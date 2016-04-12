@@ -19,9 +19,6 @@ let loaders = [{
     }, {
         test  : /\.scss$/,
         loader: 'style-loader!css-loader?modules&importLoaders=1&localIdentName=[local]___[hash:base64:5]!sass'
-    },{
-        test  : /\.less$/,
-        loader: 'style-loader!css-loader?modules&importLoaders=1&localIdentName=[local]___[hash:base64:5]!less'
     }];
 
 
@@ -47,9 +44,6 @@ if (process.env.NODE_ENV === 'production') {
     }, {
         test  : /\.scss$/,
         loader: ExtractTextPlugin.extract('style-loader', 'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!sass')
-    },{
-        test  : /\.less$/,
-        loader: ExtractTextPlugin.extract('style-loader', 'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!less')
     }];
 }
 

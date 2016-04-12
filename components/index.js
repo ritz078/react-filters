@@ -1,1 +1,3 @@
-export App from './App/App';
+import Radio from './Radio/Radio';
+
+export { Radio };
