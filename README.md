@@ -1,4 +1,4 @@
-<p align="center"><img src="examples/logo.png" align="center" alt=""></p>
+<p align="center"><img src="examples/logo.png" align="center" alt="" style="max-width:250px"></p>
 
 <p align="center">
 <a href="https://travis-ci.org/ritz078/react-filters">

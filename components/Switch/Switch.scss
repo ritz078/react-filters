@@ -1,0 +1,49 @@
+@import "../base";
+
+$height: 36px;
+$width: 70px;
+$padding: 4px;
+
+$primary: #00ACED;
+$secondary: white;
+
+.rf-switch {
+  display: inline-block;
+  &.rf-disabled{
+    .rf-switch-wrapper{
+      background-color: grey;
+    }
+  }
+}
+
+.rf-switch-wrapper {
+  background-color: $primary;
+  width: $width;
+  height: $height;
+  border-radius: $height / 2;
+  padding: $padding;
+  display: inline-block;
+  position: relative;
+}
+
+.rf-switch-btn {
+  height: $height - (2 * 4px);
+  width: $height - (2 * 4px);
+  position: absolute;
+  background-color: $secondary;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all .3s ease-in-out;
+  left: $padding;
+  &.on{
+    left: 100%;
+    margin-left:-(($height - (2 * 4px)) + $padding);
+  }
+}
+
+.rf-switch-label{
+  display: inline-block;
+  &.after{
+    float: right;
+  }
+}

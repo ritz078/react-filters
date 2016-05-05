@@ -12,7 +12,6 @@ const data = [{
   count: 5
 }];
 
-debugger;
 storiesOf('Radio Button', module)
   .add('with a text', () => (<Radio data={data} />))
   .add('with no text', () => (<Radio data={data} onChange={action('a')} />));

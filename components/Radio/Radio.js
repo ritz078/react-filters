@@ -1,17 +1,16 @@
 import React, { PropTypes, Component } from 'react';
-import classNames from 'classNames';
+import classNames from 'classnames';
 
 import './Radio.scss';
 
 class Radio extends Component {
   constructor (props) {
     super(props);
-    this.state       = {
-      value      : props.value,
-      disabledIds: []
+    this.state = {
+      value       : props.value,
+      disabledKeys: []
     };
-    debugger;
-    this.handleClick = this.handleClick.bind(this);
+    this.bindHandlers();
   }
 
   componentWillReceiveProps (newProps) {
@@ -28,6 +27,10 @@ class Radio extends Component {
     this.props.onChange(oldProps);
   }
 
+  bindHandlers () {
+    this.handleClick = this.handleClick.bind(this);
+  }
+
   handleClick (e) {
     this.setState({
       value: e.currentTarget.getAttribute('data-key')
@@ -35,7 +38,7 @@ class Radio extends Component {
   }
 
   template () {
-    return this.props.data.map((val, index)=> {
+    return this.props.data.map((val)=> {
       const isSelected = (this.state.value === val.key);
 
       const iconClass = classNames('fa', {
@@ -47,15 +50,15 @@ class Radio extends Component {
           <span className='aggr'>[{val.aggr || '0'}]</span>);
 
       const childClass = classNames('ssf-child', 'filter-child', {
-        'disabled'                    : this.state.disabledIds.indexOf(val.key) >= 0,
+        disabled                      : this.state.disabledKeys.indexOf(val.key) >= 0,
         'ssf-selected filter-selected': isSelected
       });
 
       return (
         <div key={val.key} onClick={this.handleClick} data-key={val.key} className={childClass}>
-          {this.props.iconFirst && <i className={iconClass}/> }
+          { this.props.iconFirst && <i className={iconClass}/> }
           <span>{val.label}</span> {aggregations}
-          {!this.props.iconFirst && <i className={iconClass}/> }
+          { !this.props.iconFirst && <i className={iconClass}/> }
         </div>
       );
     });
@@ -78,18 +81,32 @@ function noop () {
 }
 
 Radio.propTypes = {
+  attributes: PropTypes.object,
   className : PropTypes.string,
-  attributes: PropTypes.object
+  data      : PropTypes.arrayOf(
+    PropTypes.shape({
+      key  : PropTypes.number.isRequired,
+      label: PropTypes.string.isRequired,
+      count: PropTypes.number
+    })
+  ),
+  disabled  : PropTypes.bool,
+  iconFirst : PropTypes.bool,
+  name      : PropTypes.string.isRequired,
+  onChange  : PropTypes.func,
+  showCount : PropTypes.bool,
+  title     : PropTypes.string,
+  value     : PropTypes.number
 };
 
 Radio.defaultProps = {
-  icon      : 'radio',
-  showCount : false,
   attributes: {},
-  onChange  : noop,
-  value     : null,
   disabled  : false,
-  iconFirst : true
+  icon      : 'radio',
+  iconFirst : true,
+  onChange  : noop,
+  showCount : false,
+  value     : null
 };
 
 export default Radio;
