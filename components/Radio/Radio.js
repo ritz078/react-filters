@@ -1,8 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 import classNames from 'classnames';
 
-import './Radio.scss';
-
 class Radio extends Component {
   constructor (props) {
     super(props);

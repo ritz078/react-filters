@@ -1,7 +1,7 @@
 import React, { PropTypes, Component } from 'react';
 import classNames from 'classnames';
 
-import './Switch.scss';
+import styles from './Switch.styles';
 
 export default class Switch extends Component {
   constructor (props) {
@@ -15,13 +15,21 @@ export default class Switch extends Component {
 
   handleClick () {
     this.props.onChange({
-      name : this.props.name,
+      name: this.props.name,
       value: !this.props.value
     });
   }
 
   render () {
-    const { name, label, labelPosition, value, disabled } = this.props;
+    const {
+      name,
+      label,
+      labelPosition,
+      value,
+      style,
+      theme,
+      disabled
+    } = this.props;
 
     const mainClass = classNames('rf', 'rf-switch', name, {
       'rf-disabled': disabled
@@ -29,19 +37,24 @@ export default class Switch extends Component {
 
     const labelClass = classNames('rf-switch-label', {
       before: labelPosition === 'before',
-      after : labelPosition === 'after'
+      after: labelPosition === 'after'
     });
 
     const btnClass = classNames('rf-switch-btn', {
-      on : value,
+      on: value,
       off: !value
     });
 
+    const s = styles(style, theme);
+
+    const wrapperStyle = !value ? s.wrapper : Object.assign({}, s.wrapper, s.wrapperOn)
+    const btnStyle = !value ? s.btn : Object.assign({}, s.btn, s.btnOn);
+
     return (
-      <div onClick={!disabled && this.handleClick} className={mainClass}>
-        <div className={labelClass}>{label}</div>
-        <div className='rf-switch-wrapper'>
-          <div className={btnClass}></div>
+      <div onClick={!disabled && this.handleClick} className={mainClass} style={s.main}>
+        <div className={labelClass} style={s.label}>{label}</div>
+        <div className='rf-switch-wrapper' style={wrapperStyle}>
+          <div className={btnClass} style={btnStyle}></div>
         </div>
       </div>
     );
@@ -49,20 +62,28 @@ export default class Switch extends Component {
 }
 
 Switch.propTypes = {
-  disabled     : PropTypes.bool,
-  label        : PropTypes.string,
+  disabled: PropTypes.bool,
+  label: PropTypes.string,
   labelPosition: PropTypes.string,
-  name         : PropTypes.string.isRequired,
-  onChange     : PropTypes.func,
-  value        : PropTypes.bool
+  name: PropTypes.string.isRequired,
+  onChange: PropTypes.func,
+  style: PropTypes.object,
+  theme: PropTypes.object,
+  value: PropTypes.bool
 };
 
 function noop () {
 }
 
 Switch.defaultProps = {
-  value        : false,
-  onChange     : noop,
+  value: false,
+  onChange: noop,
   labelPosition: 'before',
-  disabled     : false
+  disabled: false,
+  style:{},
+  theme: {
+    width: 70,
+    height: 36,
+    padding: 4
+  }
 };
