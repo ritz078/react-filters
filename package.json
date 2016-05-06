@@ -7,8 +7,7 @@
     "prepublish": "npm run lint",
     "storybook": "start-storybook -p 9002",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
-    "start": "node server.js",
-    "test": "ava **/*.spec.js --require babel-register"
+    "test": "ava tests/** --require babel-register"
   },
   "repository": {
     "type": "git",
