@@ -3,9 +3,10 @@ import styleProcessor from '../utils/styleProcessor';
 
 export default function (style, theme, options) {
   const defaultStyle = {
-    base:{
+    base: {
       main: {
-        display: 'inline-block'
+        display: 'inline-block',
+        width: theme.containerWidth
       },
       wrapper: {
         backgroundColor: theme.offColor,
@@ -26,20 +27,23 @@ export default function (style, theme, options) {
         backgroundColor: theme.btnColor,
         borderRadius: '50%',
         cursor: 'pointer',
-        transition: 'all .3s ease-in-out',
+        transition: theme.transition,
         left: theme.padding
       },
 
       label: {
-        display: 'inline-block'
+        display: 'inline-block',
+        verticalAlign: 'top',
+        width: theme.containerWidth - theme.width
       },
+
       labelAfter: {
         float: 'right'
       }
     },
 
-    active:{
-      wrapper:{
+    active: {
+      wrapper: {
         backgroundColor: theme.onColor
       },
       btn: {
@@ -49,7 +53,8 @@ export default function (style, theme, options) {
     },
     disabled: {
       wrapper: {
-        backgroundColor: 'grey'
+        backgroundColor: 'grey',
+        opacity: 0.5
       }
     }
   };

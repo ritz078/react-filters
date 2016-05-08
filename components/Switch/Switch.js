@@ -51,7 +51,7 @@ export default class Switch extends Component {
 
     return (
       <div onClick={!disabled && this.handleClick} className={mainClass} style={s.main}>
-        <div className={labelClass} style={s.label}>{label}</div>
+        {label && <div className={labelClass} style={s.label}>{label}</div>}
         <div className='rf-switch-wrapper' style={s.wrapper}>
           <div className='rf-switch-btn' style={s.btn}></div>
         </div>
@@ -81,11 +81,13 @@ Switch.defaultProps = {
   disabled: false,
   style: {},
   theme: {
+    containerWidth: 200,
     width: 40,
     height: 22,
     padding: 2,
     onColor: '#40DC40',
-    offColor: 'red',
-    btnColor: 'white'
+    offColor: 'grey',
+    btnColor: 'white',
+    transition: 'all .2s ease-in'
   }
 };
