@@ -7,7 +7,7 @@
     "prepublish": "npm run lint",
     "storybook": "start-storybook -p 9002",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
-    "test": "ava tests/**"
+    "test": "mocha --require test/config/setup test/**/**/*.test.js"
   },
   "repository": {
     "type": "git",
@@ -28,7 +28,6 @@
   "devDependencies": {
     "@kadira/storybook": "^1.22.1",
     "autoprefixer": "^6.3.6",
-    "ava": "^0.14.0",
     "babel": "^6.5.2",
     "babel-core": "^6.7.4",
     "babel-eslint": "^6.0.2",
@@ -38,6 +37,7 @@
     "babel-preset-react": "^6.5.0",
     "babel-preset-stage-0": "^6.5.0",
     "babel-register": "^6.8.0",
+    "chai": "^3.5.0",
     "commitizen": "^2.8.1",
     "css-loader": "^0.23.1",
     "cz-conventional-changelog": "^1.1.6",
@@ -49,6 +49,8 @@
     "file-loader": "^0.8.5",
     "font-awesome": "^4.5.0",
     "isparta": "^4.0.0",
+    "jsdom": "^9.0.0",
+    "mocha": "^2.4.5",
     "node-sass": "^3.7.0",
     "raw-loader": "^0.5.1",
     "rimraf": "^2.5.2",
@@ -74,7 +76,8 @@
   "ava": {
     "babel": "inherit",
     "require": [
-      "babel-register"
+      "babel-register",
+      "./test/setup.js"
     ]
   }
 }

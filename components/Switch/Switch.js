@@ -47,7 +47,7 @@ export default class Switch extends Component {
 
     const s = styles(style, theme);
 
-    const wrapperStyle = !value ? s.wrapper : Object.assign({}, s.wrapper, s.wrapperOn)
+    const wrapperStyle = !value ? s.wrapper : Object.assign({}, s.wrapper, s.wrapperOn);
     const btnStyle = !value ? s.btn : Object.assign({}, s.btn, s.btnOn);
 
     return (
