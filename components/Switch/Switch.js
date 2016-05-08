@@ -1,6 +1,5 @@
 import React, { PropTypes, Component } from 'react';
 import classNames from 'classnames';
-import assign from 'object-assign';
 
 import getStyles from './Switch.styles';
 
@@ -35,7 +34,7 @@ export default class Switch extends Component {
     const mainClass = classNames('rf', 'rf-switch', name, {
       'rf-disabled': disabled,
       'rf-on': value,
-      'rf-off' : !value
+      'rf-off': !value
     });
 
     const labelClass = classNames('rf-switch-label', {
@@ -43,16 +42,18 @@ export default class Switch extends Component {
       after: labelPosition === 'after'
     });
 
-    const s = getStyles(style, theme);
+    const options = {
+      disabled,
+      active: value
+    };
 
-    const wrapperStyle = !value ? s.wrapper : assign({}, s.wrapper, s.wrapperOn);
-    const btnStyle = !value ? s.btn : assign({}, s.btn, s.btnOn);
+    const s = getStyles(style, theme, options);
 
     return (
       <div onClick={!disabled && this.handleClick} className={mainClass} style={s.main}>
         <div className={labelClass} style={s.label}>{label}</div>
-        <div className='rf-switch-wrapper' style={wrapperStyle}>
-          <div className='rf-switch-btn' style={btnStyle}></div>
+        <div className='rf-switch-wrapper' style={s.wrapper}>
+          <div className='rf-switch-btn' style={s.btn}></div>
         </div>
       </div>
     );
@@ -78,7 +79,7 @@ Switch.defaultProps = {
   onChange: noop,
   labelPosition: 'before',
   disabled: false,
-  style:{},
+  style: {},
   theme: {
     width: 40,
     height: 22,

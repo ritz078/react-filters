@@ -63,8 +63,8 @@
   },
   "dependencies": {
     "classnames": "^2.2.3",
+    "deep-assign": "^2.0.0",
     "invariant": "^2.2.1",
-    "object-assign": "^4.1.0",
     "react": "0.14.x || ^15.0.0",
     "react-dom": "0.14.x || ^15.0.0"
   },

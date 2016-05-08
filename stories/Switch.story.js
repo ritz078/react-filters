@@ -10,6 +10,7 @@ storiesOf('Switch Button', module)
       name='story1'
       label='hello'
       action={action}
+      // disabled
     />
   ))
   .add('with no text', () => (<Switch value={false} onChange={action('a')}/>));
