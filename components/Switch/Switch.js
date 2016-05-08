@@ -1,7 +1,8 @@
 import React, { PropTypes, Component } from 'react';
 import classNames from 'classnames';
+import assign from 'object-assign';
 
-import styles from './Switch.styles';
+import getStyles from './Switch.styles';
 
 export default class Switch extends Component {
   constructor (props) {
@@ -32,7 +33,9 @@ export default class Switch extends Component {
     } = this.props;
 
     const mainClass = classNames('rf', 'rf-switch', name, {
-      'rf-disabled': disabled
+      'rf-disabled': disabled,
+      'rf-on': value,
+      'rf-off' : !value
     });
 
     const labelClass = classNames('rf-switch-label', {
@@ -40,21 +43,16 @@ export default class Switch extends Component {
       after: labelPosition === 'after'
     });
 
-    const btnClass = classNames('rf-switch-btn', {
-      on: value,
-      off: !value
-    });
+    const s = getStyles(style, theme);
 
-    const s = styles(style, theme);
-
-    const wrapperStyle = !value ? s.wrapper : Object.assign({}, s.wrapper, s.wrapperOn);
-    const btnStyle = !value ? s.btn : Object.assign({}, s.btn, s.btnOn);
+    const wrapperStyle = !value ? s.wrapper : assign({}, s.wrapper, s.wrapperOn);
+    const btnStyle = !value ? s.btn : assign({}, s.btn, s.btnOn);
 
     return (
       <div onClick={!disabled && this.handleClick} className={mainClass} style={s.main}>
         <div className={labelClass} style={s.label}>{label}</div>
         <div className='rf-switch-wrapper' style={wrapperStyle}>
-          <div className={btnClass} style={btnStyle}></div>
+          <div className='rf-switch-btn' style={btnStyle}></div>
         </div>
       </div>
     );
@@ -82,8 +80,11 @@ Switch.defaultProps = {
   disabled: false,
   style:{},
   theme: {
-    width: 70,
-    height: 36,
-    padding: 4
+    width: 40,
+    height: 22,
+    padding: 2,
+    onColor: '#40DC40',
+    offColor: 'red',
+    btnColor: 'white'
   }
 };

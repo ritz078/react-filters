@@ -6,7 +6,7 @@ export default function (style, theme) {
       display: 'inline-block'
     },
     wrapper: {
-      backgroundColor: 'red',
+      backgroundColor: theme.offColor,
       width: theme.width,
       height: theme.height,
       borderRadius: theme.height / 2,
@@ -17,13 +17,13 @@ export default function (style, theme) {
       boxSizing: 'border-box'
     },
     wrapperOn: {
-      backgroundColor: '#40DC40'
+      backgroundColor: theme.onColor
     },
     btn: {
       height: theme.height - (theme.padding * 2),
       width: theme.height - (theme.padding * 2),
       position: 'absolute',
-      backgroundColor: 'white',
+      backgroundColor: theme.btnColor,
       borderRadius: '50%',
       cursor: 'pointer',
       transition: 'all .3s ease-in-out',
