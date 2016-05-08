@@ -23,4 +23,25 @@ describe('Switch Component', () => {
 
     expect(onChange.called).to.equal(true);
   });
+
+  it('should call onChange function with correct arguments', () => {
+    const onChange = sinon.spy();
+
+    const wrapper = mount(
+      <Switch
+        name='switch'
+        value={false}
+        onChange={onChange}
+      />
+    );
+
+    wrapper.simulate('click');
+
+    const args = {
+      name: 'switch',
+      value: true
+    };
+
+    expect(onChange.calledWith(args)).to.equal(true);
+  });
 });
