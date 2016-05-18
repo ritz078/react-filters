@@ -1,0 +1,60 @@
+$offColor: grey;
+$onColor: green;
+$height: 22px;
+$width: 40px;
+$padding: 2px;
+$btnColor: white;
+$countColor: grey;
+$containerWidth: 200px;
+
+.sw-wrapper {
+  background-color: $offColor;
+  width: $width;
+  height: $height;
+  border-radius: $height/2;
+  padding: $padding;
+  display: inline-block;
+  position: relative;
+  transition: all .3s ease-in-out;
+  box-sizing: border-box;
+  .sw-active & {
+    background-color: $onColor;
+  }
+  .sw-disabled & {
+    background-color: grey;
+    opacity: 0.5;
+    pointer-events: none;
+  }
+}
+
+.sw-btn {
+  height: $height - ($padding * 2);
+  width: $height - ($padding * 2);
+  position: absolute;
+  background-color: $btnColor;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all .3s ease-in;
+  left: $padding;
+  .sw-active & {
+    left: 100%;
+    display: inline-block;
+    margin-left: -($height - $padding);
+  }
+}
+
+.sw-label {
+  display: inline-block;
+  vertical-align: top;
+  width: $containerWidth - $width;
+  .after {
+    float: right;
+  }
+}
+
+.sw-count {
+  color: $countColor;
+  margin-left: 5px;
+}
+
+

@@ -1,19 +1,19 @@
-import React  from 'react';
+import React from 'react';
 import { storiesOf, action } from '@kadira/storybook';
-import { Switch } from '../components';
+import { CheckBox } from '../components';
 import Container from './Container';
 
-storiesOf('Switch Button', module)
-  .add('default', () => (
+storiesOf('Checkbox Button', module)
+  .add('with a text', () => (
     <Container
-      Filter={Switch}
+      Filter={CheckBox}
       name='story1'
       action={action}
     />
   ))
-  .add('disabled', () => (
+  .add('with no text', () => (
     <Container
-      Filter={Switch}
+      Filter={CheckBox}
       name='story1'
       label='hello'
       action={action}

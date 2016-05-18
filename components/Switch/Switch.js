@@ -1,8 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 import classNames from 'classnames';
 
-import getStyles from './Switch.styles';
-
 export default class Switch extends Component {
   constructor (props) {
     super(props);
@@ -10,7 +8,10 @@ export default class Switch extends Component {
   }
 
   shouldComponentUpdate (nextProps) {
-    return nextProps.value !== this.props.value;
+    return (
+      (nextProps.value !== this.props.value) ||
+      (nextProps.count !== this.props.count)
+    );
   }
 
   handleClick () {
@@ -26,48 +27,49 @@ export default class Switch extends Component {
       label,
       labelPosition,
       value,
-      style,
-      theme,
-      disabled
+      disabled,
+      countElem,
+      count,
+      iconElem
     } = this.props;
 
-    const mainClass = classNames('rf', 'rf-switch', name, {
-      'rf-disabled': disabled,
-      'rf-on': value,
-      'rf-off': !value
+    const mainClass = classNames('react-filters', 'rf-switch', name, {
+      'sw-disabled': disabled,
+      'sw-active': value
     });
 
-    const labelClass = classNames('rf-switch-label', {
-      before: labelPosition === 'before',
-      after: labelPosition === 'after'
+    const labelClass = classNames('sw-label', {
+      'sw-before': labelPosition === 'before',
+      'sw-after': labelPosition === 'after'
     });
-
-    const options = {
-      disabled,
-      active: value
-    };
-
-    const s = getStyles(style, theme, options);
 
     return (
-      <div onClick={!disabled && this.handleClick} className={mainClass} style={s.main}>
-        {label && <div className={labelClass} style={s.label}>{label}</div>}
-        <div className='rf-switch-wrapper' style={s.wrapper}>
-          <div className='rf-switch-btn' style={s.btn}></div>
-        </div>
+      <div onClick={!disabled && this.handleClick} className={mainClass}>
+        {label && <div className={labelClass}>
+          {label}
+          {count !== undefined && countElem(this.props)}
+        </div>}
+        {iconElem(this.props)}
       </div>
     );
   }
 }
 
 Switch.propTypes = {
+  count: PropTypes.number,
+  countElem: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.element
+  ]),
   disabled: PropTypes.bool,
+  iconElem: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.element
+  ]),
   label: PropTypes.string,
   labelPosition: PropTypes.string,
   name: PropTypes.string.isRequired,
   onChange: PropTypes.func,
-  style: PropTypes.object,
-  theme: PropTypes.object,
   value: PropTypes.bool
 };
 
@@ -75,19 +77,18 @@ function noop () {
 }
 
 Switch.defaultProps = {
+  countElem (p) {
+    return <span className='sw-count'>({p.count})</span>;
+  },
   value: false,
   onChange: noop,
   labelPosition: 'before',
   disabled: false,
-  style: {},
-  theme: {
-    containerWidth: 200,
-    width: 40,
-    height: 22,
-    padding: 2,
-    onColor: '#40DC40',
-    offColor: 'grey',
-    btnColor: 'white',
-    transition: 'all .2s ease-in'
+  iconElem () {
+    return (
+      <div className='sw-wrapper'>
+        <div className='sw-btn'></div>
+      </div>
+    );
   }
 };
