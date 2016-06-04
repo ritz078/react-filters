@@ -9,6 +9,7 @@ storiesOf('Switch Button', module)
       Filter={Switch}
       name='story1'
       action={action}
+      value
     />
   ))
   .add('disabled', () => (
@@ -19,5 +20,6 @@ storiesOf('Switch Button', module)
       action={action}
       disabled
       count={6}
+      value
     />
   ));

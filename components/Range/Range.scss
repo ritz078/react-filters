@@ -1,0 +1,35 @@
+$track-height: 6px;
+$btn-height: 15px;
+
+.rng-wrapper {
+  width: 50%;
+  overflow: visible;
+  position: relative;
+  display: inline-block;
+}
+
+.rng-track, .rng-rail {
+  height: $track-height;
+  background-color: green;
+  border-radius: $track-height/2;
+}
+
+.rng-slider {
+  height: $btn-height;
+  width: $btn-height;
+  border-radius: $btn-height/2;
+  background-color: #0b97c4;
+  position: absolute;
+  display: inline-block;
+  vertical-align: top;
+  margin-top: -($btn-height + $track-height)/2;
+  cursor: pointer;
+  transition: all .2s ease-in;
+}
+
+.rng-rail{
+  position: absolute;
+  margin-top: -$track-height;
+  background-color: red;
+  transition: all .2s ease-in;
+}

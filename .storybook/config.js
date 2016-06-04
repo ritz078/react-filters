@@ -6,6 +6,7 @@ import '../components/styles.scss';
 
 function loadStories () {
   require('../stories/Radio.story');
+  require('../stories/Range.story');
   require('../stories/Switch.story');
   require('../stories/CheckBox.story');
 }

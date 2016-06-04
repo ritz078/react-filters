@@ -1,5 +1,6 @@
-import Radio from './Radio/Radio';
-import Switch from './Switch/Switch';
 import CheckBox from './CheckBox/CheckBox';
+import Radio from './Radio/Radio';
+import Range from './Range/Range';
+import Switch from './Switch/Switch';
 
-export { Radio, Switch, CheckBox };
+export { CheckBox, Radio, Range, Switch };

@@ -4,7 +4,7 @@ export default class Container extends Component {
   constructor (props) {
     super(props);
     this.state = {
-      value: true
+      value: props.value
     };
     this.handleChange = this.handleChange.bind(this);
   }
