@@ -26,13 +26,14 @@ export default class Range extends Component {
     window.addEventListener('resize', this.updatePosition);
   }
 
-  componentWillReceiveProps () {
+  componentWillReceiveProps (newProps) {
     this.updatePosition();
   }
 
   shouldComponentUpdate (newProps, newState) {
     return isWithinRange(newProps, newProps.value) &&
-      (this.state !== newState || !isArrayEqual(this.props.value, newProps.value));
+      (!isArrayEqual(this.props.value, newProps.value) ||
+      this.state.trackWidth !== newState.trackWidth);
   }
 
   componentWillUnmount () {
@@ -40,29 +41,23 @@ export default class Range extends Component {
   }
 
   onChange (data) {
-    let value;
-    if (data.name === 'lower') {
-      value = [data.value, this.props.value[1]];
-      if (isWithinRange(this.props, value)) {
-        this.setState({
-          sliderLowerPosition: data.position + data.sliderWidth / 2
-        });
-      }
-    } else {
-      value = [this.props.value[0], data.value];
-      if (isWithinRange(this.props, value)) {
-        this.setState({
-          sliderUpperPosition: data.position + data.sliderWidth / 2
-        });
-      }
-    }
+    const value = data.name === 'lower' ? [data.value, this.props.value[1]] :
+      [this.props.value[0], data.value];
 
     if (isWithinRange(this.props, value) && !isArrayEqual(this.props.value, value)) {
-      this.props.onChange({
-        name: this.props.name,
-        value,
-        changed: data.name
-      });
+      this.setState(() => (
+          (data.name === 'lower') ? {
+            sliderLowerPosition: data.position + data.sliderWidth / 2
+          } : {
+            sliderUpperPosition: data.position + data.sliderWidth / 2
+          }), () => (
+          this.props.onChange({
+            name: this.props.name,
+            value,
+            changed: data.name
+          })
+        )
+      );
     }
   }
 
@@ -151,7 +146,7 @@ Range.defaultProps = {
   max: 20,
   min: 0,
   orientation: 'horizontal',
-  precision: 1,
+  precision: 0,
   step: 1,
   value: [5, 10]
 };

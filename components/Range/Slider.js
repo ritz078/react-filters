@@ -25,9 +25,9 @@ export default class Slider extends Component {
   }
 
   componentWillReceiveProps (newProps) {
-    const flag = (newProps.value !== this.props.value) ||
+    const propsChanged = (newProps.value !== this.props.value) ||
       (newProps.trackLength !== this.props.trackLength);
-    this.setSliderPosition(newProps, flag);
+    this.setSliderPosition(newProps, propsChanged);
   }
 
   shouldComponentUpdate (newProps) {
@@ -36,20 +36,20 @@ export default class Slider extends Component {
       newProps.trackLength !== this.props.trackLength;
   }
 
-  setSliderPosition (props, flag) {
-    const { value, max, min, trackLength, onChange, name } = props;
-    this.setState({
-      sliderPosition: getPositionFromValue(value, max, min, trackLength, this.refs.slider)
-    }, () => {
-      if (flag) {
+  setSliderPosition (props, propsChanged) {
+    if (propsChanged) {
+      const { value, max, min, trackLength, onChange, name } = props;
+      this.setState({
+        sliderPosition: getPositionFromValue(value, max, min, trackLength, this.refs.slider)
+      }, () => {
         onChange({
           name,
           value,
           position: this.state.sliderPosition,
           sliderWidth: this.refs.slider.clientWidth
         });
-      }
-    });
+      });
+    }
   }
 
   handleMouseDown () {
@@ -73,19 +73,23 @@ export default class Slider extends Component {
   }
 
   handleDrag (e) {
-    const { name, step, onChange, value } = this.props;
     suppress(e);
-    // step to precision
-    const position = getRelativePosition(e, this.props, this.refs.slider);
-    const newValue = Math.round(getValueFromPosition(this.props, position));
 
-    if (hasStepDifference(newValue, value, step) && isWithinRange(this.props, newValue)) {
-      onChange({
-        name,
-        value: newValue,
-        position,
-        sliderWidth: this.refs.slider.clientWidth
-      });
+    const { name, step, onChange, value, max, min, trackLength } = this.props;
+    const position = getRelativePosition(e, this.props, this.refs.slider);
+    const positionStep = trackLength / max - min;
+
+    if (Math.abs(position - this.state.sliderPosition) >= positionStep) {
+      const newValue = Math.round(getValueFromPosition(this.props, position));
+
+      if (hasStepDifference(newValue, value, step) && isWithinRange(this.props, newValue)) {
+        onChange({
+          name,
+          value: newValue,
+          position,
+          sliderWidth: this.refs.slider.clientWidth
+        });
+      }
     }
   }
 
