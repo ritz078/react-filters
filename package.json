@@ -7,7 +7,7 @@
     "prepublish": "npm run lint",
     "storybook": "start-storybook -p 9002",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
-    "test": "mocha --require test/config/setup test/**/**/*.test.js"
+    "test": "mocha --require test/config/setup test/**/*.test.js"
   },
   "repository": {
     "type": "git",
@@ -28,6 +28,7 @@
   "devDependencies": {
     "@kadira/storybook": "^1.28.1",
     "autoprefixer": "^6.3.6",
+    "ava": "^0.15.2",
     "babel": "^6.5.2",
     "babel-core": "^6.9.0",
     "babel-eslint": "^6.0.2",

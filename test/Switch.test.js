@@ -1,10 +1,10 @@
 import React from 'react';
-const { describe, it } = global;
+const { describe, it, __base } = global;
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
 import { expect } from 'chai';
 
-import { Switch } from '../components';
+const { Switch } = require(`${__base}components`);
 
 describe('Switch Component', () => {
   it('should call onChange function on click', () => {
