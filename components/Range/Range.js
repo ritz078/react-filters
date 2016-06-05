@@ -9,33 +9,38 @@ export default class Range extends Component {
     super(props);
 
     this.state = {
-      sliderLowerPosition:0,
-      sliderUpperPosition:0,
+      sliderLowerPosition: 0,
+      sliderUpperPosition: 0,
       trackWidth: 0
     };
 
     autoBind([
       'onChange',
-      'handleClick'
+      'handleClick',
+      'updatePosition'
     ], this);
   }
 
   componentDidMount () {
     this.updatePosition();
-    document.addEventListener('resize', this.updatePosition);
+    window.addEventListener('resize', this.updatePosition);
   }
 
   componentWillReceiveProps () {
     this.updatePosition();
   }
 
-  shouldComponentUpdate (newProps) {
-    return isWithinRange(newProps, newProps.value);
+  shouldComponentUpdate (newProps, newState) {
+    return isWithinRange(newProps, newProps.value) &&
+      (this.state !== newState || !isArrayEqual(this.props.value, newProps.value));
+  }
+
+  componentWillUnmount () {
+    window.removeEventListener('resize', this.updatePosition);
   }
 
   onChange (data) {
     let value;
-
     if (data.name === 'lower') {
       value = [data.value, this.props.value[1]];
       if (isWithinRange(this.props, value)) {

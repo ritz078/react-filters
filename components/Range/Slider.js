@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import classNames from 'classnames';
-import { autoBind, hasStepDifference, suppress } from './utils';
+import { autoBind, hasStepDifference, suppress, isWithinRange } from './utils';
 import { getValueFromPosition, getRelativePosition, getPositionFromValue } from './helpers';
 
 export default class Slider extends Component {
@@ -25,12 +25,14 @@ export default class Slider extends Component {
   }
 
   componentWillReceiveProps (newProps) {
-    const flag = newProps.value !== this.props.value;
+    const flag = (newProps.value !== this.props.value) ||
+      (newProps.trackLength !== this.props.trackLength);
     this.setSliderPosition(newProps, flag);
   }
 
   shouldComponentUpdate (newProps) {
-    return hasStepDifference(newProps.value, this.props.value, newProps.step) ||
+    return (hasStepDifference(newProps.value, this.props.value, newProps.step) &&
+      isWithinRange(newProps, newProps.value)) ||
       newProps.trackLength !== this.props.trackLength;
   }
 
@@ -77,7 +79,7 @@ export default class Slider extends Component {
     const position = getRelativePosition(e, this.props, this.refs.slider);
     const newValue = Math.round(getValueFromPosition(this.props, position));
 
-    if (hasStepDifference(newValue, value, step)) {
+    if (hasStepDifference(newValue, value, step) && isWithinRange(this.props, newValue)) {
       onChange({
         name,
         value: newValue,
