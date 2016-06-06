@@ -96,7 +96,8 @@ export default class Range extends Component {
       min,
       max,
       precision,
-      value
+      value,
+      rangeTemplate
     } = this.props;
 
     const mainClass = classNames('react-filters', 'rf-range', name, {
@@ -139,6 +140,7 @@ export default class Range extends Component {
             precision={precision}
           />
         </div>
+           {rangeTemplate(min, max)}
       </div>
     );
   }
@@ -153,15 +155,24 @@ Range.propTypes = {
   orientation: PropTypes.string,
   precision: PropTypes.number,
   step: PropTypes.number,
-  value: PropTypes.array
+  value: PropTypes.array,
+  rangeTemplate: PropTypes.func
 };
 
 Range.defaultProps = {
   disabled: false,
-  max: 20,
+  max: 200,
   min: 0,
   orientation: 'horizontal',
   precision: 0,
   step: 1,
-  value: [5, 10]
+  value: [5, 10],
+  rangeTemplate (min, max) {
+    return (
+      <div className='rng-range'>
+        <div className='rng-range-min'>{min}</div>
+        <div className='rng-range-max'>{max}</div>
+      </div>
+    );
+  }
 };

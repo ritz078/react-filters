@@ -94,18 +94,26 @@ export default class Slider extends Component {
   }
 
   render () {
-    const { name } = this.props;
+    const { name, value, valueFormat } = this.props;
 
     const className = classNames('rng-slider', name);
     return (
-      <div
-        draggable='false'
-        className={className}
-        onMouseDown={this.handleMouseDown}
-        onTouchStart={this.handleTouchStart}
-        ref='slider'
-        style={{ marginLeft: this.state.sliderPosition }}
-      ></div>
+      <div className='rng-slider-wrapper'>
+        <div
+          className='rng-value'
+          style={{ left: this.state.sliderPosition }}
+        >
+          {valueFormat(value)}
+        </div>
+        <div
+          draggable='false'
+          className={className}
+          onMouseDown={this.handleMouseDown}
+          onTouchStart={this.handleTouchStart}
+          ref='slider'
+          style={{ marginLeft: this.state.sliderPosition }}
+        ></div>
+      </div>
     );
   }
 }
@@ -118,5 +126,12 @@ Slider.propTypes = {
   orientation: PropTypes.string.isRequired,
   min: PropTypes.number.isRequired,
   max: PropTypes.number.isRequired,
-  trackLength: PropTypes.number.isRequired
+  trackLength: PropTypes.number.isRequired,
+  valueFormat: PropTypes.func
+};
+
+Slider.defaultProps = {
+  valueFormat (value) {
+    return value;
+  }
 };

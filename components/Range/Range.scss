@@ -2,10 +2,11 @@ $track-height: 6px;
 $btn-height: 15px;
 
 .rng-wrapper {
-  width: 50%;
+  width: 100%;
   overflow: visible;
   position: relative;
   display: inline-block;
+  padding-top: 40px;
 }
 
 .rng-track, .rng-rail {
@@ -27,12 +28,31 @@ $btn-height: 15px;
   transition: all .2s ease-in;
 }
 
-.rng-rail{
+.rng-rail {
   position: absolute;
   background-color: red;
   transition: all .2s ease-in;
 }
 
-.rng-active{
+.rng-active {
   transform: scale(1.4);
+}
+
+.rng-value {
+  position: absolute;
+  width: 40px;
+  margin-left: -20px + $btn-height / 2;
+  text-align: center;
+  transition: all .2s ease-in;
+  margin-top: - ($track-height + $btn-height/2 + 20px);
+}
+
+.rng-range{
+  div{
+    display: inline-block;
+    margin-top: 10px;
+    &.rng-range-max{
+      float: right;
+    }
+  }
 }
