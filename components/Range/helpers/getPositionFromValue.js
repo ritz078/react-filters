@@ -1,5 +1,6 @@
-export default function (value, max, min, sliderLength, slider) {
+export default function (props, slider) {
+  const { min, max, trackLength, value } = props;
   const offset = slider.clientWidth / 2;
-  const ratio = sliderLength / (max - min);
+  const ratio = trackLength / (max - min);
   return Math.round(value * ratio - offset);
 }

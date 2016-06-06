@@ -16,7 +16,8 @@ export default class Slider extends Component {
       'handleDrag',
       'handleMouseUp',
       'handleTouchStart',
-      'handleTouchEnd'
+      'handleTouchEnd',
+      'onChange'
     ], this);
   }
 
@@ -36,19 +37,21 @@ export default class Slider extends Component {
       newProps.trackLength !== this.props.trackLength;
   }
 
+  onChange (value, position, isRerenderRequired = false) {
+    this.props.onChange({
+      name: this.props.name,
+      value,
+      position,
+      sliderWidth: this.refs.slider.clientWidth
+    }, isRerenderRequired);
+  }
+
   setSliderPosition (props, propsChanged) {
     if (propsChanged) {
-      const { value, max, min, trackLength, onChange, name } = props;
+      const { value } = props;
       this.setState({
-        sliderPosition: getPositionFromValue(value, max, min, trackLength, this.refs.slider)
-      }, () => {
-        onChange({
-          name,
-          value,
-          position: this.state.sliderPosition,
-          sliderWidth: this.refs.slider.clientWidth
-        }, true);
-      });
+        sliderPosition: getPositionFromValue(props, this.refs.slider)
+      }, () => this.onChange(value, this.state.sliderPosition, true));
     }
   }
 
@@ -75,7 +78,7 @@ export default class Slider extends Component {
   handleDrag (e) {
     suppress(e);
 
-    const { name, step, onChange, value, max, min, trackLength } = this.props;
+    const { step, value, max, min, trackLength } = this.props;
     const position = getRelativePosition(e, this.props, this.refs.slider);
     const positionStep = trackLength / max - min;
 
@@ -83,12 +86,7 @@ export default class Slider extends Component {
       const newValue = Math.round(getValueFromPosition(this.props, position));
 
       if (hasStepDifference(newValue, value, step) && isWithinRange(this.props, newValue)) {
-        onChange({
-          name,
-          value: newValue,
-          position,
-          sliderWidth: this.refs.slider.clientWidth
-        });
+        this.onChange(newValue, position);
       }
     }
   }
