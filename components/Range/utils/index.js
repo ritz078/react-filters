@@ -6,6 +6,7 @@ import suppress from './suppress';
 import isWithinRange from './isWithinRange';
 import getSliderLength from './getSliderLength';
 import isArrayEqual from './isArrayEqual';
+import removeClass from './removeClass';
 
 export {
   autoBind,
@@ -15,5 +16,6 @@ export {
   suppress,
   isWithinRange,
   getSliderLength,
-  isArrayEqual
+  isArrayEqual,
+  removeClass
 };

@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import classNames from 'classnames';
-import { autoBind, hasStepDifference, suppress, isWithinRange } from './utils';
+import { autoBind, hasStepDifference, suppress, isWithinRange, removeClass } from './utils';
 import { getValueFromPosition, getRelativePosition, getPositionFromValue } from './helpers';
 
 export default class Slider extends Component {
@@ -58,11 +58,13 @@ export default class Slider extends Component {
   handleMouseDown () {
     document.addEventListener('mousemove', this.handleDrag);
     document.addEventListener('mouseup', this.handleMouseUp);
+    this.refs.slider.className += ' rng-active';
   }
 
   handleMouseUp () {
     document.removeEventListener('mousemove', this.handleDrag);
     document.removeEventListener('mouseup', this.handleMouseUp);
+    this.refs.slider.className = removeClass(this.refs.slider, 'rng-active');
   }
 
   handleTouchStart () {
