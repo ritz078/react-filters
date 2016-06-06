@@ -1,6 +1,7 @@
 import React, { PropTypes, Component } from 'react';
 import classNames from 'classnames';
 import { getSliderLength, isWithinRange, suppress, isArrayEqual } from './utils';
+import getNearestValue from './helpers/getNearestValue';
 import Slider from './Slider';
 import autoBind from './utils/autoBind';
 
@@ -16,6 +17,7 @@ export default class Range extends Component {
 
     autoBind([
       'onChange',
+      'onSliderChange',
       'handleClick',
       'updatePosition'
     ], this);
@@ -33,7 +35,7 @@ export default class Range extends Component {
   shouldComponentUpdate (newProps, newState) {
     return isWithinRange(newProps, newProps.value) &&
       (!isArrayEqual(this.props.value, newProps.value) ||
-      this.state.trackWidth !== newState.trackWidth || this.isRerenderRequired);
+      this.state.trackWidth !== newState.trackWidth || !!this.isRerenderRequired);
   }
 
   componentDidUpdate () {
@@ -44,7 +46,15 @@ export default class Range extends Component {
     window.removeEventListener('resize', this.updatePosition);
   }
 
-  onChange (data, isRerenderRequired) {
+  onChange (value, changed) {
+    this.props.onChange({
+      name: this.props.name,
+      value,
+      changed
+    });
+  }
+
+  onSliderChange (data, isRerenderRequired) {
     const value = data.name === 'lower' ? [data.value, this.props.value[1]] :
       [this.props.value[0], data.value];
 
@@ -58,17 +68,15 @@ export default class Range extends Component {
         sliderUpperPosition: data.position + data.sliderWidth / 2
       }), () => {
       if (isWithinRange(this.props, value) && !isArrayEqual(this.props.value, value)) {
-        this.props.onChange({
-          name: this.props.name,
-          value,
-          changed: data.name
-        });
+        this.onChange(value, data.name);
       }
     });
   }
 
   handleClick (e) {
     suppress(e);
+    const newData = getNearestValue(e, this.refs.track, this.props);
+    this.onChange(newData.value, newData.changed);
   }
 
   updatePosition () {
@@ -103,8 +111,9 @@ export default class Range extends Component {
     return (
       <div className={mainClass}>
         <div className='rng-wrapper'>
-          <div className='rng-track' ref='track' onClick={this.handleClick}></div>
-          <div className='rng-rail' style={railStyle}/>
+          <div className='rng-track' ref='track' onClick={this.handleClick}>
+            <div className='rng-rail' style={railStyle}/>
+          </div>
           <Slider
             value={value[0]}
             name={'lower'}
@@ -112,7 +121,7 @@ export default class Range extends Component {
             orientation={orientation}
             track={this.refs.track}
             trackLength={this.state.trackWidth}
-            onChange={this.onChange}
+            onChange={this.onSliderChange}
             min={min}
             max={max}
             precision={precision}
@@ -124,7 +133,7 @@ export default class Range extends Component {
             orientation={orientation}
             track={this.refs.track}
             trackLength={this.state.trackWidth}
-            onChange={this.onChange}
+            onChange={this.onSliderChange}
             min={min}
             max={max}
             precision={precision}
