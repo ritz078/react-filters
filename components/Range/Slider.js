@@ -47,7 +47,7 @@ export default class Slider extends Component {
           value,
           position: this.state.sliderPosition,
           sliderWidth: this.refs.slider.clientWidth
-        });
+        }, true);
       });
     }
   }

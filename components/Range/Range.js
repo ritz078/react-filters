@@ -26,39 +26,45 @@ export default class Range extends Component {
     window.addEventListener('resize', this.updatePosition);
   }
 
-  componentWillReceiveProps (newProps) {
+  componentWillReceiveProps () {
     this.updatePosition();
   }
 
   shouldComponentUpdate (newProps, newState) {
     return isWithinRange(newProps, newProps.value) &&
       (!isArrayEqual(this.props.value, newProps.value) ||
-      this.state.trackWidth !== newState.trackWidth);
+      this.state.trackWidth !== newState.trackWidth || this.isRerenderRequired);
+  }
+
+  componentDidUpdate () {
+    this.isRerenderRequired = false;
   }
 
   componentWillUnmount () {
     window.removeEventListener('resize', this.updatePosition);
   }
 
-  onChange (data) {
+  onChange (data, isRerenderRequired) {
     const value = data.name === 'lower' ? [data.value, this.props.value[1]] :
       [this.props.value[0], data.value];
 
-    if (isWithinRange(this.props, value) && !isArrayEqual(this.props.value, value)) {
-      this.setState(() => (
-          (data.name === 'lower') ? {
-            sliderLowerPosition: data.position + data.sliderWidth / 2
-          } : {
-            sliderUpperPosition: data.position + data.sliderWidth / 2
-          }), () => (
-          this.props.onChange({
-            name: this.props.name,
-            value,
-            changed: data.name
-          })
-        )
-      );
-    }
+    // only trigger on first onChange trigger
+    this.isRerenderRequired = isRerenderRequired;
+
+    this.setState(() => (
+      (data.name === 'lower') ? {
+        sliderLowerPosition: data.position + data.sliderWidth / 2
+      } : {
+        sliderUpperPosition: data.position + data.sliderWidth / 2
+      }), () => {
+      if (isWithinRange(this.props, value) && !isArrayEqual(this.props.value, value)) {
+        this.props.onChange({
+          name: this.props.name,
+          value,
+          changed: data.name
+        });
+      }
+    });
   }
 
   handleClick (e) {
