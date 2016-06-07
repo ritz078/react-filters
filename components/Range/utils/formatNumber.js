@@ -1,3 +1,3 @@
 export default function (num, n) {
-  return parseFloat(num.toFixed(n));
+  return !n ? Math.round(num) : parseFloat(num.toFixed(n));
 }

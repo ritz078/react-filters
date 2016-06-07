@@ -15,18 +15,20 @@ const constants = {
   }
 };
 
-export default function (e, props, slider) {
+let trackPos = null;
+
+export default function (e, props, sliderWidth) {
   // Get the offset DIRECTION relative to the viewport
 
   const coordinate = constants.orientation[props.orientation].coordinate;
   const direction = constants.orientation[props.orientation].direction;
-  const ucCoordinate = capitalize(coordinate),
-    trackPos = props.track.getBoundingClientRect()[direction];
+  const ucCoordinate = capitalize(coordinate);
+  trackPos = (trackPos !== null) ? trackPos : props.track.getBoundingClientRect()[direction];
 
   let btnPos = 0;
 
   if (typeof e[`page${ucCoordinate}`] !== 'undefined') {
-    btnPos = e[`client${ucCoordinate}`];
+    btnPos = e[`page${ucCoordinate}`];
   } else if (e && typeof e[`client${ucCoordinate}`] !== 'undefined') {
     btnPos = e[`client${ucCoordinate}`];
   } else if (e.touches && e.touches[0] &&
@@ -36,5 +38,5 @@ export default function (e, props, slider) {
     btnPos = e.currentPoint[this.COORDINATE];
   }
 
-  return btnPos - trackPos - slider.clientWidth / 2;
+  return btnPos - trackPos - sliderWidth / 2;
 }

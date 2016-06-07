@@ -8,7 +8,8 @@ export default class Slider extends Component {
     super(props, context);
 
     this.state = {
-      sliderPosition: 0
+      sliderPosition: 0,
+      sliderWidth: 0
     };
 
     autoBind([
@@ -17,12 +18,14 @@ export default class Slider extends Component {
       'handleMouseUp',
       'handleTouchStart',
       'handleTouchEnd',
-      'onChange'
+      'onChange',
+      'setSliderWidth'
     ], this);
   }
 
   componentDidMount () {
     this.setSliderPosition(this.props, true);
+    this.setSliderWidth();
   }
 
   componentWillReceiveProps (newProps) {
@@ -42,15 +45,21 @@ export default class Slider extends Component {
       name: this.props.name,
       value,
       position,
-      sliderWidth: this.refs.slider.clientWidth
+      sliderWidth: this.state.sliderWidth
     }, isRerenderRequired);
+  }
+
+  setSliderWidth () {
+    this.setState({
+      sliderWidth: this.refs.slider.clientWidth
+    });
   }
 
   setSliderPosition (props, propsChanged) {
     if (propsChanged) {
       const { value } = props;
       this.setState({
-        sliderPosition: getPositionFromValue(props, this.refs.slider)
+        sliderPosition: getPositionFromValue(props, this.state.sliderWidth)
       }, () => this.onChange(value, this.state.sliderPosition, true));
     }
   }
@@ -80,16 +89,13 @@ export default class Slider extends Component {
   handleDrag (e) {
     suppress(e);
 
-    const { step, value, max, min, trackLength } = this.props;
-    const position = getRelativePosition(e, this.props, this.refs.slider);
+    const { max, min, trackLength } = this.props;
+    const position = getRelativePosition(e, this.props, this.state.sliderWidth);
     const positionStep = trackLength / max - min;
-
-    if (Math.abs(position - this.state.sliderPosition) >= positionStep) {
-      const newValue = Math.round(getValueFromPosition(this.props, position));
-
-      if (hasStepDifference(newValue, value, step) && isWithinRange(this.props, newValue)) {
-        this.onChange(newValue, position);
-      }
+    if (Math.abs(position - this.state.sliderPosition) >= positionStep &&
+      isWithinRange(this.props, null, position)) {
+      const newValue = getValueFromPosition(this.props, position);
+      this.onChange(newValue, position);
     }
   }
 

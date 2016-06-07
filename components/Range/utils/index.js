@@ -4,7 +4,6 @@ import capitalize from './capitalize';
 import formatNumber from './formatNumber';
 import suppress from './suppress';
 import isWithinRange from './isWithinRange';
-import getSliderLength from './getSliderLength';
 import isArrayEqual from './isArrayEqual';
 import removeClass from './removeClass';
 
@@ -15,7 +14,6 @@ export {
   formatNumber,
   suppress,
   isWithinRange,
-  getSliderLength,
   isArrayEqual,
   removeClass
 };

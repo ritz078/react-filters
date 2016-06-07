@@ -1,6 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 import classNames from 'classnames';
-import { getSliderLength, isWithinRange, suppress, isArrayEqual } from './utils';
+import { isWithinRange, suppress, isArrayEqual } from './utils';
 import getNearestValue from './helpers/getNearestValue';
 import Slider from './Slider';
 import autoBind from './utils/autoBind';
@@ -26,10 +26,6 @@ export default class Range extends Component {
   componentDidMount () {
     this.updatePosition();
     window.addEventListener('resize', this.updatePosition);
-  }
-
-  componentWillReceiveProps () {
-    this.updatePosition();
   }
 
   shouldComponentUpdate (newProps, newState) {
@@ -80,10 +76,8 @@ export default class Range extends Component {
   }
 
   updatePosition () {
-    getSliderLength.width = this.refs.track.clientWidth;
-
     this.setState({
-      trackWidth: getSliderLength.width
+      trackWidth: this.refs.track.clientWidth
     });
   }
 
@@ -97,7 +91,8 @@ export default class Range extends Component {
       max,
       precision,
       value,
-      rangeTemplate
+      rangeTemplate,
+      throttle
     } = this.props;
 
     const mainClass = classNames('react-filters', 'rf-range', name, {
@@ -156,12 +151,12 @@ Range.propTypes = {
   precision: PropTypes.number,
   step: PropTypes.number,
   value: PropTypes.array,
-  rangeTemplate: PropTypes.func
+  rangeTemplate: PropTypes.func,
 };
 
 Range.defaultProps = {
   disabled: false,
-  max: 200,
+  max: 20,
   min: 0,
   orientation: 'horizontal',
   precision: 0,
