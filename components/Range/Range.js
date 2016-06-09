@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { isWithinRange, suppress, isArrayEqual } from './utils';
 import getNearestValue from './helpers/getNearestValue';
 import Slider from './Slider';
-import autoBind from './utils/autoBind';
+import autoBind from '../utils/autoBind';
 
 export default class Range extends Component {
   constructor (props) {
@@ -91,8 +91,7 @@ export default class Range extends Component {
       max,
       precision,
       value,
-      rangeTemplate,
-      throttle
+      rangeTemplate
     } = this.props;
 
     const mainClass = classNames('react-filters', 'rf-range', name, {

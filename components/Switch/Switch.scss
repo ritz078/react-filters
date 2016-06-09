@@ -34,11 +34,13 @@ $containerWidth: 200px;
   background-color: $btnColor;
   border-radius: 50%;
   cursor: pointer;
-  transition: all .3s ease-in;
   left: $padding;
+  display: inline-block;
+  will-change: left, margin-left, transform;
+  transition: left .3s ease-in, margin-left .3s ease-in;
+  transform: translate3d(0,0,0);
   .sw-active & {
     left: 100%;
-    display: inline-block;
     margin-left: -($height - $padding);
   }
 }

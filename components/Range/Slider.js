@@ -1,7 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import classNames from 'classnames';
-import { autoBind, hasStepDifference, suppress, isWithinRange, removeClass } from './utils';
+import { hasStepDifference, suppress, isWithinRange, removeClass } from './utils';
 import { getValueFromPosition, getRelativePosition, getPositionFromValue } from './helpers';
+import autoBind from '../utils/autoBind';
 
 export default class Slider extends Component {
   constructor (props, context) {

@@ -9,6 +9,7 @@ function loadStories () {
   require('../stories/Range.story');
   require('../stories/Switch.story');
   require('../stories/CheckBox.story');
+  require('../stories/AutoComplete.story')
 }
 
 configure(loadStories, module);

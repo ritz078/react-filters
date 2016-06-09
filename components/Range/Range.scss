@@ -25,17 +25,21 @@ $btn-height: 15px;
   vertical-align: top;
   margin-top: -($btn-height + $track-height)/2;
   cursor: pointer;
-  transition: all .2s ease-in;
+  will-change: margin-left, transform;
+  transition: margin-left .2s ease-in, transform .2s ease-in;
+  transform: translate3d(0,0,0);
 }
 
 .rng-rail {
   position: absolute;
   background-color: red;
-  transition: all .2s ease-in;
+  will-change: left, right;
+  transition: left .2s ease-in, right .2s ease-in;
+  transform: translate3d(0,0,0);
 }
 
 .rng-active {
-  transform: scale(1.4);
+  transform: scale(1.4) translate3d(0,0,0);
 }
 
 .rng-value {
