@@ -40,16 +40,16 @@ class AutoCompleteContainer extends React.Component {
     }
   }
 
+  onSelect ({ ...args }) {
+    this.setState({ data: [] });
+    action('selected')(args);
+  }
+
   resultTemplate (val, i, selectedIndex) {
     const className = classNames('ac-suggestion', {
       'ac-suggestion-active': i === selectedIndex
     });
     return <div className={className} key={val.uuid}>{val.name} <span>{val.type}</span></div>;
-  }
-
-  onSelect({...args}){
-    this.setState({data:[]});
-    action('selected')(args)
   }
 
   render () {
@@ -61,25 +61,45 @@ class AutoCompleteContainer extends React.Component {
         onChange={this.onChange}
         list={this.state.data}
         resultsTemplate={this.resultTemplate}
+        async
       />
     );
   }
 }
 
 storiesOf('AutoComplete', module)
-  .add('Async requests', () => {
-    return (
-      <AutoCompleteContainer/>
-    );
-  })
-  .add('Fuzzy Search', () => {
-    return (
-      <AutoComplete
-        name="fuzzy-autocomplete"
-        list={list}
-        fuzzy
-        onSelect={action('selected')}
-        keys={['author', 'title']}
-      />
-    );
-  });
+  .add('Basic', () => (
+    <AutoComplete
+      name={'default'}
+      list={list}
+      onSelect={action('selected')}
+      keys={['author', 'title']}
+    />
+  ))
+  .add('Disabled', () => (
+    <AutoComplete
+      name={'default'}
+      list={list}
+      onSelect={action('selected')}
+      keys={['author', 'title']}
+      disabled
+    />
+  ))
+  .add('Async requests', () => <AutoCompleteContainer />)
+  .add('Fuzzy Search', () => (
+    <AutoComplete
+      name='fuzzy-autocomplete'
+      list={list}
+      onSelect={action('selected')}
+      keys={['author', 'title']}
+    />
+  ))
+  .add('Initial Suggestions', () => (
+    <AutoComplete
+      name='fuzzy-autocomplete'
+      list={list}
+      onSelect={action('selected')}
+      keys={['author', 'title']}
+      showInitialResults
+    />
+  ));

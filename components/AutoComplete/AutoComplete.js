@@ -5,6 +5,9 @@ import Fuzzy from 'fuse.js';
 import autoBind from '../utils/autoBind';
 import debounce from '../utils/debounce';
 
+// TODO: disabled state
+// grouping
+// click
 const defaultResultsTemplate = (val, i, selectedIndex) => {
   const className = classNames('ac-suggestion', {
     'ac-suggestion-active': i === selectedIndex
@@ -17,7 +20,7 @@ export default class AutoComplete extends Component {
     super(props);
 
     this.state = {
-      results: [],
+      results: props.showInitialResults ? props.list : [],
       selectedIndex: 0
     };
 
@@ -30,11 +33,38 @@ export default class AutoComplete extends Component {
     ], this);
 
     this.handleChange = debounce(this.handleChange, props.debounce);
-    if (props.fuzzy) this.fuse = new Fuzzy(props.list, this.getOptions());
+    if (!props.async) this.fuse = new Fuzzy(props.list, this.getOptions());
   }
 
   componentWillReceiveProps (newProps) {
-    if (!newProps.fuzzy) this.setState({ results: newProps.list });
+    if (newProps.async || (newProps.showInitialResults && !this.query)) {
+      this.setState({ results: newProps.list || [] });
+    }
+  }
+
+  onSelect () {
+    const { name, onSelect } = this.props;
+    onSelect(name);
+  }
+
+  onKeyDown (e) {
+    if (e.keyCode === 40 && (this.state.selectedIndex < this.state.results.length - 1)) {
+      this.setState({
+        selectedIndex: this.state.selectedIndex + 1
+      });
+    } else if (e.keyCode === 38 && (this.state.selectedIndex > 0)) {
+      this.setState({
+        selectedIndex: this.state.selectedIndex - 1
+      });
+    } else if (e.keyCode === 13) {
+      if (this.state.results[this.state.selectedIndex]) {
+        this.props.onSelect(this.state.results[this.state.selectedIndex]);
+      }
+      this.setState({
+        results: [],
+        selectedIndex: 0
+      });
+    }
   }
 
   getOptions () {
@@ -70,40 +100,20 @@ export default class AutoComplete extends Component {
   }
 
   resultsTemplate () {
-    return this.state.results.map((val, i) => this.props.resultsTemplate(val, i, this.state.selectedIndex));
+    return this.state.results.map((val, i) =>
+      this.props.resultsTemplate(val, i, this.state.selectedIndex));
   }
 
   handleChange () {
-    const query = this.refs.autocomplete.value;
-    if (this.props.fuzzy) this.setState({ results: this.fuse.search(query) || [] });
-    if (typeof this.props.onChange === 'function') {
+    this.query = this.refs.autocomplete.value;
+    if (!this.props.async) {
       this.setState({
-        results: this.props.onChange(query, this.props, this)
+        results: this.props.showInitialResults && !this.query ? this.props.list : this.fuse.search(this.query)
       });
     }
-  }
-
-  onSelect () {
-    const { name, onSelect } = this.props;
-    onSelect(name);
-  }
-
-  onKeyDown (e) {
-    if (e.keyCode === 40 && (this.state.selectedIndex < this.state.results.length - 1)) {
+    if (typeof this.props.onChange === 'function') {
       this.setState({
-        selectedIndex: this.state.selectedIndex + 1
-      });
-    } else if (e.keyCode === 38 && (this.state.selectedIndex > 0)) {
-      this.setState({
-        selectedIndex: this.state.selectedIndex - 1
-      });
-    } else if (e.keyCode === 13) {
-      if (this.state.results[this.state.selectedIndex]) {
-        this.props.onSelect(this.state.results[this.state.selectedIndex]);
-      }
-      this.setState({
-        results: [],
-        selectedIndex: 0
+        results: this.props.onChange(this.query, this.props, this)
       });
     }
   }
@@ -124,7 +134,7 @@ export default class AutoComplete extends Component {
           disabled={disabled}
           onChange={this.handleChange}
         />
-        {async && <i className='fa fa-spin '></i>}
+           {async && <i className='fa fa-spin '/>}
            {
              this.state.results && this.state.results.length > 0 &&
              <div className='ac-suggestions-wrapper'>
@@ -137,10 +147,10 @@ export default class AutoComplete extends Component {
 }
 
 AutoComplete.propTypes = {
-  async:PropTypes.bool,
+  async: PropTypes.bool,
+  showInitialResults: PropTypes.bool,
   debounce: PropTypes.number,
   disabled: PropTypes.bool,
-  fuzzy: PropTypes.bool,
   name: PropTypes.string.isRequired,
   onChange: PropTypes.func,
   caseSensitive: PropTypes.bool,
@@ -164,10 +174,10 @@ AutoComplete.propTypes = {
 };
 
 AutoComplete.defaultProps = {
-  async:false,
+  async: false,
   debounce: 250,
+  showInitialResults: false,
   disabled: false,
-  fuzzy: false,
   caseSensitive: false,
   distance: 100,
   include: [],
