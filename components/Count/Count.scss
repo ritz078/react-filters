@@ -1,0 +1,40 @@
+$width: 120px;
+$height: 40px;
+$primary: green;
+$padding: 4px;
+
+.rf-count {
+  width: $width;
+  background-color: #f6f6f6;
+  padding: $padding;
+  overflow: auto;
+  &.disabled{
+    opacity: 0.8;
+    pointer-events: none;
+  }
+}
+
+.count-button {
+  border: 1px solid #e5e5e5;
+  background-color: #ffffff;
+  outline: none;
+  border-radius: 2px;
+  padding: 8px 10px;
+  color: $primary;
+  display: inline-block;
+  vertical-align: top;
+  float: left;
+  height: $height - 2*$padding;
+  width: $height - 2*$padding;
+  cursor: pointer;
+}
+
+.count-value {
+  display: inline-block;
+  vertical-align: top;
+  line-height: 32px;
+  float: left;
+  overflow: hidden;
+  width: $width - 2*($height - 2*$padding);
+  text-align: center;
+}

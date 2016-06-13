@@ -5,7 +5,6 @@ import Fuzzy from 'fuse.js';
 import autoBind from '../utils/autoBind';
 import debounce from '../utils/debounce';
 
-// TODO: disabled state
 // grouping
 // click
 const defaultResultsTemplate = (val, i, selectedIndex) => {
@@ -21,7 +20,8 @@ export default class AutoComplete extends Component {
 
     this.state = {
       results: props.showInitialResults ? props.list : [],
-      selectedIndex: 0
+      selectedIndex: 0,
+      query: ''
     };
 
     autoBind([
@@ -29,15 +29,16 @@ export default class AutoComplete extends Component {
       'onSelect',
       'onKeyDown',
       'getOptions',
-      'resultsTemplate'
+      'resultsTemplate',
+      'onResetClick'
     ], this);
 
     this.handleChange = debounce(this.handleChange, props.debounce);
     if (!props.async) this.fuse = new Fuzzy(props.list, this.getOptions());
   }
 
-  componentWillReceiveProps (newProps) {
-    if (newProps.async || (newProps.showInitialResults && !this.query)) {
+  componentWillReceiveProps (newProps, newState) {
+    if (newProps.async || (newProps.showInitialResults && !newState.query)) {
       this.setState({ results: newProps.list || [] });
     }
   }
@@ -63,6 +64,16 @@ export default class AutoComplete extends Component {
       this.setState({
         results: [],
         selectedIndex: 0
+      });
+    }
+  }
+
+  onResetClick () {
+    this.refs.autocomplete.value = '';
+    this.setState({ query: '' });
+    if (!this.props.showInitialResults) {
+      this.setState({
+        results: []
       });
     }
   }
@@ -105,21 +116,23 @@ export default class AutoComplete extends Component {
   }
 
   handleChange () {
-    this.query = this.refs.autocomplete.value;
+    const query = this.refs.autocomplete.value;
     if (!this.props.async) {
       this.setState({
-        results: this.props.showInitialResults && !this.query ? this.props.list : this.fuse.search(this.query)
+        query,
+        results: this.props.showInitialResults && !query ? this.props.list : this.fuse.search(query)
       });
     }
     if (typeof this.props.onChange === 'function') {
       this.setState({
-        results: this.props.onChange(this.query, this.props, this)
+        query,
+        results: this.props.onChange(query, this.props, this)
       });
     }
   }
 
   render () {
-    const { name, disabled, placeholder, async } = this.props;
+    const { name, disabled, placeholder, onFocus, onBlur, Reset } = this.props;
     const mainClass = classNames('react-filters', 'autocomplete', name, {
       disabled
     });
@@ -133,10 +146,18 @@ export default class AutoComplete extends Component {
           placeholder={placeholder}
           disabled={disabled}
           onChange={this.handleChange}
+          onFocus={onFocus}
+          onBlur={onBlur}
         />
-           {async && <i className='fa fa-spin '/>}
+        <span
+          className='ac-reset'
+          onClick={this.onResetClick}
+        >
+          {this.state.query.length > 0 && <Reset />}
+        </span>
            {
-             this.state.results && this.state.results.length > 0 &&
+             this.state.results &&
+             this.state.results.length > 0 &&
              <div className='ac-suggestions-wrapper'>
                   {this.resultsTemplate()}
              </div>
@@ -170,8 +191,18 @@ AutoComplete.propTypes = {
   sortFn: PropTypes.func,
   threshold: PropTypes.number,
   tokenize: PropTypes.bool,
-  verbose: PropTypes.bool
+  verbose: PropTypes.bool,
+  onFocus: PropTypes.func,
+  onBlur: PropTypes.func,
+  Reset: PropTypes.func
 };
+
+const noop = function () {
+};
+
+function Reset () {
+  return <i className='fa fa-times'/>;
+}
 
 AutoComplete.defaultProps = {
   async: false,
@@ -191,5 +222,8 @@ AutoComplete.defaultProps = {
   },
   threshold: 0.6,
   tokenize: false,
-  verbose: false
+  verbose: false,
+  onFocus: noop,
+  onBlur: noop,
+  Reset
 };

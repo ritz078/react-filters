@@ -1,4 +1,4 @@
-.ac-searchbox{
+.ac-searchbox {
   outline: none;
   padding: 10px;
   border-radius: 2px;
@@ -10,32 +10,37 @@
   font-size: 12px;
   will-change: border-color;
   transition: border-color .2s ease-in;
-  &:focus{
+  &:focus {
     border: 1px solid deepskyblue;
   }
-  .disabled &{
+  .disabled & {
     pointer-events: none;
     background-color: #fafafa;
   }
 }
 
-.ac-suggestions-wrapper{
+.ac-suggestions-wrapper {
   border: 1px solid #eee;
   border-top: 0;
   background-color: #fff;
 }
 
-.ac-suggestion{
+.ac-suggestion {
   font-size: 12px;
   line-height: 30px;
   padding: 0 10px;
   color: #666;
   border-bottom: 1px solid #eeeeee;
-  &:last-of-type{
+  &:last-of-type {
     border-bottom: none;
   }
-  &.ac-suggestion-active{
+  &.ac-suggestion-active {
     background-color: #fafafa;
   }
 }
 
+.ac-reset {
+  position: absolute;
+  right: 18px;
+  top: 14px;
+}
