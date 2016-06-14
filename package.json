@@ -28,7 +28,6 @@
   "devDependencies": {
     "@kadira/storybook": "^1.30.0",
     "autoprefixer": "^6.3.6",
-    "ava": "^0.15.2",
     "babel": "^6.5.2",
     "babel-core": "^6.9.0",
     "babel-eslint": "^6.0.2",
@@ -54,6 +53,7 @@
     "mocha": "^2.4.5",
     "node-sass": "^3.7.0",
     "raw-loader": "^0.5.1",
+    "react-addons-test-utils": "*",
     "rimraf": "^2.5.2",
     "sass-loader": "^3.2.0",
     "semantic-release": "^4.3.5",
@@ -74,12 +74,5 @@
     "commitizen": {
       "path": "node_modules/cz-conventional-changelog"
     }
-  },
-  "ava": {
-    "babel": "inherit",
-    "require": [
-      "babel-register",
-      "./test/setup.js"
-    ]
   }
 }
