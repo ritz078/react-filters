@@ -5,8 +5,8 @@ import Fuzzy from 'fuse.js';
 import autoBind from '../utils/autoBind';
 import debounce from '../utils/debounce';
 
-// grouping
-// click
+// TODO : grouping, click
+
 const defaultResultsTemplate = (val, i, selectedIndex) => {
   const className = classNames('ac-suggestion', {
     'ac-suggestion-active': i === selectedIndex
@@ -59,7 +59,7 @@ export default class AutoComplete extends Component {
       });
     } else if (e.keyCode === 13) {
       if (this.state.results[this.state.selectedIndex]) {
-        this.props.onSelect(this.state.results[this.state.selectedIndex]);
+        this.props.onSelect(this.props.name, this.state.results[this.state.selectedIndex]);
       }
       this.setState({
         results: [],
@@ -133,7 +133,7 @@ export default class AutoComplete extends Component {
 
   render () {
     const { name, disabled, placeholder, onFocus, onBlur, Reset } = this.props;
-    const mainClass = classNames('react-filters', 'autocomplete', name, {
+    const mainClass = classNames('react-filters', 'rf-autocomplete', name, {
       disabled
     });
 
@@ -156,11 +156,12 @@ export default class AutoComplete extends Component {
           {this.state.query.length > 0 && <Reset />}
         </span>
            {
-             this.state.results &&
-             this.state.results.length > 0 &&
-             <div className='ac-suggestions-wrapper'>
-                  {this.resultsTemplate()}
-             </div>
+             this.state.results && !!this.state.results.length &&
+             (
+               <div className='ac-suggestions-wrapper'>
+                    {this.resultsTemplate()}
+               </div>
+             )
            }
       </div>
     );
@@ -200,8 +201,8 @@ AutoComplete.propTypes = {
 const noop = function () {
 };
 
-function Reset () {
-  return <i className='fa fa-times'/>;
+function ResetContent () {
+  return <i className='icon-cancel' />;
 }
 
 AutoComplete.defaultProps = {
@@ -225,5 +226,5 @@ AutoComplete.defaultProps = {
   verbose: false,
   onFocus: noop,
   onBlur: noop,
-  Reset
+  Reset: ResetContent
 };

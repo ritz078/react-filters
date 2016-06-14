@@ -11,6 +11,7 @@ function loadStories () {
   require('../stories/CheckBox.story');
   require('../stories/AutoComplete.story');
   require('../stories/Count.story');
+  require('../stories/InputRange.story');
 }
 
 configure(loadStories, module);

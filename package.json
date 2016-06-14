@@ -3,7 +3,7 @@
   "description": "A collection of filters made in React",
   "main": "components/index.js",
   "scripts": {
-    "lint": "eslint --format=node_modules/eslint-formatter-pretty components/** test/**",
+    "lint": "eslint --format=node_modules/eslint-formatter-pretty components/**/*.js test/**/*.js",
     "prepublish": "npm run lint",
     "storybook": "start-storybook -p 9002",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",

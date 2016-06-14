@@ -1,3 +1,7 @@
+.rf-autocomplete{
+  position: relative;
+}
+
 .ac-searchbox {
   outline: none;
   padding: 10px;
@@ -23,6 +27,9 @@
   border: 1px solid #eee;
   border-top: 0;
   background-color: #fff;
+  position: absolute;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .ac-suggestion {
@@ -41,6 +48,7 @@
 
 .ac-reset {
   position: absolute;
-  right: 18px;
-  top: 14px;
+  right: 10px;
+  top: 8px;
+  cursor:pointer;
 }

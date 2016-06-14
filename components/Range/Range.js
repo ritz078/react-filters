@@ -107,7 +107,7 @@ export default class Range extends Component {
       <div className={mainClass}>
         <div className='rng-wrapper'>
           <div className='rng-track' ref='track' onClick={this.handleClick}>
-            <div className='rng-rail' style={railStyle}/>
+            <div className='rng-rail' style={railStyle} />
           </div>
           <Slider
             value={value[0]}
@@ -150,7 +150,7 @@ Range.propTypes = {
   precision: PropTypes.number,
   step: PropTypes.number,
   value: PropTypes.array,
-  rangeTemplate: PropTypes.func,
+  rangeTemplate: PropTypes.func
 };
 
 Range.defaultProps = {

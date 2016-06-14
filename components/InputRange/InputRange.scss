@@ -1,0 +1,17 @@
+.rf-input-range{
+  width: 300px;
+
+  .rf-autocomplete{
+    width: 47%;
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  .ir-separator{
+    width: 6%;
+    display: inline-block;
+    vertical-align: top;
+    text-align: center;
+    line-height: 30px;
+  }
+}

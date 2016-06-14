@@ -25,6 +25,8 @@
     "no-multi-spaces"  : 0,
     "quotes"           : [2, "single"],
     "jsx-quotes"       : [2, "prefer-single"],
-    "one-var"          : 0
+    "one-var"          : 0,
+    "react/prefer-template"  : 0,
+    "no-underscore-dangle" : 0
   }
 }

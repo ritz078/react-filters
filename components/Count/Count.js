@@ -60,7 +60,7 @@ export default class Count extends Component {
           className='count-button cb-lower'
           onClick={!disabled && this.handleDecrement}
         >
-          <i className='fa fa-minus' />
+          <i className='icon-remove' />
         </button>
         <div className='count-value'>
           <span className='count-prefix'>{prefix}</span>
@@ -71,7 +71,7 @@ export default class Count extends Component {
           className='count-button cb-upper'
           onClick={!disabled && this.handleIncrement}
         >
-          <i className='fa fa-plus' />
+          <i className='icon-add' />
         </button>
       </div>
     );
