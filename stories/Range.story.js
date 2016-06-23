@@ -4,7 +4,14 @@ import { Range } from '../components';
 import Container from './Container';
 
 storiesOf('Range Slider', module)
-  .addDecorator((story) => <Container className={'range-container'} action={action} value={[5, 10]}>{story()}</Container>)
+  .addDecorator((story) => (
+    <Container
+      className={'range-container'}
+      action={action}
+      value={[5, 10]}
+    >
+      {story()}
+    </Container>))
   .add('default', () => (
-    <Range name={'range'}/>
+    <Range name={'range'} />
   ));

@@ -50,6 +50,7 @@
     "eslint-plugin-react": "^5.1.1",
     "eventsource-polyfill": "*",
     "file-loader": "^0.8.5",
+    "ghooks": "^1.2.4",
     "isparta": "^4.0.0",
     "jsdom": "^9.0.0",
     "mocha": "^2.4.5",
@@ -76,6 +77,9 @@
   "config": {
     "commitizen": {
       "path": "node_modules/cz-conventional-changelog"
+    },
+    "ghooks": {
+      "pre-commit": "npm run test"
     }
   }
 }

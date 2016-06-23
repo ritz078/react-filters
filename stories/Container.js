@@ -25,7 +25,7 @@ export default class Container extends Component {
         onChange: self.handleChange
       });
     });
-    console.log(children);
+
     return (
       <div className={this.props.className}>
         {children}
