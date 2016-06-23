@@ -1,10 +1,14 @@
 import React, { PropTypes, Component } from 'react';
 import classNames from 'classnames';
 
+import autoBind from '../utils/autoBind';
+
 export default class Switch extends Component {
   constructor (props) {
     super(props);
-    this.handleClick = this.handleClick.bind(this);
+    autoBind([
+      'handleClick'
+    ], this);
   }
 
   shouldComponentUpdate (nextProps) {
@@ -45,11 +49,11 @@ export default class Switch extends Component {
 
     return (
       <div onClick={!disabled && this.handleClick} className={mainClass}>
-        {label && <div className={labelClass}>
-          {label}
-          {count !== undefined && countElem(this.props)}
-        </div>}
-        {iconElem(this.props)}
+           {label && <div className={labelClass}>
+                          {label}
+                          {count !== undefined && countElem(this.props)}
+           </div>}
+           {iconElem(this.props)}
       </div>
     );
   }
@@ -70,7 +74,8 @@ Switch.propTypes = {
   labelPosition: PropTypes.string,
   name: PropTypes.string.isRequired,
   onChange: PropTypes.func,
-  value: PropTypes.bool
+  value: PropTypes.bool,
+  iconLabel: PropTypes.array
 };
 
 function noop () {
@@ -84,10 +89,26 @@ Switch.defaultProps = {
   onChange: noop,
   labelPosition: 'before',
   disabled: false,
-  iconElem () {
+  iconElem (prop) {
+    const labelClass = classNames('sw-icon-label', {
+      'sw-il-left': prop.value,
+      'sw-il-right': !prop.value
+    });
+
+    let iconLabelText;
+
+    if (prop.iconLabel && prop.iconLabel.length) {
+      iconLabelText = prop.value ? prop.iconLabel[0] : prop.iconLabel[1];
+    }
     return (
       <div className='sw-wrapper'>
-        <div className='sw-btn'></div>
+           {prop.iconLabel && prop.iconLabel.length &&
+           (<div className={labelClass}>
+                 {iconLabelText}
+           </div>)
+           }
+        <div className='sw-btn'>
+        </div>
       </div>
     );
   }

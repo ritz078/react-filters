@@ -4,19 +4,14 @@ import { Radio } from '../components';
 import Container from './Container';
 
 storiesOf('Radio Button', module)
+  .addDecorator((story) => <Container action={action} value={false}>{story()}</Container>)
   .add('with a text', () => (
-    <Container
-      Filter={Radio}
-      name='story1'
-      action={action}
-    />
+    <Radio name='basic' />
   ))
   .add('with no text', () => (
-    <Container
-      Filter={Radio}
+    <Radio
       name='story1'
       label='hello'
-      action={action}
       disabled
       count={6}
     />

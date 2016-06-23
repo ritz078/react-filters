@@ -49,18 +49,22 @@ export default class AutoComplete extends Component {
   }
 
   onKeyDown (e) {
-    if (e.keyCode === 40 && (this.state.selectedIndex < this.state.results.length - 1)) {
+    const { selectedIndex, results } = this.state;
+    const { name, valueKey, onSelect } = this.props;
+
+    if (e.keyCode === 40 && (selectedIndex < results.length - 1)) {
       this.setState({
-        selectedIndex: this.state.selectedIndex + 1
+        selectedIndex: selectedIndex + 1
       });
-    } else if (e.keyCode === 38 && (this.state.selectedIndex > 0)) {
+    } else if (e.keyCode === 38 && (selectedIndex > 0)) {
       this.setState({
-        selectedIndex: this.state.selectedIndex - 1
+        selectedIndex: selectedIndex - 1
       });
     } else if (e.keyCode === 13) {
-      if (this.state.results[this.state.selectedIndex]) {
-        this.props.onSelect(this.props.name, this.state.results[this.state.selectedIndex]);
+      if (results[selectedIndex]) {
+        onSelect(name, results[selectedIndex]);
       }
+      this.refs.autocomplete.value = results[selectedIndex][valueKey];
       this.setState({
         results: [],
         selectedIndex: 0
@@ -195,14 +199,15 @@ AutoComplete.propTypes = {
   verbose: PropTypes.bool,
   onFocus: PropTypes.func,
   onBlur: PropTypes.func,
-  Reset: PropTypes.func
+  Reset: PropTypes.func,
+  valueKey: PropTypes.string
 };
 
 const noop = function () {
 };
 
 function ResetContent () {
-  return <i className='icon-cancel' />;
+  return <i className='icon-cancel'/>;
 }
 
 AutoComplete.defaultProps = {
@@ -226,5 +231,6 @@ AutoComplete.defaultProps = {
   verbose: false,
   onFocus: noop,
   onBlur: noop,
-  Reset: ResetContent
+  Reset: ResetContent,
+  valueKey: 'title'
 };

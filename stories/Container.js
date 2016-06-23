@@ -18,21 +18,25 @@ export default class Container extends Component {
   }
 
   render () {
-    const { Filter, ...other } = this.props;
-
+    const self = this;
+    const children = React.Children.map(this.props.children, (child) => {
+      return React.cloneElement(child, {
+        value: self.state.value,
+        onChange: self.handleChange
+      });
+    });
+    console.log(children);
     return (
-      <div>
-        <Filter
-          value={this.state.value}
-          onChange={this.handleChange}
-          {...other}
-        />
+      <div className={this.props.className}>
+        {children}
       </div>
     );
   }
 }
 
 Container.propTypes = {
-  Filter : PropTypes.element.isRequired,
-  action : PropTypes.func
+  action: PropTypes.func,
+  value: PropTypes.bool,
+  children: PropTypes.element,
+  className: PropTypes.string
 };

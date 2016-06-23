@@ -4,20 +4,15 @@ import { CheckBox } from '../components';
 import Container from './Container';
 
 storiesOf('Checkbox Button', module)
+  .addDecorator((story) => <Container action={action} value={false}>{story()}</Container>)
   .add('with a text', () => (
-    <Container
-      Filter={CheckBox}
-      name='story1'
-      action={action}
-    />
+    <CheckBox name='basic' />
   ))
   .add('with no text', () => (
-    <Container
-      Filter={CheckBox}
-      name='story1'
+    <CheckBox
+      name='no-text'
       label='hello'
-      action={action}
-      disabled
       count={6}
+      disabled
     />
   ));

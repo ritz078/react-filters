@@ -9,8 +9,8 @@ CheckBox.defaultProps = {
   ...Switch.defaultProps,
   iconElem (p) {
     const iconClass = classNames('fa', {
-      'fa-square-o': !p.value,
-      'fa-check-square': p.value
+      'icon-check-box-outline-blank': !p.value,
+      'icon-check-box': p.value
     });
     return <i className={iconClass} />;
   }

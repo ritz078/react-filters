@@ -1,24 +1,30 @@
-$offColor: grey;
-$onColor: green;
-$height: 22px;
-$width: 40px;
-$padding: 2px;
-$btnColor: white;
-$countColor: grey;
-$containerWidth: 200px;
+@import "../icons";
+
+$swOffColor: grey !default;
+$swOnColor: green !default;
+$swHeight: 24px !default;
+$swWidth: 44px !default;
+$swPadding: 2px !default;
+$swBtnColor: white !default;
+$swCountColor: grey !default;
+$swContainerWidth: 200px !default;
+
+.rf-switch {
+  display: inline-block;
+}
 
 .sw-wrapper {
-  background-color: $offColor;
-  width: $width;
-  height: $height;
-  border-radius: $height/2;
-  padding: $padding;
+  background-color: $swOffColor;
+  width: $swWidth;
+  height: $swHeight;
+  border-radius: $swHeight/2;
+  padding: $swPadding;
   display: inline-block;
   position: relative;
   transition: all .3s ease-in-out;
   box-sizing: border-box;
   .sw-active & {
-    background-color: $onColor;
+    background-color: $swOnColor;
   }
   .sw-disabled & {
     background-color: grey;
@@ -28,35 +34,56 @@ $containerWidth: 200px;
 }
 
 .sw-btn {
-  height: $height - ($padding * 2);
-  width: $height - ($padding * 2);
+  height: $swHeight - ($swPadding * 2);
+  width: $swHeight - ($swPadding * 2);
   position: absolute;
-  background-color: $btnColor;
+  background-color: $swBtnColor;
   border-radius: 50%;
   cursor: pointer;
-  left: $padding;
+  left: $swPadding;
   display: inline-block;
   will-change: left, margin-left, transform;
   transition: left .3s ease-in, margin-left .3s ease-in;
-  transform: translate3d(0,0,0);
+  transform: translate3d(0, 0, 0);
   .sw-active & {
     left: 100%;
-    margin-left: -($height - $padding);
+    margin-left: -($swHeight - $swPadding);
   }
 }
 
 .sw-label {
   display: inline-block;
   vertical-align: top;
-  width: $containerWidth - $width;
+  width: $swContainerWidth - $swWidth;
   .after {
     float: right;
   }
 }
 
 .sw-count {
-  color: $countColor;
+  color: $swCountColor;
   margin-left: 5px;
 }
+
+$swLabelFontSize: $swHeight * (11px / 22px) !default;
+$swLabelLineHeight: $swLabelFontSize * 1.6;
+
+.sw-icon-label {
+  font-size: $swLabelFontSize;
+  line-height: $swLabelLineHeight;
+  width: $swWidth - ($swHeight + 2 * $swPadding);
+  text-align: center;
+  color: white;
+  &.sw-il-right {
+    float: right;
+    padding-right: $swPadding;
+  }
+  &.sw-il-left {
+    float: left;
+    padding-left: $swPadding;
+  }
+}
+
+
 
 

@@ -5,35 +5,16 @@ import { Count } from '../components';
 import Container from './Container';
 
 storiesOf('Count', module)
+  .addDecorator((story) => <Container action={action} value={0}>{story()}</Container>)
   .add('Basic', () => (
-    <Container
-      Filter={Count}
-      name='basic-count'
-      action={action}
-    />
+    <Count name={'basic'} />
   ))
   .add('Disabled', () => (
-    <Container
-      Filter={Count}
-      name='basic-count'
-      action={action}
-      disabled
-    />
+    <Count name={'disabled'} disabled />
   ))
   .add('Define Range', () => (
-    <Container
-      Filter={Count}
-      name='basic-count'
-      action={action}
-      min={0}
-      max={5}
-    />
+    <Count name={'range'} min={0} max={5} />
   ))
   .add('Stepped change', () => (
-    <Container
-      Filter={Count}
-      name='basic-count'
-      action={action}
-      step={3}
-    />
+    <Count name={'step'} step={3} />
   ));

@@ -1,0 +1,65 @@
+@font-face {
+  font-family: 'react-filters';
+  src: url('../assets/fonts/reactfilters.eot');
+  src: url('../assets/fonts/reactfilters.eot?#iefix') format('embedded-opentype'),
+  url('../assets/fonts/reactfilters.ttf') format('truetype'),
+  url('../assets/fonts/reactfilters.woff') format('woff'),
+  url('../assets/fonts/reactfilters.svg') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'react-filters' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-add:before {
+  content: "\e145";
+}
+
+.icon-arrow-drop-down:before {
+  content: "\e5c5";
+}
+
+.icon-arrow-drop-up:before {
+  content: "\e5c7";
+}
+
+.icon-cancel:before {
+  content: "\e5c9";
+}
+
+.icon-check-box:before {
+  content: "\e834";
+}
+
+.icon-check-box-outline-blank:before {
+  content: "\e835";
+}
+
+.icon-check-circle:before {
+  content: "\e86c";
+}
+
+.icon-radio-button-unchecked:before {
+  content: "\e836";
+}
+
+.icon-radio-button-checked:before {
+  content: "\e837";
+}
+
+.icon-remove:before {
+  content: "\e15b";
+}

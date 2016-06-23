@@ -40,9 +40,9 @@ class AutoCompleteContainer extends React.Component {
     }
   }
 
-  onSelect ({ ...args }) {
+  onSelect (name, selected) {
     this.setState({ data: [] });
-    action('selected')(args);
+    action('selected')(name, selected);
   }
 
   resultTemplate (val, i, selectedIndex) {
@@ -61,6 +61,7 @@ class AutoCompleteContainer extends React.Component {
         onChange={this.onChange}
         list={this.state.data}
         resultsTemplate={this.resultTemplate}
+        valueKey='name'
         async
       />
     );
