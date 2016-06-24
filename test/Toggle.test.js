@@ -4,16 +4,17 @@ import { shallow } from 'enzyme';
 import sinon from 'sinon';
 import { expect } from 'chai';
 
-const { Switch } = require(`${__base}components`);
+const { Toggle } = require(`${__base}components`);
 
 describe('Switch Component', () => {
   it('should call onChange function on click', () => {
     const onChange = sinon.spy();
 
     const wrapper = shallow(
-      <Switch
+      <Toggle
         name='switch'
         value={false}
+        type='switch'
         onChange={onChange}
       />
     );
@@ -27,9 +28,10 @@ describe('Switch Component', () => {
     const onChange = sinon.spy();
 
     const wrapper = shallow(
-      <Switch
+      <Toggle
         name='switch'
         value={false}
+        type='switch'
         onChange={onChange}
       />
     );
@@ -44,13 +46,14 @@ describe('Switch Component', () => {
     expect(onChange.calledWith(args)).to.equal(true);
   });
 
-  it('should change class to rf-on on click', () => {
+  it('should change class to toggle-on on click', () => {
     const onChange = sinon.spy();
 
     const wrapper = shallow(
-      <Switch
+      <Toggle
         name='switch'
         value={false}
+        type='switch'
         onChange={onChange}
       />
     );

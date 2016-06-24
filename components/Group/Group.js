@@ -39,7 +39,7 @@ export default class RadioGroup extends Component {
     const { name, value, type } = this.props;
     let newValue = value;
     const index = parseInt(lastElement(data.name.split('-')), 10);
-    if (type === 'checkbox' || type === 'switch'){
+    if (type === 'checkbox' || type === 'switch') {
       newValue[index].value = data.value;
     } else {
       newValue = handleSingleSelect(value, index);
