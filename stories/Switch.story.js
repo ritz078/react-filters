@@ -1,22 +1,22 @@
 import React  from 'react';
 import { storiesOf, action } from '@kadira/storybook';
-import { Switch } from '../components';
+import { Toggle } from '../components';
 import Container from './Container';
 
 storiesOf('Switch Button')
   .addDecorator((story) => <Container action={action} value={false}>{story()}</Container>)
   .add('Basic', () => (
-    <Switch name='basic' />
+    <Toggle name='basic' />
   ))
   .add('Label and count', () => (
-    <Switch
+    <Toggle
       name='story1'
       label='hello'
       count={6}
     />
   ))
   .add('Icon Label', () => (
-    <Switch
+    <Toggle
       name='switch-icon-label'
       iconLabel={['on', 'off']}
     />

@@ -14,6 +14,7 @@ function loadStories () {
   require('../stories/AutoComplete.story');
   require('../stories/Count.story');
   require('../stories/InputRange.story');
+  require('../stories/Group.story');
 }
 
 configure(loadStories, module);

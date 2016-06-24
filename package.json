@@ -4,6 +4,7 @@
   "main": "components/index.js",
   "scripts": {
     "lint": "eslint --format=node_modules/eslint-formatter-pretty components/**/*.js test/**/*.js",
+    "lintfix": "eslint --fix components/**/*.js test/**/*.js",
     "prepublish": "npm run lint",
     "storybook": "start-storybook -p 9002",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
@@ -79,7 +80,7 @@
       "path": "node_modules/cz-conventional-changelog"
     },
     "ghooks": {
-      "pre-commit": "npm run test"
+      "pre-commit": "npm run lint && npm run test"
     }
   }
 }

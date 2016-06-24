@@ -1,0 +1,89 @@
+@import "../icons";
+
+$toggleOffColor: grey !default;
+$toggleOnColor: green !default;
+$toggleHeight: 24px !default;
+$toggleWidth: 44px !default;
+$togglePadding: 2px !default;
+$toggleBtnColor: white !default;
+$toggleCountColor: grey !default;
+$toggleContainerWidth: 200px !default;
+
+.rf-toggle {
+  display: inline-block;
+}
+
+.toggle-wrapper {
+  background-color: $toggleOffColor;
+  width: $toggleWidth;
+  height: $toggleHeight;
+  border-radius: $toggleHeight/2;
+  padding: $togglePadding;
+  display: inline-block;
+  position: relative;
+  transition: all .3s ease-in-out;
+  box-sizing: border-box;
+  .toggle-active & {
+    background-color: $toggleOnColor;
+  }
+  .toggle-disabled & {
+    background-color: grey;
+    opacity: 0.5;
+    pointer-events: none;
+  }
+}
+
+.toggle-btn {
+  height: $toggleHeight - ($togglePadding * 2);
+  width: $toggleHeight - ($togglePadding * 2);
+  position: absolute;
+  background-color: $toggleBtnColor;
+  border-radius: 50%;
+  cursor: pointer;
+  left: $togglePadding;
+  display: inline-block;
+  will-change: left, margin-left, transform;
+  transition: left .3s ease-in, margin-left .3s ease-in;
+  transform: translate3d(0, 0, 0);
+  .toggle-active & {
+    left: 100%;
+    margin-left: -($toggleHeight - $togglePadding);
+  }
+}
+
+.toggle-label {
+  display: inline-block;
+  vertical-align: top;
+  width: $toggleContainerWidth - $toggleWidth;
+  .after {
+    float: right;
+  }
+}
+
+.toggle-count {
+  color: $toggleCountColor;
+  margin-left: 5px;
+}
+
+$toggleLabelFontSize: $toggleHeight * (11px / 22px) !default;
+$toggleLabelLineHeight: $toggleLabelFontSize * 1.6;
+
+.toggle-icon-label {
+  font-size: $toggleLabelFontSize;
+  line-height: $toggleLabelLineHeight;
+  width: $toggleWidth - ($toggleHeight + 2 * $togglePadding);
+  text-align: center;
+  color: white;
+  &.toggle-il-right {
+    float: right;
+    padding-right: $togglePadding;
+  }
+  &.toggle-il-left {
+    float: left;
+    padding-left: $togglePadding;
+  }
+}
+
+
+
+
