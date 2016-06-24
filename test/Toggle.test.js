@@ -6,7 +6,7 @@ import { expect } from 'chai';
 
 const { Toggle } = require(`${__base}components`);
 
-describe('Switch Component', () => {
+describe('Toggle Component', () => {
   it('should call onChange function on click', () => {
     const onChange = sinon.spy();
 
