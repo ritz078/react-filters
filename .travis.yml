@@ -12,8 +12,10 @@ before_install:
 before_script:
   - npm prune
 after_success:
-  - bash <(curl -s https://codecov.io/bash)
   - npm run semantic-release
 branches:
   except:
     - "/^v\\d+\\.\\d+\\.\\d+$/"
+addons:
+    code_climate:
+        repo_token: 842be7e8b1dee369a0c5077a36d43ae401a153731331283c570c725148a10fb5
