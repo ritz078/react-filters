@@ -3,6 +3,8 @@ import classNames from 'classnames';
 import autoBind from '../utils/autoBind';
 import lastElement from '../utils/lastElement';
 
+import deepCopy from 'deep-copy';
+
 import Toggle from '../Toggle/Toggle';
 
 function handleSingleSelect (arr, index) {
@@ -13,7 +15,7 @@ function handleSingleSelect (arr, index) {
   });
 }
 
-export default class RadioGroup extends Component {
+export default class Group extends Component {
   constructor (props) {
     super(props);
 
@@ -37,16 +39,17 @@ export default class RadioGroup extends Component {
 
   handleChange (data) {
     const { name, value, type } = this.props;
-    let newValue = value;
+    let newValue = deepCopy(value);
     const index = parseInt(lastElement(data.name.split('-')), 10);
     if (type === 'checkbox' || type === 'switch') {
       newValue[index].value = data.value;
     } else {
-      newValue = handleSingleSelect(value, index);
+      newValue = handleSingleSelect(newValue, index);
     }
     this.props.onChange({
       name,
       value: newValue,
+      oldValue: value,
       index
     });
   }
@@ -62,7 +65,7 @@ export default class RadioGroup extends Component {
   }
 }
 
-RadioGroup.propTypes = {
+Group.propTypes = {
   attributes: PropTypes.object,
   className: PropTypes.string,
   name: PropTypes.string.isRequired,

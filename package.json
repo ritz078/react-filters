@@ -69,7 +69,7 @@
   },
   "dependencies": {
     "classnames": "^2.2.5",
-    "deep-assign": "^2.0.0",
+    "deep-copy": "^1.1.2",
     "fuse.js": "^2.2.0",
     "invariant": "^2.2.1",
     "react": "^15.0.2",

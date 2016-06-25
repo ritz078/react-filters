@@ -13,23 +13,32 @@ const value = [{
   label: 'c'
 }];
 
+const value2 = [{
+  label: 'a',
+  count: 6
+}, {
+  label: 'b'
+}, {
+  label: 'c'
+}];
+
 storiesOf('Group Button', module)
   .addDecorator((story) => <Container action={action} value={value}>{story()}</Container>)
-  .add('switch', () => (
+  .add('Switch', () => (
     <Group
       name='group'
       type='switch'
       value={value}
     />
   ))
-  .add('radio', () => (
+  .add('Radio', () => (
     <Group
       name='group'
       type='radio'
-      value={value}
+      value={value2}
     />
   ))
-  .add('checkbox', () => (
+  .add('Checkbox', () => (
     <Group
       name='group'
       type='checkbox'
