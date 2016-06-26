@@ -8,8 +8,8 @@
     "prepublish": "npm run lintfix",
     "storybook": "start-storybook -p 9002",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
-    "test": "mocha --require test/config/setup test/**/*.test.js",
-    "test:cover": "istanbul cover -x *.test.js _mocha --report lcovonly -- -R spec --require test/config/setup test/**/*.test.js",
+    "test": "mocha --require test/config/setup 'test/**/*.test.js'",
+    "test:cover": "istanbul cover -x *.test.js _mocha --report lcovonly -- -R spec --require test/config/setup 'test/**/*.test.js'",
     "test:report": "cat ./coverage/lcov.info | codecov && rm -rf ./coverage"
   },
   "repository": {
