@@ -12,3 +12,15 @@
 <img src="https://img.shields.io/twitter/url/https/github.com/ritz078/embed.js.svg?style=social" alt="Twitter" style="max-width:100%;">
 </a>
 </p>
+
+##TODO
+
+- [x] Switch
+- [x] Checkbox
+- [x] Radio
+- [x] Range
+- [x] Autocomplete
+- [x] Input Range
+- [x] Count
+- [ ] Select
+- [ ] Dropdown
