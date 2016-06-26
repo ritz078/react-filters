@@ -63,6 +63,7 @@ class AutoCompleteContainer extends React.Component {
         resultsTemplate={this.resultTemplate}
         valueKey='name'
         async
+        multiSelect={this.props.multiSelect}
       />
     );
   }
@@ -105,11 +106,5 @@ storiesOf('AutoComplete', module)
     />
   ))
   .add('Tags', () => (
-    <AutoComplete
-      name={'default'}
-      list={list}
-      onSelect={action('selected')}
-      keys={['author', 'title']}
-      multiSelect
-    />
+    <AutoCompleteContainer multiSelect />
   ));

@@ -20,6 +20,9 @@
     pointer-events: none;
     background-color: #fafafa;
   }
+  &.tags{
+    padding-left: 10px;
+  }
 }
 
 .ac-searchbox-input{
@@ -72,7 +75,7 @@
 
 .ac-tag-wrapper{
   display: inline-block;
-  padding: 6px;
+  padding: 6px 0;
   float: left;
   font-size: 12px;
 }

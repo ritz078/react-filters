@@ -62,8 +62,18 @@ export default class AutoComplete extends Component {
         this.state.multiSelected.push(results[selectedIndex]);
       }
 
-      if (results[selectedIndex]) {
-        onSelect(name, results[selectedIndex]);
+      if (multiSelect) {
+        onSelect({
+          name,
+          value: this.state.multiSelected,
+          action: 'added',
+          changed: results[selectedIndex]
+        });
+      } else if (results[selectedIndex]) {
+        onSelect({
+          name,
+          value: results[selectedIndex]
+        });
       }
 
       this.setState({
@@ -127,9 +137,17 @@ export default class AutoComplete extends Component {
   }
 
   removeTag ({ id }) {
+    const changed = this.state.multiSelected[id];
     const multiSelected = deepCopy(this.state.multiSelected);
     multiSelected.splice(id, 1);
-    this.setState({ multiSelected });
+    this.setState({ multiSelected }, () => (
+      this.props.onSelect({
+        name: this.props.name,
+        value: this.state.multiSelected,
+        action: 'removed',
+        changed
+      })
+    ));
   }
 
   handleQueryChange (query) {
