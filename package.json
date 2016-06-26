@@ -8,7 +8,9 @@
     "prepublish": "npm run lintfix",
     "storybook": "start-storybook -p 9002",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
-    "test": "mocha --require test/config/setup test/**/*.test.js"
+    "test": "mocha --require test/config/setup test/**/*.test.js",
+    "test:cover": "istanbul cover -x *.test.js _mocha --report lcovonly -- -R spec --require test/config/setup test/**/*.test.js",
+    "test:report": "cat ./coverage/lcov.info | codecov && rm -rf ./coverage"
   },
   "repository": {
     "type": "git",
@@ -40,6 +42,7 @@
     "babel-preset-stage-0": "^6.5.0",
     "babel-register": "^6.9.0",
     "chai": "^3.5.0",
+    "codecov.io": "^0.1.6",
     "commitizen": "^2.8.1",
     "css-loader": "^0.23.1",
     "cz-conventional-changelog": "^1.1.6",
@@ -53,6 +56,7 @@
     "file-loader": "^0.8.5",
     "ghooks": "^1.2.4",
     "isparta": "^4.0.0",
+    "istanbul": "^1.0.0-alpha.2",
     "jsdom": "^9.0.0",
     "mocha": "^2.4.5",
     "node-sass": "^3.7.0",
