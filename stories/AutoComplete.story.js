@@ -103,4 +103,13 @@ storiesOf('AutoComplete', module)
       keys={['author', 'title']}
       showInitialResults
     />
+  ))
+  .add('Tags', () => (
+    <AutoComplete
+      name={'default'}
+      list={list}
+      onSelect={action('selected')}
+      keys={['author', 'title']}
+      multiSelect
+    />
   ));

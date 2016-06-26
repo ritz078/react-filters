@@ -5,14 +5,10 @@ import Fuzzy from 'fuse.js';
 import autoBind from '../utils/autoBind';
 import debounce from '../utils/debounce';
 
-// TODO : grouping, click
+import SearchBox from './SearchBox';
+import Suggestions from './Suggestions';
 
-const defaultResultsTemplate = (val, i, selectedIndex) => {
-  const className = classNames('ac-suggestion', {
-    'ac-suggestion-active': i === selectedIndex
-  });
-  return <div className={className} key={i} data-index={i}>{val.title}</div>;
-};
+import deepCopy from 'deep-copy';
 
 export default class AutoComplete extends Component {
   constructor (props) {
@@ -21,16 +17,17 @@ export default class AutoComplete extends Component {
     this.state = {
       results: props.showInitialResults ? props.list : [],
       selectedIndex: 0,
-      query: ''
+      query: '',
+      multiSelected: []
     };
 
     autoBind([
-      'handleChange',
       'onSelect',
       'onKeyDown',
       'getOptions',
-      'resultsTemplate',
-      'onResetClick'
+      'onResetClick',
+      'handleQueryChange',
+      'removeTag'
     ], this);
 
     this.handleChange = debounce(this.handleChange, props.debounce);
@@ -50,7 +47,7 @@ export default class AutoComplete extends Component {
 
   onKeyDown (e) {
     const { selectedIndex, results } = this.state;
-    const { name, valueKey, onSelect } = this.props;
+    const { name, valueKey, onSelect, multiSelect } = this.props;
 
     if (e.keyCode === 40 && (selectedIndex < results.length - 1)) {
       this.setState({
@@ -61,25 +58,25 @@ export default class AutoComplete extends Component {
         selectedIndex: selectedIndex - 1
       });
     } else if (e.keyCode === 13) {
+      if (multiSelect) {
+        this.state.multiSelected.push(results[selectedIndex]);
+      }
+
       if (results[selectedIndex]) {
         onSelect(name, results[selectedIndex]);
       }
-      this.refs.autocomplete.value = results[selectedIndex][valueKey];
+
       this.setState({
         results: [],
-        selectedIndex: 0
+        selectedIndex: 0,
+        query: multiSelect ? '' : results[selectedIndex][valueKey]
       });
     }
   }
 
   onResetClick () {
-    this.refs.autocomplete.value = '';
     this.setState({ query: '' });
-    if (!this.props.showInitialResults) {
-      this.setState({
-        results: []
-      });
-    }
+    if (!this.props.showInitialResults) this.setState({ results: [] });
   }
 
   getOptions () {
@@ -114,19 +111,35 @@ export default class AutoComplete extends Component {
     };
   }
 
-  resultsTemplate () {
-    return this.state.results.map((val, i) =>
-      this.props.resultsTemplate(val, i, this.state.selectedIndex));
+  getSuggestions () {
+    const { resultsTemplate } = this.props;
+    const { results, selectedIndex } = this.state;
+    if (results && results.length) {
+      return (
+        <Suggestions
+          results={results}
+          selectedIndex={selectedIndex}
+          resultsTemplate={resultsTemplate}
+        />
+      );
+    }
+    return null;
   }
 
-  handleChange () {
-    const query = this.refs.autocomplete.value;
+  removeTag ({ id }) {
+    const multiSelected = deepCopy(this.state.multiSelected);
+    multiSelected.splice(id, 1);
+    this.setState({ multiSelected });
+  }
+
+  handleQueryChange (query) {
     if (!this.props.async) {
       this.setState({
         query,
         results: this.props.showInitialResults && !query ? this.props.list : this.fuse.search(query)
       });
     }
+
     if (typeof this.props.onChange === 'function') {
       this.setState({
         query,
@@ -136,37 +149,41 @@ export default class AutoComplete extends Component {
   }
 
   render () {
-    const { name, disabled, placeholder, onFocus, onBlur, Reset } = this.props;
+    const {
+      name,
+      disabled,
+      placeholder,
+      onFocus,
+      onBlur,
+      Reset,
+      multiSelect,
+      showTagRemove,
+      valueKey
+    } = this.props;
+
     const mainClass = classNames('react-filters', 'rf-autocomplete', name, {
       disabled
     });
 
     return (
       <div className={mainClass} onKeyDown={this.onKeyDown}>
-        <input
-          className='ac-searchbox'
-          type='text'
-          ref='autocomplete'
+        <SearchBox
+          onQueryChange={this.handleQueryChange}
+          Reset={Reset}
+          value={this.state.query}
+          multiSelected={this.state.multiSelected}
+          onReset={this.onResetClick}
           placeholder={placeholder}
-          disabled={disabled}
-          onChange={this.handleChange}
           onFocus={onFocus}
           onBlur={onBlur}
+          disabled={disabled}
+          multiSelect={multiSelect}
+          showTagRemove={showTagRemove}
+          valueKey={valueKey}
+          onTagRemove={this.removeTag}
         />
-        <span
-          className='ac-reset'
-          onClick={this.onResetClick}
-        >
-          {this.state.query.length > 0 && <Reset />}
-        </span>
-           {
-             this.state.results && !!this.state.results.length &&
-             (
-               <div className='ac-suggestions-wrapper'>
-                    {this.resultsTemplate()}
-               </div>
-             )
-           }
+
+           {this.getSuggestions()}
       </div>
     );
   }
@@ -200,15 +217,10 @@ AutoComplete.propTypes = {
   onFocus: PropTypes.func,
   onBlur: PropTypes.func,
   Reset: PropTypes.func,
-  valueKey: PropTypes.string
+  valueKey: PropTypes.string,
+  showTagRemove: PropTypes.bool,
+  multiSelect: PropTypes.bool
 };
-
-const noop = function () {
-};
-
-function ResetContent () {
-  return <i className='icon-cancel' />;
-}
 
 AutoComplete.defaultProps = {
   async: false,
@@ -221,7 +233,7 @@ AutoComplete.defaultProps = {
   location: 0,
   width: 430,
   placeholder: 'Search',
-  resultsTemplate: defaultResultsTemplate,
+  resultsTemplate: Suggestions.defaultResultsTemplate,
   shouldSort: true,
   sortFn (a, b) {
     return a.score - b.score;
@@ -229,8 +241,8 @@ AutoComplete.defaultProps = {
   threshold: 0.6,
   tokenize: false,
   verbose: false,
-  onFocus: noop,
-  onBlur: noop,
-  Reset: ResetContent,
-  valueKey: 'title'
+  valueKey: 'title',
+  tags: false,
+  showTagRemove: true,
+  multiSelect: false
 };

@@ -33,6 +33,7 @@ export default class Group extends Component {
         name={`${type}-${i}`}
         onChange={this.handleChange}
         value={val.value}
+        key={i}
       />
     ));
   }
@@ -40,12 +41,15 @@ export default class Group extends Component {
   handleChange (data) {
     const { name, value, type } = this.props;
     let newValue = deepCopy(value);
+
     const index = parseInt(lastElement(data.name.split('-')), 10);
+
     if (type === 'checkbox' || type === 'switch') {
       newValue[index].value = data.value;
     } else {
       newValue = handleSingleSelect(newValue, index);
     }
+
     this.props.onChange({
       name,
       value: newValue,

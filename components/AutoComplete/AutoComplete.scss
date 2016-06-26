@@ -1,27 +1,42 @@
 @import "../icons";
 
-.rf-autocomplete{
+.rf-autocomplete {
   position: relative;
 }
 
 .ac-searchbox {
   outline: none;
-  padding: 10px;
   border-radius: 2px;
   border: 1px solid #eee;
-  font-family: inherit;
-  line-height: 14px;
   width: 100%;
   box-sizing: border-box;
-  font-size: 12px;
   will-change: border-color;
   transition: border-color .2s ease-in;
+  background-color: #ffffff;
   &:focus {
     border: 1px solid deepskyblue;
   }
   .disabled & {
     pointer-events: none;
     background-color: #fafafa;
+  }
+}
+
+.ac-searchbox-input{
+  width: 100%;
+  padding: 10px;
+  font-size: 12px;
+  line-height: 14px;
+  border:none;
+  outline: none;
+  font-family: inherit;
+  box-sizing: border-box;
+  background-color: transparent;
+  .tags &{
+    display: inline-block;
+    max-width: 150px;
+    vertical-align: top;
+    padding-left: 0;
   }
 }
 
@@ -52,5 +67,29 @@
   position: absolute;
   right: 10px;
   top: 8px;
-  cursor:pointer;
+  cursor: pointer;
+}
+
+.ac-tag-wrapper{
+  display: inline-block;
+  padding: 6px;
+  float: left;
+  font-size: 12px;
+}
+
+.ac-tag {
+  display: inline-block;
+  background-color: cornflowerblue;
+  color: #fff;
+  border-radius: 2px;
+  padding: 0 5px;
+  line-height: 22px;
+  margin-right: 5px;
+}
+
+.ac-tag-remove {
+  padding-left: 5px;
+  cursor: pointer;
+  border-left: 1px solid #a5c5ff;
+  margin-left: 5px;
 }
