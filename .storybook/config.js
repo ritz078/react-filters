@@ -1,5 +1,4 @@
 import { configure, addDecorator } from '@kadira/storybook';
-import 'font-awesome/scss/font-awesome.scss';
 import './base.scss';
 import '../components/styles.scss';
 import centered from '@kadira/react-storybook-decorator-centered';

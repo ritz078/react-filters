@@ -62,4 +62,40 @@ describe('Toggle Component', () => {
 
     expect(wrapper.closest('.rf-active')).to.have.length(1);
   });
+
+  it('should render the count', () => {
+    const onChange = sinon.spy();
+
+    const wrapper = shallow(
+      <Toggle
+        name='switch'
+        value={false}
+        type='switch'
+        onChange={onChange}
+        label='hello'
+        count={7}
+      />
+    );
+
+    expect(wrapper.find('span.toggle-count')).to.have.length(1);
+  });
+
+  it('should render checkbox when checkbox option is passed', () => {
+    const onChange = sinon.spy();
+
+    const wrapper = shallow(
+      <Toggle
+        name='checkbox'
+        type='checkbox'
+        onChange={onChange}
+        value={false}
+      />
+    );
+
+    expect(wrapper.find('i.icon-check-box-outline-blank')).to.have.length(1);
+
+    wrapper.simulate('click');
+
+    expect(onChange.called).to.equal(true);
+  });
 });

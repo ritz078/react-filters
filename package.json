@@ -9,7 +9,7 @@
     "storybook": "start-storybook -p 9002",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
     "test": "mocha --require test/config/setup 'test/**/*.test.js'",
-    "test:cover": "istanbul cover -x *.test.js _mocha --report lcovonly -- -R spec --require test/config/setup 'test/**/*.test.js'",
+    "test:cover": "istanbul cover -x *.test.js _mocha -- -R spec --require test/config/setup 'test/**/*.test.js'",
     "test:report": "cat ./coverage/lcov.info | codecov && rm -rf ./coverage"
   },
   "repository": {
@@ -30,7 +30,7 @@
   "homepage": "https://github.com/ritz078/react-filters",
   "devDependencies": {
     "@kadira/react-storybook-decorator-centered": "^1.0.0",
-    "@kadira/storybook": "^1.34.1",
+    "@kadira/storybook": "^1.35.1",
     "autoprefixer": "^6.3.6",
     "babel": "^6.5.2",
     "babel-core": "^6.9.0",
@@ -53,10 +53,10 @@
     "eslint-plugin-import": "^1.8.1",
     "eslint-plugin-react": "^5.1.1",
     "eventsource-polyfill": "*",
-    "file-loader": "^0.8.5",
+    "file-loader": "^0.9.0",
     "ghooks": "^1.2.4",
     "isparta": "^4.0.0",
-    "istanbul": "^1.0.0-alpha.2",
+    "istanbul": "^1.1.0-alpha.1",
     "jsdom": "^9.0.0",
     "mocha": "^2.4.5",
     "node-sass": "^3.7.0",
@@ -72,12 +72,13 @@
     "webpack-hot-middleware": "^2.10.0"
   },
   "dependencies": {
+    "@kadira/storybook-deployer": "^1.0.0",
     "classnames": "^2.2.5",
     "deep-copy": "^1.1.2",
     "fuse.js": "^2.2.0",
     "invariant": "^2.2.1",
-    "react": "^15.0.2",
-    "react-dom": "0.14.x || ^15.0.2"
+    "react": "0.14.x || ^15.x.x",
+    "react-dom": "0.14.x || ^15.x.x"
   },
   "config": {
     "commitizen": {
