@@ -95,7 +95,8 @@ export default class Range extends Component {
       max,
       precision,
       value,
-      rangeTemplate
+      rangeTemplate,
+      readOnly
     } = this.props;
 
     const mainClass = classNames('react-filters', 'rf-range', name, {
@@ -110,7 +111,7 @@ export default class Range extends Component {
     return (
       <div className={mainClass}>
         <div className='rng-wrapper'>
-          <div className='rng-track' ref='track' onClick={this.handleClick}>
+          <div className='rng-track' ref='track' onClick={!disabled && this.handleClick}>
             <div className='rng-rail' style={railStyle} />
           </div>
           <Slider
@@ -123,6 +124,8 @@ export default class Range extends Component {
             min={min}
             max={max}
             precision={precision}
+            readOnly={readOnly}
+            disabled={disabled}
           />
           <Slider
             value={value[1]}
@@ -134,6 +137,8 @@ export default class Range extends Component {
             min={min}
             max={max}
             precision={precision}
+            readOnly={readOnly}
+            disabled={disabled}
           />
         </div>
            {rangeTemplate(min, max)}
@@ -152,7 +157,8 @@ Range.propTypes = {
   precision: PropTypes.number,
   step: PropTypes.number,
   value: PropTypes.array,
-  rangeTemplate: PropTypes.func
+  rangeTemplate: PropTypes.func,
+  readOnly: PropTypes.bool
 };
 
 Range.defaultProps = {
@@ -163,6 +169,7 @@ Range.defaultProps = {
   precision: 0,
   step: 1,
   value: [5, 10],
+  readOnly: false,
   rangeTemplate (min, max) {
     return (
       <div className='rng-range'>

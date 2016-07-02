@@ -56,16 +56,21 @@ export default class Slider extends Component {
 
   handleMouseDown (e) {
     suppress(e);
-    document.addEventListener('mousemove', this.handleDrag);
-    document.addEventListener('mouseup', this.handleMouseUp);
     this.refs.sliderWrapper.className += ' rng-active';
+    document.addEventListener('mouseup', this.handleMouseUp);
+    if (this.props.readOnly) return;
+
+    document.addEventListener('mousemove', this.handleDrag);
   }
 
   handleMouseUp (e) {
     suppress(e);
-    document.removeEventListener('mousemove', this.handleDrag);
-    document.removeEventListener('mouseup', this.handleMouseUp);
     this.refs.sliderWrapper.className = removeClass(this.refs.sliderWrapper, 'rng-active');
+    document.removeEventListener('mouseup', this.handleMouseUp);
+
+    if (this.props.readOnly) return;
+
+    document.removeEventListener('mousemove', this.handleDrag);
   }
 
   handleTouchStart () {
@@ -86,7 +91,7 @@ export default class Slider extends Component {
   }
 
   render () {
-    const { name, value, valueFormat } = this.props;
+    const { name, value, valueFormat, disabled } = this.props;
 
     const className = classNames('rng-slider', name);
     const sliderPosition = getPositionFromValue(this.props, this.sliderWidth);
@@ -103,8 +108,8 @@ export default class Slider extends Component {
         <div
           draggable='false'
           className={className}
-          onMouseDown={this.handleMouseDown}
-          onTouchStart={this.handleTouchStart}
+          onMouseDown={!disabled && this.handleMouseDown}
+          onTouchStart={!disabled && this.handleTouchStart}
           ref='slider'
         ></div>
       </div>
@@ -121,7 +126,9 @@ Slider.propTypes = {
   min: PropTypes.number.isRequired,
   max: PropTypes.number.isRequired,
   trackOffset: PropTypes.object.isRequired,
-  valueFormat: PropTypes.func
+  valueFormat: PropTypes.func,
+  readOnly: PropTypes.bool,
+  disabled: PropTypes.bool
 };
 
 Slider.defaultProps = {
