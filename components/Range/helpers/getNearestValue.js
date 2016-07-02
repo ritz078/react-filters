@@ -4,16 +4,17 @@
  * slider (upper or lower) and changes the value based on whether the lower or upper
  * slider should move to that position.
  * @param e [Synthetic Event]
- * @param track The reference to the track element
  * @param props React Props
+ * @param trackWidth width of the track
+ * @param trackOffset cached track.getBoundingClientRect()
  * @returns {{value: *[], changed: string}}
  */
-export default function (e, track, props) {
+export default function (e, props, trackWidth, trackOffset) {
   const { value, max, min } = props;
-  const trackOffsetLeft = track.getBoundingClientRect().left;
-  const relativeOffset = e.pageX - trackOffsetLeft;
 
-  const positionOffset = track.clientWidth / (max - min);
+  const relativeOffset = e.pageX - trackOffset.left;
+
+  const positionOffset = trackWidth / (max - min);
   const nearestValue = Math.round(relativeOffset / positionOffset);
   const distancesFromValues = [
     Math.abs(nearestValue - value[0]),

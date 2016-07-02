@@ -15,6 +15,12 @@ $btn-height: 15px;
   border-radius: $track-height/2;
 }
 
+.rng-slider-wrapper{
+  will-change: transform;
+  transition: transform .2s ease-out;
+  transform: translate3d(0,0,0);
+}
+
 .rng-slider {
   height: $btn-height;
   width: $btn-height;
@@ -25,20 +31,18 @@ $btn-height: 15px;
   vertical-align: top;
   margin-top: -($btn-height + $track-height)/2;
   cursor: pointer;
-  will-change: margin-left, transform;
-  transition: margin-left .2s ease-in, transform .2s ease-in;
-  transform: translate3d(0,0,0);
+  will-change: transform;
+  transition: transform .2s ease-out;
 }
 
 .rng-rail {
-  position: absolute;
+  position: relative;
   background-color: red;
-  will-change: left, right;
-  transition: left .2s ease-in, right .2s ease-in;
-  transform: translate3d(0,0,0);
+  will-change: left, width;
+  transition: left .2s ease-out, width .2s ease-out;
 }
 
-.rng-active {
+.rng-active .rng-slider {
   transform: scale(1.4) translate3d(0,0,0);
 }
 
@@ -47,7 +51,6 @@ $btn-height: 15px;
   width: 40px;
   margin-left: -20px + $btn-height / 2;
   text-align: center;
-  transition: all .2s ease-in;
   margin-top: - ($track-height + $btn-height/2 + 20px);
 }
 

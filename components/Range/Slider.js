@@ -8,31 +8,24 @@ export default class Slider extends Component {
   constructor (props, context) {
     super(props, context);
 
-    this.state = {
-      sliderPosition: 0,
-      sliderWidth: 0
-    };
-
     autoBind([
       'handleMouseDown',
       'handleDrag',
       'handleMouseUp',
       'handleTouchStart',
       'handleTouchEnd',
-      'onChange',
-      'setSliderWidth'
+      'onChange'
     ], this);
   }
 
   componentDidMount () {
-    this.setSliderPosition(this.props, true);
-    this.setSliderWidth();
+    this.setSliderPosition(this.props);
   }
 
   componentWillReceiveProps (newProps) {
     const propsChanged = (newProps.value !== this.props.value) ||
       (newProps.trackLength !== this.props.trackLength);
-    this.setSliderPosition(newProps, propsChanged);
+    if (propsChanged) this.setSliderPosition(newProps);
   }
 
   shouldComponentUpdate (newProps) {
@@ -41,40 +34,37 @@ export default class Slider extends Component {
       newProps.trackLength !== this.props.trackLength;
   }
 
-  onChange (value, position, isRerenderRequired = false) {
+  onChange (value, isRerenderRequired = false) {
     this.props.onChange({
       name: this.props.name,
       value,
-      position,
-      sliderWidth: this.state.sliderWidth
+      sliderWidth: this.getSliderWidth()
     }, isRerenderRequired);
   }
 
-  setSliderWidth () {
-    this.setState({
-      sliderWidth: this.refs.slider.clientWidth
-    });
+  getSliderWidth () {
+    const slider = this.refs.slider;
+    if (!slider) return 0;
+    return slider.clientWidth;
   }
 
-  setSliderPosition (props, propsChanged) {
-    if (propsChanged) {
-      const { value } = props;
-      this.setState({
-        sliderPosition: getPositionFromValue(props, this.state.sliderWidth)
-      }, () => this.onChange(value, this.state.sliderPosition, true));
-    }
+  setSliderPosition (props) {
+    const { value } = props;
+    this.onChange(value, true);
   }
 
-  handleMouseDown () {
+  handleMouseDown (e) {
+    suppress(e);
     document.addEventListener('mousemove', this.handleDrag);
     document.addEventListener('mouseup', this.handleMouseUp);
-    this.refs.slider.className += ' rng-active';
+    this.refs.sliderWrapper.className += ' rng-active';
   }
 
-  handleMouseUp () {
+  handleMouseUp (e) {
+    suppress(e);
     document.removeEventListener('mousemove', this.handleDrag);
     document.removeEventListener('mouseup', this.handleMouseUp);
-    this.refs.slider.className = removeClass(this.refs.slider, 'rng-active');
+    this.refs.sliderWrapper.className = removeClass(this.refs.sliderWrapper, 'rng-active');
   }
 
   handleTouchStart () {
@@ -90,26 +80,26 @@ export default class Slider extends Component {
   handleDrag (e) {
     suppress(e);
 
-    const { max, min, trackLength } = this.props;
-    const position = getRelativePosition(e, this.props, this.state.sliderWidth);
-    const positionStep = trackLength / max - min;
-    if (Math.abs(position - this.state.sliderPosition) >= positionStep &&
-      isWithinRange(this.props, null, position)) {
-      const newValue = getValueFromPosition(this.props, position);
-      this.onChange(newValue, position);
-    }
+    const position = getRelativePosition(e, this.props, this.getSliderWidth());
+
+    const newValue = getValueFromPosition(this.props, position);
+    this.onChange(newValue);
   }
 
   render () {
     const { name, value, valueFormat } = this.props;
 
     const className = classNames('rng-slider', name);
+
+    const sliderPosition = getPositionFromValue(this.props, this.getSliderWidth());
+
+    const style = {
+      transform: `translateX(${sliderPosition}%) translate3d(0,0,0)`
+    };
+
     return (
-      <div className='rng-slider-wrapper'>
-        <div
-          className='rng-value'
-          style={{ left: this.state.sliderPosition }}
-        >
+      <div className='rng-slider-wrapper' ref={'sliderWrapper'} style={style}>
+        <div className='rng-value'>
           {valueFormat(value)}
         </div>
         <div
@@ -118,7 +108,6 @@ export default class Slider extends Component {
           onMouseDown={this.handleMouseDown}
           onTouchStart={this.handleTouchStart}
           ref='slider'
-          style={{ marginLeft: this.state.sliderPosition }}
         ></div>
       </div>
     );

@@ -13,5 +13,5 @@ storiesOf('Range Slider', module)
       {story()}
     </Container>))
   .add('default', () => (
-    <Range name={'range'} min={0} max={50}/>
+    <Range name={'range'} min={0} max={100}/>
   ));

@@ -10,9 +10,8 @@ export default class Range extends Component {
     super(props);
 
     this.state = {
-      sliderLowerPosition: 0,
-      sliderUpperPosition: 0,
-      trackWidth: 0
+      trackWidth: 0,
+      trackOffset: 0
     };
 
     autoBind([
@@ -28,10 +27,10 @@ export default class Range extends Component {
     window.addEventListener('resize', this.updatePosition);
   }
 
-  shouldComponentUpdate (newProps, newState) {
+  shouldComponentUpdate (newProps) {
     return isWithinRange(newProps, newProps.value) &&
       (!isArrayEqual(this.props.value, newProps.value) ||
-      this.state.trackWidth !== newState.trackWidth || !!this.isRerenderRequired);
+      !!this.isRerenderRequired);
   }
 
   componentDidUpdate () {
@@ -40,6 +39,16 @@ export default class Range extends Component {
 
   componentWillUnmount () {
     window.removeEventListener('resize', this.updatePosition);
+  }
+
+  getTrackOffset () {
+    const track = this.refs.track;
+    if (!track) return 0;
+    return track.getBoundingClientRect();
+  }
+
+  getTrackWidth () {
+    return this.getTrackOffset() ? this.getTrackOffset().width : 0;
   }
 
   onChange (value, changed) {
@@ -57,27 +66,21 @@ export default class Range extends Component {
     // only trigger on first onChange trigger
     this.isRerenderRequired = isRerenderRequired;
 
-    this.setState(() => (
-      (data.name === 'lower') ? {
-        sliderLowerPosition: data.position + data.sliderWidth / 2
-      } : {
-        sliderUpperPosition: data.position + data.sliderWidth / 2
-      }), () => {
-      if (isWithinRange(this.props, value) && !isArrayEqual(this.props.value, value)) {
-        this.onChange(value, data.name);
-      }
-    });
+    if (isWithinRange(this.props, value) && !isArrayEqual(this.props.value, value)) {
+      this.onChange(value, data.name);
+    }
   }
 
   handleClick (e) {
     suppress(e);
-    const newData = getNearestValue(e, this.refs.track, this.props);
+    const newData = getNearestValue(e, this.props, this.getTrackWidth(), this.getTrackOffset());
     this.onChange(newData.value, newData.changed);
   }
 
   updatePosition () {
     this.setState({
-      trackWidth: this.refs.track.clientWidth
+      trackWidth: this.getTrackWidth(),
+      trackOffset: this.getTrackOffset()
     });
   }
 
@@ -99,15 +102,15 @@ export default class Range extends Component {
     });
 
     const railStyle = {
-      left: this.state.sliderLowerPosition,
-      right: this.state.trackWidth - this.state.sliderUpperPosition
+      left: `${(value[0] / max - min) * 100}%`,
+      width: `${((value[1] - value[0]) / (max - min)) * 100}%`
     };
 
     return (
       <div className={mainClass}>
         <div className='rng-wrapper'>
           <div className='rng-track' ref='track' onClick={this.handleClick}>
-            <div className='rng-rail' style={railStyle} />
+            <div className='rng-rail' style={railStyle}/>
           </div>
           <Slider
             value={value[0]}
@@ -115,7 +118,7 @@ export default class Range extends Component {
             step={step}
             orientation={orientation}
             track={this.refs.track}
-            trackLength={this.state.trackWidth}
+            trackLength={this.getTrackWidth()}
             onChange={this.onSliderChange}
             min={min}
             max={max}
@@ -127,7 +130,7 @@ export default class Range extends Component {
             step={step}
             orientation={orientation}
             track={this.refs.track}
-            trackLength={this.state.trackWidth}
+            trackLength={this.getTrackWidth()}
             onChange={this.onSliderChange}
             min={min}
             max={max}
