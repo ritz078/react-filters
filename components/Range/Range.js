@@ -41,16 +41,6 @@ export default class Range extends Component {
     window.removeEventListener('resize', this.updatePosition);
   }
 
-  getTrackOffset () {
-    const track = this.refs.track;
-    if (!track) return 0;
-    return track.getBoundingClientRect();
-  }
-
-  getTrackWidth () {
-    return this.getTrackOffset() ? this.getTrackOffset().width : 0;
-  }
-
   onChange (value, changed) {
     this.props.onChange({
       name: this.props.name,
@@ -69,6 +59,16 @@ export default class Range extends Component {
     if (isWithinRange(this.props, value) && !isArrayEqual(this.props.value, value)) {
       this.onChange(value, data.name);
     }
+  }
+
+  getTrackOffset () {
+    const track = this.refs.track;
+    if (!track) return 0;
+    return track.getBoundingClientRect();
+  }
+
+  getTrackWidth () {
+    return this.getTrackOffset() ? this.getTrackOffset().width : 0;
   }
 
   handleClick (e) {
@@ -110,7 +110,7 @@ export default class Range extends Component {
       <div className={mainClass}>
         <div className='rng-wrapper'>
           <div className='rng-track' ref='track' onClick={this.handleClick}>
-            <div className='rng-rail' style={railStyle}/>
+            <div className='rng-rail' style={railStyle} />
           </div>
           <Slider
             value={value[0]}
