@@ -15,15 +15,13 @@ const constants = {
   }
 };
 
-let trackPos = null;
-
 export default function (e, props, sliderWidth) {
   // Get the offset DIRECTION relative to the viewport
 
   const coordinate = constants.orientation[props.orientation].coordinate;
   const direction = constants.orientation[props.orientation].direction;
   const ucCoordinate = capitalize(coordinate);
-  trackPos = trackPos || props.trackOffset[direction];
+  const trackPos = props.trackOffset[direction];
 
   let btnPos = 0;
 

@@ -1,3 +1,5 @@
+@import "../theme";
+
 $track-height: 6px;
 $btn-height: 15px;
 
@@ -11,7 +13,7 @@ $btn-height: 15px;
 
 .rng-track, .rng-rail {
   height: $track-height;
-  background-color: green;
+  background-color: $secondary-color;
   border-radius: $track-height/2;
 }
 
@@ -25,7 +27,7 @@ $btn-height: 15px;
   height: $btn-height;
   width: $btn-height;
   border-radius: $btn-height/2;
-  background-color: #0b97c4;
+  background-color: darken($primary-color, 10%);
   position: absolute;
   display: inline-block;
   vertical-align: top;
@@ -37,7 +39,7 @@ $btn-height: 15px;
 
 .rng-rail {
   position: relative;
-  background-color: red;
+  background-color: $primary-color;
   will-change: left, width;
   transition: left .2s ease-out, width .2s ease-out;
 }

@@ -12,7 +12,7 @@ storiesOf('Range Slider', module)
     >
       {story()}
     </Container>))
-  .add('default', () => (
+  .add('Default', () => (
     <Range name={'range'} min={0} max={100}/>
   ))
   .add('Read Only', () => (

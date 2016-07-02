@@ -27,7 +27,7 @@ export default class Range extends Component {
   }
 
   componentWillReceiveProps () {
-    this.updatePosition();
+    this.updatePosition(true);
   }
 
   shouldComponentUpdate (newProps, newState) {
@@ -72,10 +72,22 @@ export default class Range extends Component {
     return this.state.trackOffset ? this.state.trackOffset.width : 0;
   }
 
-  updatePosition () {
-    const track = this.refs.track;
-    this.setState({
-      trackOffset: track ? track.getBoundingClientRect() : {}
+  updatePosition (propsUpdated = false) {
+    this.setState(() => {
+      const track = this.refs.track;
+
+      if (propsUpdated) {
+        const isEmpty = !this.getTrackWidth();
+        if (isEmpty) {
+          return {
+            trackOffset: track ? track.getBoundingClientRect() : {}
+          };
+        } else return null;
+      } else {
+        return {
+          trackOffset: track ? track.getBoundingClientRect() : {}
+        };
+      }
     });
   }
 
@@ -104,7 +116,7 @@ export default class Range extends Component {
     });
 
     const railStyle = {
-      left: `${(value[0] / max - min) * 100}%`,
+      left: `${Math.round((value[0] / max - min) * 100)}%`,
       width: `${((value[1] - value[0]) / (max - min)) * 100}%`
     };
 
@@ -112,7 +124,7 @@ export default class Range extends Component {
       <div className={mainClass}>
         <div className='rng-wrapper'>
           <div className='rng-track' ref='track' onClick={!disabled && this.handleClick}>
-            <div className='rng-rail' style={railStyle} />
+            <div className='rng-rail' style={railStyle}/>
           </div>
           <Slider
             value={value[0]}
