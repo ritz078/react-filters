@@ -27,7 +27,7 @@
   "homepage": "https://github.com/ritz078/react-filters",
   "devDependencies": {
     "@kadira/storybook": "^1.22.1",
-    "autoprefixer": "^6.3.6",
+    "autoprefixer": "^6.3.7",
     "babel": "^6.5.2",
     "babel-core": "^6.7.4",
     "babel-eslint": "^6.0.2",
