@@ -36,7 +36,9 @@ export default class Container extends Component {
 
 Container.propTypes = {
   action: PropTypes.func,
-  value: PropTypes.bool,
+  value: PropTypes.oneOfType(
+    [PropTypes.array, PropTypes.bool]
+  ),
   children: PropTypes.element,
   className: PropTypes.string
 };

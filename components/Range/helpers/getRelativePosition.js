@@ -23,7 +23,7 @@ export default function (e, props, sliderWidth) {
   const coordinate = constants.orientation[props.orientation].coordinate;
   const direction = constants.orientation[props.orientation].direction;
   const ucCoordinate = capitalize(coordinate);
-  trackPos = trackPos || props.track.getBoundingClientRect()[direction];
+  trackPos = trackPos || props.trackOffset[direction];
 
   let btnPos = 0;
 

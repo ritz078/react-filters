@@ -10,8 +10,7 @@ export default class Range extends Component {
     super(props);
 
     this.state = {
-      trackWidth: 0,
-      trackOffset: 0
+      trackOffset: {}
     };
 
     autoBind([
@@ -27,10 +26,14 @@ export default class Range extends Component {
     window.addEventListener('resize', this.updatePosition);
   }
 
-  shouldComponentUpdate (newProps) {
+  componentWillReceiveProps () {
+    this.updatePosition();
+  }
+
+  shouldComponentUpdate (newProps, newState) {
     return isWithinRange(newProps, newProps.value) &&
-      (!isArrayEqual(this.props.value, newProps.value) ||
-      !!this.isRerenderRequired);
+      (!isArrayEqual(this.props.value, newProps.value) || !!this.isRerenderRequired ||
+      this.state.trackOffset.width !== newState.trackOffset.width);
   }
 
   componentDidUpdate () {
@@ -62,26 +65,24 @@ export default class Range extends Component {
   }
 
   getTrackOffset () {
-    const track = this.refs.track;
-    if (!track) return 0;
-    return track.getBoundingClientRect();
+    return this.state.trackOffset;
   }
 
   getTrackWidth () {
-    return this.getTrackOffset() ? this.getTrackOffset().width : 0;
+    return this.state.trackOffset ? this.state.trackOffset.width : 0;
+  }
+
+  updatePosition () {
+    const track = this.refs.track;
+    this.setState({
+      trackOffset: track ? track.getBoundingClientRect() : {}
+    });
   }
 
   handleClick (e) {
     suppress(e);
     const newData = getNearestValue(e, this.props, this.getTrackWidth(), this.getTrackOffset());
     this.onChange(newData.value, newData.changed);
-  }
-
-  updatePosition () {
-    this.setState({
-      trackWidth: this.getTrackWidth(),
-      trackOffset: this.getTrackOffset()
-    });
   }
 
   render () {
@@ -117,8 +118,7 @@ export default class Range extends Component {
             name={'lower'}
             step={step}
             orientation={orientation}
-            track={this.refs.track}
-            trackLength={this.getTrackWidth()}
+            trackOffset={this.getTrackOffset()}
             onChange={this.onSliderChange}
             min={min}
             max={max}
@@ -129,8 +129,7 @@ export default class Range extends Component {
             name={'upper'}
             step={step}
             orientation={orientation}
-            track={this.refs.track}
-            trackLength={this.getTrackWidth()}
+            trackOffset={this.getTrackOffset()}
             onChange={this.onSliderChange}
             min={min}
             max={max}
