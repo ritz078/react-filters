@@ -7,7 +7,7 @@ addDecorator(centered);
 function loadStories () {
   require('../stories/Switch.story');
   require('../stories/Radio.story');
-  require('../stories/Range.story');
+  require('../stories/Slider.story.js');
   require('../stories/CheckBox.story');
   require('../stories/AutoComplete.story');
   require('../stories/Count.story');

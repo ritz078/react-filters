@@ -1,138 +1,210 @@
-import React, { Component, PropTypes } from 'react';
+import React, { PropTypes, Component } from 'react';
 import classNames from 'classnames';
-import { hasStepDifference, suppress, isWithinRange, removeClass } from './utils';
-import { getValueFromPosition, getRelativePosition, getPositionFromValue } from './helpers';
+import { isWithinRange, suppress, isArrayEqual } from './utils';
+import getNearestValue from './helpers/getNearestValue';
+import Control from './Control';
+import Steps from './Steps';
 import autoBind from '../utils/autoBind';
 
 export default class Slider extends Component {
-  constructor (props, context) {
-    super(props, context);
+  constructor (props) {
+    super(props);
+
+    this.state = {
+      trackOffset: {}
+    };
 
     autoBind([
-      'handleMouseDown',
-      'handleDrag',
-      'handleMouseUp',
-      'handleTouchStart',
-      'handleTouchEnd',
-      'onChange'
+      'onChange',
+      'onSliderChange',
+      'handleClick',
+      'updatePosition'
     ], this);
   }
 
   componentDidMount () {
-    this.setSliderPosition(this.props);
-    this.sliderWidth = this.getSliderWidth();
+    this.updatePosition();
+    window.addEventListener('resize', this.updatePosition);
   }
 
-  componentWillReceiveProps (newProps) {
-    const propsChanged = (newProps.value !== this.props.value) ||
-      (newProps.trackOffset.width !== this.props.trackOffset.width);
-    if (propsChanged) this.setSliderPosition(newProps);
+  componentWillReceiveProps () {
+    this.updatePosition(true);
   }
 
-  shouldComponentUpdate (newProps) {
-    return (hasStepDifference(newProps.value, this.props.value, newProps.step) &&
-      isWithinRange(newProps, newProps.value)) ||
-      newProps.trackOffset.width !== this.props.trackOffset.width;
+  shouldComponentUpdate (newProps, newState) {
+    return isWithinRange(newProps, newProps.value) &&
+      (!isArrayEqual(this.props.value, newProps.value) || !!this.isRerenderRequired ||
+      this.state.trackOffset.width !== newState.trackOffset.width);
   }
 
-  onChange (value, isRerenderRequired = false) {
+  componentDidUpdate () {
+    this.isRerenderRequired = false;
+  }
+
+  componentWillUnmount () {
+    window.removeEventListener('resize', this.updatePosition);
+  }
+
+  onChange (value, changed) {
     this.props.onChange({
       name: this.props.name,
       value,
-      sliderWidth: this.sliderWidth
-    }, isRerenderRequired);
+      changed
+    });
   }
 
-  getSliderWidth () {
-    const slider = this.refs.slider;
-    if (!slider) return 0;
-    return slider.offsetWidth;
+  onSliderChange (data, isRerenderRequired) {
+    const value = data.name === 'lower' ? [data.value, this.props.value[1]] :
+      [this.props.value[0], data.value];
+
+    // only trigger on first onChange trigger
+    this.isRerenderRequired = isRerenderRequired;
+
+    if (isWithinRange(this.props, value) && !isArrayEqual(this.props.value, value)) {
+      this.onChange(value, data.name);
+    }
   }
 
-  setSliderPosition (props) {
-    const { value } = props;
-    this.onChange(value, true);
+  getTrackOffset () {
+    return this.state.trackOffset;
   }
 
-  handleMouseDown (e) {
+  getTrackWidth () {
+    return this.state.trackOffset ? this.state.trackOffset.width : 0;
+  }
+
+  updatePosition (propsUpdated = false) {
+    this.setState(() => {
+      const track = this.refs.track;
+
+      if (propsUpdated) {
+        const isEmpty = !this.getTrackWidth();
+        if (isEmpty) {
+          return {
+            trackOffset: track ? track.getBoundingClientRect() : {}
+          };
+        } else return null;
+      } else {
+        return {
+          trackOffset: track ? track.getBoundingClientRect() : {}
+        };
+      }
+    });
+  }
+
+  handleClick (e) {
     suppress(e);
-    this.refs.sliderWrapper.className += ' rng-active';
-    document.addEventListener('mouseup', this.handleMouseUp);
-    if (this.props.readOnly) return;
-
-    document.addEventListener('mousemove', this.handleDrag);
-  }
-
-  handleMouseUp (e) {
-    suppress(e);
-    this.refs.sliderWrapper.className = removeClass(this.refs.sliderWrapper, 'rng-active');
-    document.removeEventListener('mouseup', this.handleMouseUp);
-
-    if (this.props.readOnly) return;
-
-    document.removeEventListener('mousemove', this.handleDrag);
-  }
-
-  handleTouchStart () {
-    document.addEventListener('touchmove', this.handleDrag);
-    document.addEventListener('touchend', this.handleTouchEnd);
-  }
-
-  handleTouchEnd () {
-    document.removeEventListener('touchmove', this.handleDrag);
-    document.removeEventListener('touchend', this.handleTouchEnd);
-  }
-
-  handleDrag (e) {
-    suppress(e);
-    const position = getRelativePosition(e, this.props, this.sliderWidth);
-    const newValue = getValueFromPosition(this.props, position);
-    this.onChange(newValue);
+    const newData = getNearestValue(e, this.props, this.getTrackWidth(), this.getTrackOffset());
+    this.onChange(newData.value, newData.changed);
   }
 
   render () {
-    const { name, value, valueFormat, disabled } = this.props;
+    const {
+      name,
+      disabled,
+      step,
+      orientation,
+      min,
+      max,
+      precision,
+      value,
+      rangeTemplate,
+      readOnly,
+      showSteps
+    } = this.props;
 
-    const className = classNames('rng-slider', name);
-    const sliderPosition = getPositionFromValue(this.props, this.sliderWidth);
+    const mainClass = classNames('react-filters', 'rf-range', name, {
+      'rng-disabled': disabled
+    });
 
-    const style = {
-      transform: `translateX(${sliderPosition}%) translate3d(0,0,0)`
+    const railStyle = {
+      left: `${Math.round((value[0] / max - min) * 100)}%`,
+      width: `${((value[1] - value[0]) / (max - min)) * 100}%`
     };
 
     return (
-      <div className='rng-slider-wrapper' ref={'sliderWrapper'} style={style}>
-        <div className='rng-value'>
-             {valueFormat(value)}
+      <div className={mainClass}>
+        <div className='rng-wrapper'>
+          <div
+            className='rng-track'
+            ref='track'
+            onClick={!disabled && !showSteps && this.handleClick}
+          >
+            <div className='rng-rail' style={railStyle} />
+          </div>
+             {
+               showSteps && <Steps
+                 step={step}
+                 min={min}
+                 max={max}
+                 value={value}
+                 onClick={this.handleClick}
+               />
+             }
+          <Control
+            value={value[0]}
+            name={'lower'}
+            step={step}
+            orientation={orientation}
+            trackOffset={this.getTrackOffset()}
+            onChange={this.onSliderChange}
+            min={min}
+            max={max}
+            precision={precision}
+            readOnly={readOnly}
+            disabled={disabled}
+          />
+          <Control
+            value={value[1]}
+            name={'upper'}
+            step={step}
+            orientation={orientation}
+            trackOffset={this.getTrackOffset()}
+            onChange={this.onSliderChange}
+            min={min}
+            max={max}
+            precision={precision}
+            readOnly={readOnly}
+            disabled={disabled}
+          />
         </div>
-        <div
-          draggable='false'
-          className={className}
-          onMouseDown={!disabled && this.handleMouseDown}
-          onTouchStart={!disabled && this.handleTouchStart}
-          ref='slider'
-        ></div>
+           {rangeTemplate(min, max)}
       </div>
     );
   }
 }
 
 Slider.propTypes = {
-  onChange: PropTypes.func,
-  step: PropTypes.number.isRequired,
+  disabled: PropTypes.bool,
+  max: PropTypes.number,
+  min: PropTypes.number,
   name: PropTypes.string.isRequired,
-  value: PropTypes.number.isRequired,
-  orientation: PropTypes.string.isRequired,
-  min: PropTypes.number.isRequired,
-  max: PropTypes.number.isRequired,
-  trackOffset: PropTypes.object.isRequired,
-  valueFormat: PropTypes.func,
+  onChange: PropTypes.func,
+  orientation: PropTypes.string,
+  precision: PropTypes.number,
+  step: PropTypes.number,
+  value: PropTypes.array,
+  rangeTemplate: PropTypes.func,
   readOnly: PropTypes.bool,
-  disabled: PropTypes.bool
+  showSteps: PropTypes.bool
 };
 
 Slider.defaultProps = {
-  valueFormat (value) {
-    return value;
+  disabled: false,
+  max: 20,
+  min: 0,
+  orientation: 'horizontal',
+  precision: 0,
+  step: 1,
+  value: [5, 10],
+  readOnly: false,
+  showSteps: false,
+  rangeTemplate (min, max) {
+    return (
+      <div className='rng-range'>
+        <div className='rng-range-min'>{min}</div>
+        <div className='rng-range-max'>{max}</div>
+      </div>
+    );
   }
 };

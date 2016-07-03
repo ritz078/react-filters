@@ -10,12 +10,13 @@
  * @returns {{value: *[], changed: string}}
  */
 export default function (e, props, trackWidth, trackOffset) {
-  const { value, max, min } = props;
+  const { value, max, min, step } = props;
 
   const relativeOffset = e.pageX - trackOffset.left;
 
   const positionOffset = trackWidth / (max - min);
-  const nearestValue = Math.round(relativeOffset / positionOffset);
+  const nearestIntegerValue = Math.round(relativeOffset / positionOffset);
+  const nearestValue = nearestIntegerValue - (nearestIntegerValue % step);
   const distancesFromValues = [
     Math.abs(nearestValue - value[0]),
     Math.abs(nearestValue - value[1])

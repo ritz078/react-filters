@@ -17,10 +17,10 @@ $btn-height: 15px;
   border-radius: $track-height/2;
 }
 
-.rng-slider-wrapper{
+.rng-slider-wrapper {
   will-change: transform;
   transition: transform .2s ease-out;
-  transform: translate3d(0,0,0);
+  transform: translate3d(0, 0, 0);
 }
 
 .rng-slider {
@@ -32,9 +32,8 @@ $btn-height: 15px;
   display: inline-block;
   vertical-align: top;
   margin-top: -($btn-height + $track-height)/2;
+  margin-left: -$btn-height/2;
   cursor: pointer;
-  will-change: transform;
-  transition: transform .2s ease-out;
 }
 
 .rng-rail {
@@ -45,7 +44,7 @@ $btn-height: 15px;
 }
 
 .rng-active .rng-slider {
-  transform: scale(1.4) translate3d(0,0,0);
+  transform: scale(1.4) translate3d(0, 0, 0);
 }
 
 .rng-value {
@@ -56,12 +55,38 @@ $btn-height: 15px;
   margin-top: - ($track-height + $btn-height/2 + 20px);
 }
 
-.rng-range{
-  div{
+.rng-range {
+  div {
     display: inline-block;
     margin-top: 10px;
-    &.rng-range-max{
+    &.rng-range-max {
       float: right;
     }
+  }
+}
+
+.rng-steps-wrapper {
+  width: 100%;
+  height: $track-height;
+  margin-top: -$track-height;
+  position: absolute;
+}
+
+$stepWidth: 6px;
+
+.rng-step {
+  width: $stepWidth;
+  height: $stepWidth;
+  background-color: white;
+  display: inline-block;
+  position: absolute;
+  margin-top: -2px;
+  border-radius: 50%;
+  border: 2px solid $secondary-color;
+  margin-left: -($stepWidth+4px)/2;
+  will-change: border-color;
+  transition: border-color .2s ease-out;
+  &.rng-step-active{
+    border-color: $primary-color;
   }
 }

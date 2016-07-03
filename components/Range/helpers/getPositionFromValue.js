@@ -1,5 +1,4 @@
-export default function (props, sliderWidth) {
-  const { min, max, trackOffset, value } = props;
-  const offset = sliderWidth && trackOffset.width ? sliderWidth / (2 * trackOffset.width) : 0;
-  return ((value / (max - min)) - offset) * 100;
+export default function (props) {
+  const { min, max, value } = props;
+  return ((value / (max - min))) * 100;
 }
