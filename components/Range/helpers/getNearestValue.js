@@ -1,5 +1,5 @@
 /**
- * Returns the neares value that can be obtained after clicking on a
+ * Returns the nearest value that can be obtained after clicking on a
  * particular position on the track. Technically finds the nearest
  * slider (upper or lower) and changes the value based on whether the lower or upper
  * slider should move to that position.
