@@ -46,7 +46,7 @@ function switchElem (prop) {
   );
 }
 
-export default class Switch extends Component {
+export default class Toggle extends Component {
   constructor (props) {
     super(props);
     autoBind([
@@ -111,7 +111,7 @@ export default class Switch extends Component {
   }
 }
 
-Switch.propTypes = {
+Toggle.propTypes = {
   count: PropTypes.number,
   countElem: PropTypes.oneOfType([
     PropTypes.func,
@@ -136,7 +136,7 @@ Switch.propTypes = {
 function noop () {
 }
 
-Switch.defaultProps = {
+Toggle.defaultProps = {
   countElem (p) {
     return <span className='toggle-count'>({p.count})</span>;
   },
