@@ -11,8 +11,8 @@ function getPositionInPercentage (stepValue, min, max) {
 
 function getSteps (props) {
   const { step, min, max, value } = props;
-  const steps = [];
 
+  const steps = [];
   const totalSteps = ((max - min) / step) + 1;
 
   for (let i = 0; i < totalSteps; i++) {

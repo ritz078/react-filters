@@ -94,7 +94,7 @@ export default class Control extends Component {
   render () {
     const { name, value, valueFormat, disabled } = this.props;
 
-    const className = classNames('rng-slider', name);
+    const className = classNames('rng-control', name);
     const sliderPosition = getPositionFromValue(this.props);
 
     const style = {

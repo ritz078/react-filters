@@ -16,7 +16,7 @@ export default class Slider extends Component {
 
     autoBind([
       'onChange',
-      'onSliderChange',
+      'onControlChange',
       'handleClick',
       'updatePosition'
     ], this);
@@ -28,7 +28,7 @@ export default class Slider extends Component {
   }
 
   componentWillReceiveProps () {
-    this.updatePosition(true);
+    this.updatePosition();
   }
 
   shouldComponentUpdate (newProps, newState) {
@@ -53,7 +53,7 @@ export default class Slider extends Component {
     });
   }
 
-  onSliderChange (data, isRerenderRequired) {
+  onControlChange (data, isRerenderRequired) {
     const value = data.name === 'lower' ? [data.value, this.props.value[1]] :
       [this.props.value[0], data.value];
 
@@ -73,22 +73,10 @@ export default class Slider extends Component {
     return this.state.trackOffset ? this.state.trackOffset.width : 0;
   }
 
-  updatePosition (propsUpdated = false) {
-    this.setState(() => {
-      const track = this.refs.track;
-
-      if (propsUpdated) {
-        const isEmpty = !this.getTrackWidth();
-        if (isEmpty) {
-          return {
-            trackOffset: track ? track.getBoundingClientRect() : {}
-          };
-        } else return null;
-      } else {
-        return {
-          trackOffset: track ? track.getBoundingClientRect() : {}
-        };
-      }
+  updatePosition () {
+    const track = this.refs.track;
+    this.setState({
+      trackOffset: track ? track.getBoundingClientRect() : {}
     });
   }
 
@@ -147,7 +135,7 @@ export default class Slider extends Component {
             step={step}
             orientation={orientation}
             trackOffset={this.getTrackOffset()}
-            onChange={this.onSliderChange}
+            onChange={this.onControlChange}
             min={min}
             max={max}
             precision={precision}
@@ -160,7 +148,7 @@ export default class Slider extends Component {
             step={step}
             orientation={orientation}
             trackOffset={this.getTrackOffset()}
-            onChange={this.onSliderChange}
+            onChange={this.onControlChange}
             min={min}
             max={max}
             precision={precision}

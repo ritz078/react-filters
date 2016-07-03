@@ -23,7 +23,7 @@ $btn-height: 15px;
   transform: translate3d(0, 0, 0);
 }
 
-.rng-slider {
+.rng-control {
   height: $btn-height;
   width: $btn-height;
   border-radius: $btn-height/2;
@@ -34,6 +34,10 @@ $btn-height: 15px;
   margin-top: -($btn-height + $track-height)/2;
   margin-left: -$btn-height/2;
   cursor: pointer;
+  transition: transform .2s ease-out;
+  .rng-disabled &{
+    background-color: grayscale(darken($primary-color, 10%));
+  }
 }
 
 .rng-rail {
@@ -41,6 +45,9 @@ $btn-height: 15px;
   background-color: $primary-color;
   will-change: left, width;
   transition: left .2s ease-out, width .2s ease-out;
+  .rng-disabled &{
+    background-color: grayscale($primary-color);
+  }
 }
 
 .rng-active .rng-slider {
