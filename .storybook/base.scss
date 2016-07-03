@@ -1,0 +1,24 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+@import "../components/styles";
+
+body{
+  font-family: 'Open Sans', sans-serif;
+}
+
+.ac-suggestion{
+  span{
+    float: right;
+  }
+}
+
+.range-container{
+  width: 80%;
+}
+
+.rf-autocomplete{
+  width: 80%;
+}
+
+.group{
+  width: 200px;
+}

@@ -1,4 +1,8 @@
-import Radio from './Radio/Radio';
-import Switch from './Switch/Switch';
+import AutoComplete from './AutoComplete/AutoComplete';
+import Count from './Count/Count';
+import Range from './Range/Range';
+import Toggle from './Toggle/Toggle';
+import InputRange from './InputRange/InputRange';
+import Group from './Group/Group';
 
-export { Radio, Switch };
+export { AutoComplete, Count, Range, Toggle, InputRange, Group };

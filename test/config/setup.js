@@ -1,8 +1,8 @@
 require('babel-core/register');
+const path = require('path');
 
-var jsdom = require('jsdom').jsdom;
-
-var exposedProperties = ['window', 'navigator', 'document'];
+const jsdom = require('jsdom').jsdom;
+const exposedProperties = ['window', 'navigator', 'document'];
 
 global.document = jsdom('');
 global.window = document.defaultView;
@@ -16,3 +16,4 @@ Object.keys(document.defaultView).forEach((property) => {
 global.navigator = {
   userAgent: 'node.js'
 };
+global.__base = `${path.resolve()}/`;

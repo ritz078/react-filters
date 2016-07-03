@@ -11,8 +11,13 @@ before_install:
   - npm i -g npm@^2.0.0
 before_script:
   - npm prune
+script:
+  - npm run test:cover
 after_success:
-  - npm run semantic-release
+  - npm run test:report
 branches:
   except:
     - "/^v\\d+\\.\\d+\\.\\d+$/"
+addons:
+    code_climate:
+        repo_token: 842be7e8b1dee369a0c5077a36d43ae401a153731331283c570c725148a10fb5
