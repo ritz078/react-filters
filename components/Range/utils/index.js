@@ -3,7 +3,7 @@ import capitalize from './capitalize';
 import formatNumber from './formatNumber';
 import suppress from './suppress';
 import isWithinRange from './isWithinRange';
-import isArrayEqual from './isArrayEqual';
+import isEqual from './isEqual';
 import removeClass from './removeClass';
 
 export {
@@ -12,6 +12,6 @@ export {
   formatNumber,
   suppress,
   isWithinRange,
-  isArrayEqual,
+  isEqual,
   removeClass
 };

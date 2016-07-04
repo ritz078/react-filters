@@ -1,9 +1,10 @@
 import React, { PropTypes, Component } from 'react';
 import classNames from 'classnames';
-import { isWithinRange, suppress, isArrayEqual } from './utils';
+import { isWithinRange, suppress, isEqual } from './utils';
 import getNearestValue from './helpers/getNearestValue';
 import Control from './Control';
 import Steps from './Steps';
+import Rail from './Rail';
 import autoBind from '../utils/autoBind';
 
 export default class Slider extends Component {
@@ -33,7 +34,7 @@ export default class Slider extends Component {
 
   shouldComponentUpdate (newProps, newState) {
     return isWithinRange(newProps, newProps.value) &&
-      (!isArrayEqual(this.props.value, newProps.value) || !!this.isRerenderRequired ||
+      (!isEqual(this.props.value, newProps.value) || !!this.isRerenderRequired ||
       this.state.trackOffset.width !== newState.trackOffset.width);
   }
 
@@ -46,21 +47,29 @@ export default class Slider extends Component {
   }
 
   onChange (value, changed) {
-    this.props.onChange({
+    const args = {
       name: this.props.name,
-      value,
-      changed
-    });
+      value
+    };
+
+    if (changed) args.changed = changed;
+    this.props.onChange(args);
   }
 
   onControlChange (data, isRerenderRequired) {
-    const value = data.name === 'lower' ? [data.value, this.props.value[1]] :
-      [this.props.value[0], data.value];
+    let value;
+    if (!this.isRangeType()) {
+      value = data.value;
+    } else {
+      value = data.name === 'lower' ? [data.value, this.props.value[1]] :
+        [this.props.value[0], data.value];
+    }
+
 
     // only trigger on first onChange trigger
     this.isRerenderRequired = isRerenderRequired;
 
-    if (isWithinRange(this.props, value) && !isArrayEqual(this.props.value, value)) {
+    if (isWithinRange(this.props, value) && !isEqual(this.props.value, value)) {
       this.onChange(value, data.name);
     }
   }
@@ -71,6 +80,25 @@ export default class Slider extends Component {
 
   getTrackWidth () {
     return this.state.trackOffset ? this.state.trackOffset.width : 0;
+  }
+
+  getControl (value, name) {
+    const { step, orientation, min, max, precision, readOnly, disabled } = this.props;
+    return (
+      <Control
+        value={this.isRangeType() ? value[0] : value}
+        name={name}
+        step={step}
+        orientation={orientation}
+        trackOffset={this.getTrackOffset()}
+        onChange={this.onControlChange}
+        min={min}
+        max={max}
+        precision={precision}
+        readOnly={readOnly}
+        disabled={disabled}
+      />
+    );
   }
 
   updatePosition () {
@@ -86,18 +114,19 @@ export default class Slider extends Component {
     this.onChange(newData.value, newData.changed);
   }
 
+  isRangeType () {
+    return this.props.type === 'range';
+  }
+
   render () {
     const {
       name,
       disabled,
       step,
-      orientation,
       min,
       max,
-      precision,
       value,
       rangeTemplate,
-      readOnly,
       showSteps
     } = this.props;
 
@@ -105,10 +134,7 @@ export default class Slider extends Component {
       'rng-disabled': disabled
     });
 
-    const railStyle = {
-      left: `${Math.round((value[0] / max - min) * 100)}%`,
-      width: `${((value[1] - value[0]) / (max - min)) * 100}%`
-    };
+    const lowerValue = this.isRangeType() ? value[0] : value;
 
     return (
       <div className={mainClass}>
@@ -118,7 +144,11 @@ export default class Slider extends Component {
             ref='track'
             onClick={!disabled && !showSteps && this.handleClick}
           >
-            <div className='rng-rail' style={railStyle} />
+            {this.isRangeType() && <Rail
+              min={min}
+              max={max}
+              value={value}
+            />}
           </div>
              {
                showSteps && <Steps
@@ -127,34 +157,13 @@ export default class Slider extends Component {
                  max={max}
                  value={value}
                  onClick={this.handleClick}
+                 range={this.isRangeType()}
                />
              }
-          <Control
-            value={value[0]}
-            name={'lower'}
-            step={step}
-            orientation={orientation}
-            trackOffset={this.getTrackOffset()}
-            onChange={this.onControlChange}
-            min={min}
-            max={max}
-            precision={precision}
-            readOnly={readOnly}
-            disabled={disabled}
-          />
-          <Control
-            value={value[1]}
-            name={'upper'}
-            step={step}
-            orientation={orientation}
-            trackOffset={this.getTrackOffset()}
-            onChange={this.onControlChange}
-            min={min}
-            max={max}
-            precision={precision}
-            readOnly={readOnly}
-            disabled={disabled}
-          />
+
+             {this.getControl(lowerValue, 'lower')}
+             {this.isRangeType() && this.getControl(value[1], 'upper')}
+
         </div>
            {rangeTemplate(min, max)}
       </div>
@@ -168,13 +177,16 @@ Slider.propTypes = {
   min: PropTypes.number,
   name: PropTypes.string.isRequired,
   onChange: PropTypes.func,
-  orientation: PropTypes.string,
+  orientation: PropTypes.oneOf(['horizontal', 'vertical']),
   precision: PropTypes.number,
   step: PropTypes.number,
-  value: PropTypes.array,
+  value: PropTypes.oneOfType(
+    [PropTypes.array, PropTypes.number]
+  ),
   rangeTemplate: PropTypes.func,
   readOnly: PropTypes.bool,
-  showSteps: PropTypes.bool
+  showSteps: PropTypes.bool,
+  type: PropTypes.oneOf(['value', 'range'])
 };
 
 Slider.defaultProps = {
@@ -187,6 +199,7 @@ Slider.defaultProps = {
   value: [5, 10],
   readOnly: false,
   showSteps: false,
+  type: 'range',
   rangeTemplate (min, max) {
     return (
       <div className='rng-range'>

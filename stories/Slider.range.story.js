@@ -3,7 +3,7 @@ import { storiesOf, action } from '@kadira/storybook';
 import { Slider } from '../components';
 import Container from './Container';
 
-storiesOf('Slider Component', module)
+storiesOf('Slider Component (Range)', module)
   .addDecorator((story) => (
     <Container
       className={'range-container'}

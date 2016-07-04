@@ -29,7 +29,7 @@ function getPositionInPercentage (stepValue, min, max) {
  * @returns {Array}
  */
 function getSteps (props) {
-  const { step, min, max, value } = props;
+  const { step, min, max, value, range } = props;
 
   const steps = [];
   const totalSteps = ((max - min) / step) + 1;
@@ -40,7 +40,7 @@ function getSteps (props) {
     };
 
     const className = classNames('rng-step', {
-      'rng-step-active': isInActiveRange(i * step, value)
+      'rng-step-active': range && isInActiveRange(i * step, value)
     });
 
     steps.push(<span style={style} key={i} className={className} />);
@@ -61,6 +61,7 @@ Steps.propTypes = {
   step: PropTypes.number.isRequired,
   min: PropTypes.number,
   max: PropTypes.number,
-  onClick: PropTypes.func.isRequired
+  onClick: PropTypes.func.isRequired,
+  range: PropTypes.bool.isRequired
 };
 
