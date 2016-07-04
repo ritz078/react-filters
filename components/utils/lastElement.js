@@ -3,5 +3,5 @@
  * @param arr
  */
 export default function (arr) {
-  return arr[arr.length - 1];
+  return arr.length ? arr[arr.length - 1] : null;
 }

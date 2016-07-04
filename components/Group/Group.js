@@ -59,8 +59,8 @@ export default class Group extends Component {
   }
 
   render () {
-    const { name, className, attributes } = this.props;
-    const mainClass = classNames('radio-group', name, className);
+    const { name, className, attributes, type } = this.props;
+    const mainClass = classNames('rf-group', `${type}-group`, name, className);
     return (
       <div className={mainClass} {...attributes}>
            {this.getElements()}
@@ -73,7 +73,13 @@ Group.propTypes = {
   attributes: PropTypes.object,
   className: PropTypes.string,
   name: PropTypes.string.isRequired,
-  value: PropTypes.arrayOf(),
+  value: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string,
+      value: PropTypes.bool,
+      count: PropTypes.number
+    })
+  ),
   onChange: PropTypes.func.isRequired,
   type: PropTypes.oneOf([
     'radio', 'checkbox', 'switch'

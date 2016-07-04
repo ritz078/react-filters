@@ -12,7 +12,7 @@ function radioElem (p) {
 }
 
 function checkBoxElem (p) {
-  const iconClass = classNames('fa', {
+  const iconClass = classNames({
     'icon-check-box-outline-blank': !p.value,
     'icon-check-box': p.value
   });
@@ -62,12 +62,11 @@ export default class Toggle extends Component {
   }
 
   getIconElement () {
-    const { iconElem, type } = this.props;
-    if (iconElem) return iconElem(this.props);
+    const { iconElement, type } = this.props;
+    if (typeof iconElement === 'function') return iconElement(this.props);
     if (type === 'radio') return radioElem(this.props);
     else if (type === 'checkbox') return checkBoxElem(this.props);
-    else if (type === 'switch') return switchElem(this.props);
-    return null;
+    else return switchElem(this.props);
   }
 
   handleClick () {
@@ -118,7 +117,7 @@ Toggle.propTypes = {
     PropTypes.element
   ]),
   disabled: PropTypes.bool,
-  iconElem: PropTypes.oneOfType([
+  iconElement: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.element
   ]),
