@@ -65,7 +65,6 @@ export default class Slider extends Component {
         [this.props.value[0], data.value];
     }
 
-
     // only trigger on first onChange trigger
     this.isRerenderRequired = isRerenderRequired;
 
@@ -86,7 +85,7 @@ export default class Slider extends Component {
     const { step, orientation, min, max, precision, readOnly, disabled } = this.props;
     return (
       <Control
-        value={this.isRangeType() ? value[0] : value}
+        value={value}
         name={name}
         step={step}
         orientation={orientation}
@@ -180,9 +179,7 @@ Slider.propTypes = {
   orientation: PropTypes.oneOf(['horizontal', 'vertical']),
   precision: PropTypes.number,
   step: PropTypes.number,
-  value: PropTypes.oneOfType(
-    [PropTypes.array, PropTypes.number]
-  ),
+  value: PropTypes.oneOfType([PropTypes.array, PropTypes.number]),
   rangeTemplate: PropTypes.func,
   readOnly: PropTypes.bool,
   showSteps: PropTypes.bool,

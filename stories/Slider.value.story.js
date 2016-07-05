@@ -19,8 +19,8 @@ storiesOf('Slider Component (Value)', module)
     <Slider name={'read-only'} type={'value'} readOnly/>
   ))
   .add('Disabled', () => (
-    <Slider name={'read-only'} type={'value'} disabled/>
+    <Slider name={'disabled'} type={'value'} disabled/>
   ))
   .add('Steps', () => (
-    <Slider name={'read-only'} type={'value'} showSteps/>
+    <Slider name={'steps'} type={'value'} showSteps/>
   ));
