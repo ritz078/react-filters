@@ -13,14 +13,17 @@ storiesOf('Slider Component (Range)', module)
       {story()}
     </Container>))
   .add('Default', () => (
-    <Slider name={'range'} min={0} max={100}/>
+    <Slider name={'range'} min={0} type={'range'} max={100}/>
   ))
   .add('Read Only', () => (
-    <Slider name={'read-only'} readOnly />
+    <Slider name={'read-only'} type={'range'} readOnly />
   ))
   .add('Disabled', () => (
-    <Slider name={'disabled'} disabled/>
+    <Slider name={'disabled'} type={'range'} disabled/>
   ))
   .add('Steps', () => (
-    <Slider name={'steps'} showSteps step={2}/>
+    <Slider name={'steps'} type={'range'} showSteps step={2}/>
+  ))
+  .add('Vertical', () => (
+    <Slider name={'vertical'} type={'range'} orientation={'vertical'} showSteps />
   ));

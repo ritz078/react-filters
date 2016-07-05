@@ -197,7 +197,7 @@ Slider.defaultProps = {
   value: [5, 10],
   readOnly: false,
   showSteps: false,
-  type: 'range',
+  type: 'value',
   rangeTemplate (min, max) {
     return (
       <div className='rng-range' >

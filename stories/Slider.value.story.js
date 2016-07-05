@@ -13,17 +13,17 @@ storiesOf('Slider Component (Value)', module)
       {story()}
     </Container>))
   .add('Default', () => (
-    <Slider name={'simple-value'} type='value'/>
+    <Slider name={'simple-value'} />
   ))
   .add('Read only', () => (
-    <Slider name={'read-only'} type={'value'} readOnly/>
+    <Slider name={'read-only'} readOnly />
   ))
   .add('Disabled', () => (
-    <Slider name={'disabled'} type={'value'} disabled/>
+    <Slider name={'disabled'} disabled />
   ))
   .add('Steps', () => (
-    <Slider name={'steps'} type={'value'} showSteps/>
+    <Slider name={'steps'} showSteps />
   ))
   .add('Vertical', () => (
-    <Slider name={'vertical'} orientation={'vertical'} type={'value'} showSteps/>
+    <Slider name={'vertical'} orientation={'vertical'} showSteps />
   ));

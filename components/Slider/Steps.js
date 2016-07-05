@@ -36,8 +36,14 @@ function getSteps (props) {
   const totalSteps = ((max - min) / step) + 1;
 
   for (let i = 0; i < totalSteps; i++) {
+    let position = getPositionInPercentage(i * step, min, max);
+
+    if (orientation === 'vertical') {
+      position = 100 - position;
+    }
+
     const style = {
-      [constants[orientation].direction]: `${getPositionInPercentage(i * step, min, max)}%`
+      [constants[orientation].direction]: `${position}%`
     };
 
     const className = classNames('rng-step', {
@@ -52,7 +58,7 @@ function getSteps (props) {
 
 export default function Steps (props) {
   return (
-    <div className='rng-steps-wrapper' onClick={props.onClick}>
+    <div className='rng-steps-wrapper' onClick={props.onClick} >
          {getSteps(props)}
     </div>
   );
