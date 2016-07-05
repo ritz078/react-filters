@@ -1,5 +1,5 @@
 const { describe, it, __base } = global;
-const { removeClass } = require(`${__base}components/Range/utils/`);
+const { removeClass } = require(`${__base}components/Slider/utils/`);
 import { expect } from 'chai';
 
 describe('removeClass utility method', () => {

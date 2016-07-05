@@ -1,10 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import classNames from 'classnames';
-import { hasStepDifference, suppress, isWithinRange, removeClass } from './utils';
+import { hasStepDifference, suppress, isWithinRange, removeClass, capitalize } from './utils';
 import { getValueFromPosition, getRelativePosition, getPositionFromValue } from './helpers';
 import autoBind from '../utils/autoBind';
 
-import { capitalize } from './utils';
 import constants from './constants';
 
 export default class Control extends Component {
@@ -34,7 +33,7 @@ export default class Control extends Component {
 
   shouldComponentUpdate (newProps) {
     const dimension = constants[newProps.orientation].dimension;
-    
+
     return (hasStepDifference(newProps.value, this.props.value, newProps.step) &&
       isWithinRange(newProps, newProps.value)) ||
       newProps.trackOffset[dimension] !== this.props.trackOffset[dimension];

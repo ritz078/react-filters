@@ -1,5 +1,5 @@
 const { describe, it, __base } = global;
-const { isEqual } = require(`${__base}components/Range/utils/`);
+const { isEqual } = require(`${__base}components/Slider/utils/`);
 import { expect } from 'chai';
 
 describe('isArrayEqual Method', () => {

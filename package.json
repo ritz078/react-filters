@@ -85,7 +85,7 @@
       "path": "node_modules/cz-conventional-changelog"
     },
     "ghooks": {
-      "pre-commit": "npm run lintfix && npm run test:cover"
+      "pre-commit": "npm run lintfix && npm run test"
     }
   }
 }

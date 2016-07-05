@@ -1,5 +1,5 @@
 const { describe, it, __base } = global;
-const { isWithinRange } = require(`${__base}components/Range/utils/`);
+const { isWithinRange } = require(`${__base}components/Slider/utils/`);
 import { expect } from 'chai';
 
 describe('isWithinRange utility method', () => {

@@ -1,5 +1,5 @@
 const { describe, it, __base } = global;
-const { hasStepDifference } = require(__base + 'components/Range/utils/');
+const { hasStepDifference } = require(__base + 'components/Slider/utils/');
 import { expect } from 'chai';
 
 describe('hasStepDifference method', () => {

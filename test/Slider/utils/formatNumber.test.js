@@ -1,5 +1,5 @@
 const { describe, it, __base } = global;
-const { formatNumber } = require(`${__base}components/Range/utils/`);
+const { formatNumber } = require(`${__base}components/Slider/utils/`);
 import { expect } from 'chai';
 
 describe('formatNumber', () => {
