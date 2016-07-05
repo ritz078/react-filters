@@ -1,5 +1,5 @@
 const { describe, it, __base } = global;
-const { capitalize } = require(`${__base}components/Range/utils/`);
+const { capitalize } = require(`${__base}components/Slider/utils/`);
 import { expect } from 'chai';
 
 describe('capitalize util method()', () => {

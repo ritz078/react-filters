@@ -5,7 +5,7 @@ import lastElement from '../utils/lastElement';
 
 import deepCopy from 'deep-copy';
 
-import Toggle from '../Toggle/Toggle';
+import Toggle from '../Toggle/index';
 
 function handleSingleSelect (arr, index) {
   return arr.map((val, i) => {

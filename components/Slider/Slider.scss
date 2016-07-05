@@ -9,12 +9,30 @@ $btn-height: 15px;
   position: relative;
   display: inline-block;
   padding-top: 40px;
+  .rng-vertical & {
+    width: $track-height;
+    height: 400px;
+    padding-top: 0;
+  }
+}
+
+.rng-vertical {
+  width: 20px;
+  height: 400px;
+  position: relative;
+  .rng-track {
+    position: absolute;
+  }
 }
 
 .rng-track, .rng-rail {
   height: $track-height;
   background-color: $secondary-color;
   border-radius: $track-height/2;
+  .rng-vertical & {
+    width: $track-height;
+    height: 400px;
+  }
 }
 
 .rng-slider-wrapper {
@@ -35,8 +53,12 @@ $btn-height: 15px;
   margin-left: -$btn-height/2;
   cursor: pointer;
   transition: transform .2s ease-out;
-  .rng-disabled &{
+  .rng-disabled & {
     background-color: grayscale(darken($primary-color, 10%));
+  }
+  .rng-vertical & {
+    margin-left: -($btn-height/2 - $track-height/2);
+    margin-top: -$btn-height/2;
   }
 }
 
@@ -45,7 +67,7 @@ $btn-height: 15px;
   background-color: $primary-color;
   will-change: left, width;
   transition: left .2s ease-out, width .2s ease-out;
-  .rng-disabled &{
+  .rng-disabled & {
     background-color: grayscale($primary-color);
   }
 }
@@ -54,12 +76,21 @@ $btn-height: 15px;
   transform: scale(1.4) translate3d(0, 0, 0);
 }
 
+// TODO : prevent text selection in disabled state
+
 .rng-value {
   position: absolute;
   width: 40px;
-  margin-left: -20px + $btn-height / 2;
+  margin-left: -20px;
   text-align: center;
   margin-top: - ($track-height + $btn-height/2 + 20px);
+  .rng-disabled & {
+    color: darken($secondary-color, 20%);
+  }
+  .rng-vertical & {
+    margin-top: -($btn-height/2);
+    margin-left: -40px;
+  }
 }
 
 .rng-range {
@@ -70,16 +101,37 @@ $btn-height: 15px;
       float: right;
     }
   }
+  .rng-vertical & {
+    margin-left: 20px;
+    div{
+      margin-top: 0;
+    }
+    position: absolute;
+    top: 0;
+    height: 100%;
+    .rng-range-min{
+      position: absolute;
+      bottom: 0;
+      margin-bottom: -10px;
+    }
+    .rng-range-max{
+      margin-top: -10px;
+    }
+  }
 }
+
+$stepWidth: 6px;
 
 .rng-steps-wrapper {
   width: 100%;
   height: $track-height;
   margin-top: -$track-height;
   position: absolute;
+  .rng-vertical & {
+    height: 100%;
+    margin-top: -($stepWidth + 4px)/2;
+  }
 }
-
-$stepWidth: 6px;
 
 .rng-step {
   width: $stepWidth;
@@ -93,7 +145,11 @@ $stepWidth: 6px;
   margin-left: -($stepWidth+4px)/2;
   will-change: border-color;
   transition: border-color .2s ease-out;
-  &.rng-step-active{
+  &.rng-step-active {
     border-color: $primary-color;
+  }
+  .rng-vertical & {
+    margin-left: -2px;
+    margin-top: 0;
   }
 }

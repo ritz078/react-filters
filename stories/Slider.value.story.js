@@ -23,4 +23,7 @@ storiesOf('Slider Component (Value)', module)
   ))
   .add('Steps', () => (
     <Slider name={'steps'} type={'value'} showSteps/>
+  ))
+  .add('Vertical', () => (
+    <Slider name={'vertical'} orientation={'vertical'} type={'value'} showSteps/>
   ));

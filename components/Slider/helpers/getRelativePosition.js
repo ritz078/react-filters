@@ -1,25 +1,11 @@
 import { capitalize } from '../utils';
-
-const constants = {
-  orientation: {
-    horizontal: {
-      dimension: 'width',
-      direction: 'left',
-      coordinate: 'x'
-    },
-    vertical: {
-      dimension: 'height',
-      direction: 'top',
-      coordinate: 'y'
-    }
-  }
-};
+import constants from '../constants';
 
 export default function (e, props, sliderWidth) {
   // Get the offset DIRECTION relative to the viewport
 
-  const coordinate = constants.orientation[props.orientation].coordinate;
-  const direction = constants.orientation[props.orientation].direction;
+  const coordinate = constants[props.orientation].coordinate;
+  const direction = constants[props.orientation].direction;
   const ucCoordinate = capitalize(coordinate);
   const trackPos = props.trackOffset[direction];
 
@@ -32,8 +18,6 @@ export default function (e, props, sliderWidth) {
   } else if (e.touches && e.touches[0] &&
     typeof e.touches[0][`client${ucCoordinate}`] !== 'undefined') {
     btnPos = e.touches[0][`client${ucCoordinate}`];
-  } else if (e.currentPoint && typeof e.currentPoint[this.COORDINATE] !== 'undefined') {
-    btnPos = e.currentPoint[this.COORDINATE];
   }
 
   return btnPos - trackPos - sliderWidth / 2;

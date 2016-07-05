@@ -4,6 +4,9 @@ import { hasStepDifference, suppress, isWithinRange, removeClass } from './utils
 import { getValueFromPosition, getRelativePosition, getPositionFromValue } from './helpers';
 import autoBind from '../utils/autoBind';
 
+import { capitalize } from './utils';
+import constants from './constants';
+
 export default class Control extends Component {
   constructor (props, context) {
     super(props, context);
@@ -30,9 +33,11 @@ export default class Control extends Component {
   }
 
   shouldComponentUpdate (newProps) {
+    const dimension = constants[newProps.orientation].dimension;
+    
     return (hasStepDifference(newProps.value, this.props.value, newProps.step) &&
       isWithinRange(newProps, newProps.value)) ||
-      newProps.trackOffset.width !== this.props.trackOffset.width;
+      newProps.trackOffset[dimension] !== this.props.trackOffset[dimension];
   }
 
   onChange (value, isRerenderRequired = false) {
@@ -92,18 +97,21 @@ export default class Control extends Component {
   }
 
   render () {
-    const { name, value, valueFormat, disabled } = this.props;
+    const { name, value, valueFormat, disabled, orientation, trackOffset } = this.props;
 
     const className = classNames('rng-control', name);
-    const sliderPosition = getPositionFromValue(this.props);
+
+    const sliderPosition = (orientation === 'vertical') ?
+      (trackOffset.height - getPositionFromValue(this.props)) : getPositionFromValue(this.props);
 
     const style = {
-      transform: `translateX(${sliderPosition}%) translate3d(0,0,0)`
+      transform: `translate${capitalize(constants[orientation].coordinate)}(${sliderPosition}px)
+      translate3d(0,0,0)`
     };
 
     return (
-      <div className='rng-slider-wrapper' ref={'sliderWrapper'} style={style}>
-        <div className='rng-value'>
+      <div className='rng-slider-wrapper' ref={'sliderWrapper'} style={style} >
+        <div className='rng-value' >
              {valueFormat(value)}
         </div>
         <div

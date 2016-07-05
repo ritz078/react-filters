@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import classNames from 'classnames';
+import constants from './constants';
 
 /**
  * Tells whether a particular step comes in between two controls or not
@@ -29,18 +30,18 @@ function getPositionInPercentage (stepValue, min, max) {
  * @returns {Array}
  */
 function getSteps (props) {
-  const { step, min, max, value, range } = props;
+  const { step, min, max, value, isRangeType, orientation } = props;
 
   const steps = [];
   const totalSteps = ((max - min) / step) + 1;
 
   for (let i = 0; i < totalSteps; i++) {
     const style = {
-      left: `${getPositionInPercentage(i * step, min, max)}%`
+      [constants[orientation].direction]: `${getPositionInPercentage(i * step, min, max)}%`
     };
 
     const className = classNames('rng-step', {
-      'rng-step-active': range && isInActiveRange(i * step, value)
+      'rng-step-active': isRangeType && isInActiveRange(i * step, value)
     });
 
     steps.push(<span style={style} key={i} className={className} />);
@@ -62,6 +63,7 @@ Steps.propTypes = {
   min: PropTypes.number,
   max: PropTypes.number,
   onClick: PropTypes.func.isRequired,
-  range: PropTypes.bool.isRequired
+  isRangeType: PropTypes.bool.isRequired,
+  orientation: PropTypes.string.isRequired
 };
 

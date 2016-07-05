@@ -1,3 +1,6 @@
+import constants from '../constants';
+import { capitalize } from '../utils';
+
 /**
  * Returns the nearest value that can be obtained after clicking on a
  * particular position on the track. Technically finds the nearest
@@ -5,16 +8,18 @@
  * slider should move to that position.
  * @param e [Synthetic Event]
  * @param props React Props
- * @param trackWidth width of the track
  * @param trackOffset cached track.getBoundingClientRect()
- * @returns {{value: *[], changed: string}} || {{value: string}}
+ * @returns {*}
  */
-export default function (e, props, trackWidth, trackOffset) {
-  const { value, max, min, step, type } = props;
+export default function (e, props, trackOffset) {
+  const { value, max, min, step, type, orientation } = props;
 
-  const relativeOffset = e.pageX - trackOffset.left;
+  let relativeOffset = e[`page${capitalize(constants[orientation].coordinate)}`]
+    - trackOffset[constants[orientation].direction];
 
-  const positionOffset = trackWidth / (max - min);
+  if (orientation === 'vertical') relativeOffset = trackOffset.height - relativeOffset;
+
+  const positionOffset = trackOffset[constants[orientation].dimension] / (max - min);
   const nearestIntegerValue = Math.round(relativeOffset / positionOffset);
   const nearestValue = nearestIntegerValue - (nearestIntegerValue % step);
   if (type === 'range') {

@@ -1,6 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 import classNames from 'classnames';
-import { isWithinRange, suppress, isEqual } from './utils';
+import { isWithinRange, suppress, isEqual, isVertical } from './utils';
 import getNearestValue from './helpers/getNearestValue';
 import Control from './Control';
 import Steps from './Steps';
@@ -26,10 +26,6 @@ export default class Slider extends Component {
   componentDidMount () {
     this.updatePosition();
     window.addEventListener('resize', this.updatePosition);
-  }
-
-  componentWillReceiveProps () {
-    this.updatePosition();
   }
 
   shouldComponentUpdate (newProps, newState) {
@@ -77,10 +73,6 @@ export default class Slider extends Component {
     return this.state.trackOffset;
   }
 
-  getTrackWidth () {
-    return this.state.trackOffset ? this.state.trackOffset.width : 0;
-  }
-
   getControl (value, name) {
     const { step, orientation, min, max, precision, readOnly, disabled } = this.props;
     return (
@@ -102,14 +94,19 @@ export default class Slider extends Component {
 
   updatePosition () {
     const track = this.refs.track;
-    this.setState({
-      trackOffset: track ? track.getBoundingClientRect() : {}
+
+    setTimeout(() => {
+      window.requestAnimationFrame(() => {
+        this.setState({
+          trackOffset: track ? track.getBoundingClientRect() : {}
+        });
+      });
     });
   }
 
   handleClick (e) {
     suppress(e);
-    const newData = getNearestValue(e, this.props, this.getTrackWidth(), this.getTrackOffset());
+    const newData = getNearestValue(e, this.props, this.getTrackOffset());
     this.onChange(newData.value, newData.changed);
   }
 
@@ -126,18 +123,20 @@ export default class Slider extends Component {
       max,
       value,
       rangeTemplate,
-      showSteps
+      showSteps,
+      orientation
     } = this.props;
 
     const mainClass = classNames('react-filters', 'rf-range', name, {
-      'rng-disabled': disabled
+      'rng-disabled': disabled,
+      'rng-vertical': isVertical(this.props)
     });
 
     const lowerValue = this.isRangeType() ? value[0] : value;
 
     return (
-      <div className={mainClass}>
-        <div className='rng-wrapper'>
+      <div className={mainClass} >
+        <div className='rng-wrapper' >
           <div
             className='rng-track'
             ref='track'
@@ -147,6 +146,7 @@ export default class Slider extends Component {
               min={min}
               max={max}
               value={value}
+              orientation={orientation}
             />}
           </div>
              {
@@ -156,7 +156,8 @@ export default class Slider extends Component {
                  max={max}
                  value={value}
                  onClick={this.handleClick}
-                 range={this.isRangeType()}
+                 isRangeType={this.isRangeType()}
+                 orientation={orientation}
                />
              }
 
@@ -199,9 +200,9 @@ Slider.defaultProps = {
   type: 'range',
   rangeTemplate (min, max) {
     return (
-      <div className='rng-range'>
-        <div className='rng-range-min'>{min}</div>
-        <div className='rng-range-max'>{max}</div>
+      <div className='rng-range' >
+        <div className='rng-range-min' >{min}</div>
+        <div className='rng-range-max' >{max}</div>
       </div>
     );
   }

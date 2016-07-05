@@ -5,6 +5,7 @@ import suppress from './suppress';
 import isWithinRange from './isWithinRange';
 import isEqual from './isEqual';
 import removeClass from './removeClass';
+import isVertical from './isVertical';
 
 export {
   capitalize,
@@ -13,5 +14,6 @@ export {
   suppress,
   isWithinRange,
   isEqual,
-  removeClass
+  removeClass,
+  isVertical
 };

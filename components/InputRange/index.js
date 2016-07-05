@@ -2,7 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import classNames from 'classnames';
 import autoBind from '../utils/autoBind';
 
-import AutoComplete from '../AutoComplete/AutoComplete';
+import AutoComplete from '../AutoComplete/index';
 
 export default class InputRange extends Component {
   constructor (props) {
