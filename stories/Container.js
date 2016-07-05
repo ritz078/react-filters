@@ -19,16 +19,16 @@ export default class Container extends Component {
 
   render () {
     const self = this;
-    const children = React.Children.map(this.props.children, (child) => {
-      return React.cloneElement(child, {
+    const children = React.Children.map(this.props.children, (child) => (
+      React.cloneElement(child, {
         value: self.state.value,
         onChange: self.handleChange
-      });
-    });
+      }))
+    );
 
     return (
-      <div className={this.props.className}>
-        {children}
+      <div className={this.props.className} >
+           {children}
       </div>
     );
   }
