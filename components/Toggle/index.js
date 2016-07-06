@@ -3,7 +3,7 @@ import classNames from 'classnames';
 
 import autoBind from '../utils/autoBind';
 
-function radioElem (p) {
+function radioElement (p) {
   const iconClass = classNames({
     'icon-radio-button-unchecked': !p.value,
     'icon-radio-button-checked': p.value
@@ -11,7 +11,7 @@ function radioElem (p) {
   return <i className={iconClass} />;
 }
 
-function checkBoxElem (p) {
+function checkBoxElement (p) {
   const iconClass = classNames({
     'icon-check-box-outline-blank': !p.value,
     'icon-check-box': p.value
@@ -19,7 +19,7 @@ function checkBoxElem (p) {
   return <i className={iconClass} />;
 }
 
-function switchElem (prop) {
+function switchElement (prop) {
   const labelClass = classNames('toggle-icon-label', {
     'toggle-il-left': prop.value,
     'toggle-il-right': !prop.value
@@ -31,17 +31,14 @@ function switchElem (prop) {
     iconLabelText = prop.value ? prop.iconLabel[0] : prop.iconLabel[1];
   }
   return (
-    <div className='toggle-wrapper'>
+    <div className='toggle-wrapper' >
          {
-           prop.iconLabel && prop.iconLabel.length &&
-           (
-             <div className={labelClass}>
-                  {iconLabelText}
-             </div>
-           )
+           prop.iconLabel && prop.iconLabel.length && <div className={labelClass} >
+                                                           {iconLabelText}
+           </div>
          }
 
-      <div className='toggle-btn'></div>
+      <div className='toggle-btn' />
     </div>
   );
 }
@@ -64,9 +61,9 @@ export default class Toggle extends Component {
   getIconElement () {
     const { iconElement, type } = this.props;
     if (typeof iconElement === 'function') return iconElement(this.props);
-    if (type === 'radio') return radioElem(this.props);
-    else if (type === 'checkbox') return checkBoxElem(this.props);
-    else return switchElem(this.props);
+    if (type === 'radio') return radioElement(this.props);
+    else if (type === 'checkbox') return checkBoxElement(this.props);
+    else return switchElement(this.props);
   }
 
   handleClick () {
@@ -99,8 +96,8 @@ export default class Toggle extends Component {
     });
 
     return (
-      <div onClick={!disabled && this.handleClick} className={mainClass}>
-           {label && <div className={labelClass}>
+      <div onClick={!disabled && this.handleClick} className={mainClass} >
+           {label && <div className={labelClass} >
                           {label}
                           {count !== undefined && countElem(this.props)}
            </div>}
@@ -137,7 +134,7 @@ function noop () {
 
 Toggle.defaultProps = {
   countElem (p) {
-    return <span className='toggle-count'>({p.count})</span>;
+    return <span className='toggle-count' >({p.count})</span>;
   },
   value: false,
   onChange: noop,

@@ -1,8 +1,8 @@
+@import "../theme";
 @import "../icons";
 
 $width: 120px;
 $height: 40px;
-$primary: green;
 $padding: 4px;
 
 .rf-count {
@@ -22,7 +22,7 @@ $padding: 4px;
   outline: none;
   border-radius: 2px;
   padding: 8px 10px;
-  color: $primary;
+  color: $primary-color;
   display: inline-block;
   vertical-align: top;
   float: left;

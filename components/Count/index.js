@@ -11,9 +11,8 @@ function inRange (value, props) {
     return value >= min;
   } else if (max) {
     return value <= max;
-  } else {
-    return true;
   }
+  return true;
 }
 
 export default class Count extends Component {
@@ -28,8 +27,7 @@ export default class Count extends Component {
   }
 
   shouldComponentUpdate (newProps) {
-    return inRange(newProps.value, newProps) &&
-      (newProps.value !== this.props.value);
+    return inRange(newProps.value, newProps) && (newProps.value !== this.props.value);
   }
 
   onChange (value, action) {
@@ -52,27 +50,37 @@ export default class Count extends Component {
   }
 
   render () {
-    const { name, disabled, value, prefix, suffix } = this.props;
+    const {
+      name,
+      disabled,
+      value,
+      prefix,
+      suffix,
+      decrementElement,
+      incrementElement
+    } = this.props;
+
     const mainClass = classNames('react-filters', 'rf-count', name, { disabled });
     return (
-      <div className={mainClass}>
-        <button
-          className='count-button cb-lower'
+      <div className={mainClass} >
+        <div
+          className='count-button-wrapper cb-lower'
           onClick={!disabled && this.handleDecrement}
         >
-          <i className='icon-remove' />
-        </button>
-        <div className='count-value'>
-          <span className='count-prefix'>{prefix}</span>
-             {value}
-          <span className='count-suffix'>{suffix}</span>
+          {decrementElement(this.props)}
         </div>
-        <button
-          className='count-button cb-upper'
+
+        <div className='count-value' >
+          <span className='count-prefix' >{prefix}</span>
+             {value}
+          <span className='count-suffix' >{suffix}</span>
+        </div>
+        <div
+          className='count-button-wrapper cb-upper'
           onClick={!disabled && this.handleIncrement}
         >
-          <i className='icon-add' />
-        </button>
+          {incrementElement(this.props)}
+        </div>
       </div>
     );
   }
@@ -87,7 +95,9 @@ Count.propTypes = {
   max: PropTypes.number,
   prefix: PropTypes.string,
   suffix: PropTypes.string,
-  step: PropTypes.number
+  step: PropTypes.number,
+  decrementElement: PropTypes.func,
+  incrementElement: PropTypes.func
 };
 
 Count.defaultProps = {
@@ -95,5 +105,19 @@ Count.defaultProps = {
   value: 0,
   min: null,
   max: null,
-  step: 1
+  step: 1,
+  decrementElement () {
+    return (
+      <button className='count-button' >
+        <i className='icon-remove' />
+      </button>
+    );
+  },
+  incrementElement () {
+    return (
+      <button className='count-button' >
+        <i className='icon-add' />
+      </button>
+    );
+  }
 };
