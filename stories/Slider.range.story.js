@@ -25,5 +25,12 @@ storiesOf('Slider Component (Range)', module)
     <Slider name={'steps'} type={'range'} showSteps step={2} />
   ))
   .add('Vertical', () => (
-    <Slider name={'vertical'} type={'range'} orientation={'vertical'} showSteps />
+    <Slider
+      name={'vertical'}
+      type={'range'}
+      orientation={'vertical'}
+      showSteps
+      onDragStart={action('drag-start')}
+      onDragEnd={action('drag-end')}
+    />
   ));

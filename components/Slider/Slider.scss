@@ -36,9 +36,10 @@ $btn-height: 15px;
 }
 
 .rng-slider-wrapper {
-  will-change: transform;
-  transition: transform .2s ease-out;
+  will-change: transform, top;
+  transition: transform .2s ease-out, top .2s ease-out;
   transform: translate3d(0, 0, 0);
+  position: relative;
 }
 
 .rng-control {

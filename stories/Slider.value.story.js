@@ -25,5 +25,11 @@ storiesOf('Slider Component (Value)', module)
     <Slider name={'steps'} showSteps />
   ))
   .add('Vertical', () => (
-    <Slider name={'vertical'} orientation={'vertical'} showSteps />
+    <Slider
+      name={'vertical'}
+      orientation={'vertical'}
+      showSteps
+      onDragStart={action('drag-start')}
+      onDragEnd={action('drag-end')}
+    />
   ));

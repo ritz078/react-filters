@@ -1,5 +1,5 @@
 import constants from '../constants';
-import { capitalize } from '../utils';
+import { capitalize, isVertical } from '../utils';
 
 /**
  * Returns the nearest value that can be obtained after clicking on a
@@ -17,7 +17,7 @@ export default function (e, props, trackOffset) {
   let relativeOffset = e[`page${capitalize(constants[orientation].coordinate)}`]
     - trackOffset[constants[orientation].direction];
 
-  if (orientation === 'vertical') relativeOffset = trackOffset.height - relativeOffset;
+  if (isVertical(orientation)) relativeOffset = trackOffset.height - relativeOffset;
 
   const positionOffset = trackOffset[constants[orientation].dimension] / (max - min);
   const nearestIntegerValue = Math.round(relativeOffset / positionOffset);

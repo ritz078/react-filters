@@ -1,3 +1,3 @@
-export default function (props) {
-  return props.orientation === 'vertical';
+export default function (orientation) {
+  return orientation === 'vertical';
 }

@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import { isVertical } from './utils';
 import constants from './constants';
 
 export default function Rail (props) {
@@ -6,7 +7,7 @@ export default function Rail (props) {
 
   const dimensionValue = ((value[1] - value[0]) / (max - min)) * 100;
 
-  const directionValue = orientation === 'vertical' ? (
+  const directionValue = isVertical(orientation) ? (
     Math.round(((max - value[1]) / max - min) * 100) // as upper value is used to calculate `top`;
   ) : (
     Math.round((value[0] / max - min) * 100)

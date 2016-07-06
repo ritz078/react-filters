@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import classNames from 'classnames';
 import constants from './constants';
+import {isVertical} from './utils';
 
 /**
  * Tells whether a particular step comes in between two controls or not
@@ -38,7 +39,7 @@ function getSteps (props) {
   for (let i = 0; i < totalSteps; i++) {
     let position = getPositionInPercentage(i * step, min, max);
 
-    if (orientation === 'vertical') {
+    if (isVertical(orientation)) {
       position = 100 - position;
     }
 

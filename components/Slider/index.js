@@ -1,7 +1,7 @@
 import React, { PropTypes, Component } from 'react';
 import classNames from 'classnames';
-import { isWithinRange, suppress, isEqual, isVertical } from './utils';
-import getNearestValue from './helpers/getNearestValue';
+import { isWithinRange, suppress, isEqual, isVertical, formatValue, capitalize } from './utils';
+import { getNearestValue } from './helpers';
 import Control from './Control';
 import Steps from './Steps';
 import Rail from './Rail';
@@ -19,7 +19,8 @@ export default class Slider extends Component {
       'onChange',
       'onControlChange',
       'handleClick',
-      'updatePosition'
+      'updatePosition',
+      'onDragExtreme'
     ], this);
   }
 
@@ -69,12 +70,25 @@ export default class Slider extends Component {
     }
   }
 
-  getTrackOffset () {
-    return this.state.trackOffset;
+  onDragExtreme (name, value, action) {
+    const newValue = formatValue(this.props.value, value, name, this.props.type);
+    this.props[`onDrag${capitalize(action)}`]({
+      name: this.props.name,
+      value: newValue,
+      changed: name
+    });
   }
 
   getControl (value, name) {
-    const { step, orientation, min, max, precision, readOnly, disabled } = this.props;
+    const {
+      step,
+      orientation,
+      min,
+      max,
+      readOnly,
+      disabled
+    } = this.props;
+
     return (
       <Control
         value={value}
@@ -85,11 +99,15 @@ export default class Slider extends Component {
         onChange={this.onControlChange}
         min={min}
         max={max}
-        precision={precision}
         readOnly={readOnly}
         disabled={disabled}
+        onDragExtreme={this.onDragExtreme}
       />
     );
+  }
+
+  getTrackOffset () {
+    return this.state.trackOffset;
   }
 
   updatePosition () {
@@ -101,7 +119,7 @@ export default class Slider extends Component {
           trackOffset: track ? track.getBoundingClientRect() : {}
         });
       });
-    });
+    }, 0);
   }
 
   handleClick (e) {
@@ -129,7 +147,7 @@ export default class Slider extends Component {
 
     const mainClass = classNames('react-filters', 'rf-range', name, {
       'rng-disabled': disabled,
-      'rng-vertical': isVertical(this.props)
+      'rng-vertical': isVertical(orientation)
     });
 
     const lowerValue = this.isRangeType() ? value[0] : value;
@@ -178,26 +196,32 @@ Slider.propTypes = {
   name: PropTypes.string.isRequired,
   onChange: PropTypes.func,
   orientation: PropTypes.oneOf(['horizontal', 'vertical']),
-  precision: PropTypes.number,
   step: PropTypes.number,
   value: PropTypes.oneOfType([PropTypes.array, PropTypes.number]),
   rangeTemplate: PropTypes.func,
   readOnly: PropTypes.bool,
   showSteps: PropTypes.bool,
-  type: PropTypes.oneOf(['value', 'range'])
+  type: PropTypes.oneOf(['value', 'range']),
+  onDragStart: PropTypes.func,
+  onDragEnd: PropTypes.func
 };
+
+function noop () {
+
+}
 
 Slider.defaultProps = {
   disabled: false,
   max: 20,
   min: 0,
   orientation: 'horizontal',
-  precision: 0,
   step: 1,
   value: [5, 10],
   readOnly: false,
   showSteps: false,
   type: 'value',
+  onDragStart: noop,
+  onDragEnd: noop,
   rangeTemplate (min, max) {
     return (
       <div className='rng-range' >

@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import classNames from 'classnames';
-import { hasStepDifference, suppress, isWithinRange, removeClass, capitalize } from './utils';
+import { hasStepDifference, suppress, isWithinRange, removeClass, isVertical } from './utils';
 import { getValueFromPosition, getRelativePosition, getPositionFromValue } from './helpers';
 import autoBind from '../utils/autoBind';
 
@@ -22,7 +22,7 @@ export default class Control extends Component {
 
   componentDidMount () {
     this.setSliderPosition(this.props);
-    this.sliderWidth = this.getSliderWidth();
+    this.controlWidth = this.getControlWidth();
   }
 
   componentWillReceiveProps (newProps) {
@@ -43,14 +43,14 @@ export default class Control extends Component {
     this.props.onChange({
       name: this.props.name,
       value,
-      sliderWidth: this.sliderWidth
+      controlWidth: this.controlWidth
     }, isRerenderRequired);
   }
 
-  getSliderWidth () {
-    const slider = this.refs.slider;
-    if (!slider) return 0;
-    return slider.offsetWidth;
+  getControlWidth () {
+    const control = this.refs.control;
+    if (!control) return 0;
+    return control.offsetWidth;
   }
 
   setSliderPosition (props) {
@@ -60,56 +60,68 @@ export default class Control extends Component {
 
   handleMouseDown (e) {
     suppress(e);
-    this.refs.sliderWrapper.className += ' rng-active';
+    this.refs.controlWrapper.className += ' rng-active';
     document.addEventListener('mouseup', this.handleMouseUp);
     if (this.props.readOnly) return;
 
     document.addEventListener('mousemove', this.handleDrag);
+    this.props.onDragExtreme(this.props.name, this.props.value, 'start');
   }
 
   handleMouseUp (e) {
     suppress(e);
-    this.refs.sliderWrapper.className = removeClass(this.refs.sliderWrapper, 'rng-active');
+    this.refs.controlWrapper.className = removeClass(this.refs.controlWrapper, 'rng-active');
     document.removeEventListener('mouseup', this.handleMouseUp);
 
     if (this.props.readOnly) return;
 
     document.removeEventListener('mousemove', this.handleDrag);
+    this.props.onDragExtreme(this.props.name, this.newValue, 'end');
   }
 
   handleTouchStart () {
     document.addEventListener('touchmove', this.handleDrag);
     document.addEventListener('touchend', this.handleTouchEnd);
+    this.props.onDragExtreme(this.props.name, this.props.value, 'start');
   }
 
   handleTouchEnd () {
     document.removeEventListener('touchmove', this.handleDrag);
     document.removeEventListener('touchend', this.handleTouchEnd);
+    this.props.onDragExtreme(this.props.name, this.newValue, 'end');
   }
 
   handleDrag (e) {
     suppress(e);
-    const position = getRelativePosition(e, this.props, this.sliderWidth);
+    const position = getRelativePosition(e, this.props, this.controlWidth);
 
-    const newValue = getValueFromPosition(this.props, position);
-    this.onChange(newValue);
+    this.newValue = getValueFromPosition(this.props, position);
+    this.onChange(this.newValue);
   }
 
   render () {
-    const { name, value, valueFormat, disabled, orientation, trackOffset } = this.props;
+    const { name, value, valueFormat, disabled, orientation } = this.props;
 
     const className = classNames('rng-control', name);
 
-    const sliderPosition = (orientation === 'vertical') ?
-      (trackOffset.height - getPositionFromValue(this.props)) : getPositionFromValue(this.props);
+    const sliderPosition = isVertical(orientation) ?
+      (100 - getPositionFromValue(this.props)) : getPositionFromValue(this.props);
 
-    const style = {
-      transform: `translate${capitalize(constants[orientation].coordinate)}(${sliderPosition}px)
-      translate3d(0,0,0)`
-    };
+    let style;
+
+    if (isVertical(orientation)) {
+      style = {
+        top: `${sliderPosition}%`
+      };
+    } else {
+      style = {
+        transform: `translateX(${sliderPosition}%) translate3d(0,0,0)`
+      };
+    }
+
 
     return (
-      <div className='rng-slider-wrapper' ref={'sliderWrapper'} style={style} >
+      <div className='rng-slider-wrapper' ref={'controlWrapper'} style={style} >
         <div className='rng-value' >
              {valueFormat(value)}
         </div>
@@ -118,7 +130,7 @@ export default class Control extends Component {
           className={className}
           onMouseDown={!disabled && this.handleMouseDown}
           onTouchStart={!disabled && this.handleTouchStart}
-          ref='slider'
+          ref='control'
         ></div>
       </div>
     );
@@ -136,7 +148,8 @@ Control.propTypes = {
   trackOffset: PropTypes.object.isRequired,
   valueFormat: PropTypes.func,
   readOnly: PropTypes.bool,
-  disabled: PropTypes.bool
+  disabled: PropTypes.bool,
+  onDragExtreme: PropTypes.func.isRequired
 };
 
 Control.defaultProps = {

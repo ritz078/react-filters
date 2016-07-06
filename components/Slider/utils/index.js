@@ -6,6 +6,7 @@ import isWithinRange from './isWithinRange';
 import isEqual from './isEqual';
 import removeClass from './removeClass';
 import isVertical from './isVertical';
+import formatValue from './formatValue';
 
 export {
   capitalize,
@@ -15,5 +16,6 @@ export {
   isWithinRange,
   isEqual,
   removeClass,
-  isVertical
+  isVertical,
+  formatValue
 };
