@@ -32,12 +32,7 @@ function switchElement (prop) {
   }
   return (
     <div className='toggle-wrapper' >
-         {
-           prop.iconLabel && prop.iconLabel.length && <div className={labelClass} >
-                                                           {iconLabelText}
-           </div>
-         }
-
+      <div className={labelClass} >{iconLabelText}</div>
       <div className='toggle-btn' />
     </div>
   );
@@ -75,6 +70,8 @@ export default class Toggle extends Component {
 
   render () {
     const {
+      attributes,
+      className,
       name,
       label,
       labelPosition,
@@ -85,7 +82,7 @@ export default class Toggle extends Component {
       type
     } = this.props;
 
-    const mainClass = classNames('react-filters', 'rf-toggle', type, name, {
+    const mainClass = classNames('rf-toggle', type, className, name, {
       'toggle-disabled': disabled,
       'toggle-active': value
     });
@@ -96,18 +93,26 @@ export default class Toggle extends Component {
     });
 
     return (
-      <div onClick={!disabled && this.handleClick} className={mainClass} >
-           {label && <div className={labelClass} >
-                          {label}
-                          {count !== undefined && countElem(this.props)}
-           </div>}
-           {this.getIconElement()}
+      <div
+        onClick={!disabled && this.handleClick}
+        className={mainClass}
+        {...attributes}
+      >
+        {
+          label && <div className={labelClass} >
+                        {label}
+                        {count !== undefined && countElem(this.props)}
+          </div>
+        }
+        {this.getIconElement()}
       </div>
     );
   }
 }
 
 Toggle.propTypes = {
+  attributes: PropTypes.object,
+  className: PropTypes.string,
   count: PropTypes.number,
   countElem: PropTypes.oneOfType([
     PropTypes.func,
@@ -118,12 +123,12 @@ Toggle.propTypes = {
     PropTypes.func,
     PropTypes.element
   ]),
+  iconLabel: PropTypes.array,
   label: PropTypes.string,
   labelPosition: PropTypes.string,
   name: PropTypes.string.isRequired,
   onChange: PropTypes.func,
   value: PropTypes.bool,
-  iconLabel: PropTypes.array,
   type: PropTypes.oneOf([
     'switch', 'radio', 'checkbox'
   ])
@@ -136,9 +141,9 @@ Toggle.defaultProps = {
   countElem (p) {
     return <span className='toggle-count' >({p.count})</span>;
   },
-  value: false,
-  onChange: noop,
-  labelPosition: 'before',
   disabled: false,
+  labelPosition: 'before',
+  onChange: noop,
+  value: false,
   type: 'switch'
 };

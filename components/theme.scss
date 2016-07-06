@@ -6,3 +6,12 @@ $tertiary-color: darkgrey;
 $slider-track-width: 6px;
 $slider-control-width: 15px;
 $slider-step-width: 6px;
+
+//Toggle
+$toggle-height: 24px;
+$toggle-width: 44px;
+$toggle-padding: 2px;
+$toggle-btn-color: #ffffff;
+$toggle-count-color: grey;
+$toggle-label-font-size: $toggle-height * (11px / 22px);
+$toggle-label-line-height: $toggle-label-font-size * 1.6;

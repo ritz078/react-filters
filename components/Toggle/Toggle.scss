@@ -1,13 +1,6 @@
 @import "../icons";
 @import "../theme";
 
-$toggleOffColor: grey !default;
-$toggleOnColor: green !default;
-$toggleHeight: 24px !default;
-$toggleWidth: 44px !default;
-$togglePadding: 2px !default;
-$toggleBtnColor: white !default;
-$toggleCountColor: grey !default;
 $toggleContainerWidth: 200px !default;
 
 .rf-toggle {
@@ -16,13 +9,13 @@ $toggleContainerWidth: 200px !default;
 
 .toggle-wrapper {
   background-color: darken($secondary-color, 30%);
-  width: $toggleWidth;
-  height: $toggleHeight;
-  border-radius: $toggleHeight/2;
-  padding: $togglePadding;
+  width: $toggle-width;
+  height: $toggle-height;
+  border-radius: $toggle-height/2;
+  padding: $toggle-padding;
   display: inline-block;
   position: relative;
-  transition: all .3s ease-in-out;
+  transition: all .3s ease-out;
   box-sizing: border-box;
   .toggle-active & {
     background-color: $primary-color;
@@ -35,53 +28,49 @@ $toggleContainerWidth: 200px !default;
 }
 
 .toggle-btn {
-  height: $toggleHeight - ($togglePadding * 2);
-  width: $toggleHeight - ($togglePadding * 2);
+  height: $toggle-height - ($toggle-padding * 2);
+  width: $toggle-height - ($toggle-padding * 2);
   position: absolute;
-  background-color: $toggleBtnColor;
+  background-color: $toggle-btn-color;
   border-radius: 50%;
   cursor: pointer;
-  left: $togglePadding;
+  left: $toggle-padding;
   display: inline-block;
-  will-change: left, margin-left, transform;
-  transition: left .3s ease-in, margin-left .3s ease-in;
+  transition: all .3s ease-out;
   transform: translate3d(0, 0, 0);
   .toggle-active & {
     left: 100%;
-    margin-left: -($toggleHeight - $togglePadding);
+    margin-left: -($toggle-height - $toggle-padding);
   }
 }
 
 .toggle-label {
   display: inline-block;
   vertical-align: top;
-  width: $toggleContainerWidth - $toggleWidth;
+  width: $toggleContainerWidth - $toggle-width;
   .after {
     float: right;
   }
 }
 
 .toggle-count {
-  color: $toggleCountColor;
+  color: $toggle-count-color;
   margin-left: 5px;
 }
 
-$toggleLabelFontSize: $toggleHeight * (11px / 22px) !default;
-$toggleLabelLineHeight: $toggleLabelFontSize * 1.6;
-
 .toggle-icon-label {
-  font-size: $toggleLabelFontSize;
-  line-height: $toggleLabelLineHeight;
-  width: $toggleWidth - ($toggleHeight + 2 * $togglePadding);
+  font-size: $toggle-label-font-size;
+  line-height: $toggle-label-line-height;
+  width: $toggle-width - ($toggle-height + 2 * $toggle-padding);
   text-align: center;
   color: white;
   &.toggle-il-right {
     float: right;
-    padding-right: $togglePadding;
+    padding-right: $toggle-padding;
   }
   &.toggle-il-left {
     float: left;
-    padding-left: $togglePadding;
+    padding-left: $toggle-padding;
   }
 }
 
