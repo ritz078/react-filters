@@ -1,108 +1,114 @@
 @import "../theme";
 
-$track-height: 6px;
-$btn-height: 15px;
-
-.rng-wrapper {
+.slider-wrapper {
   width: 100%;
   overflow: visible;
   position: relative;
   display: inline-block;
   padding-top: 40px;
-  .rng-vertical & {
-    width: $track-height;
+
+  .slider-vertical & {
+    width: $slider-track-width;
     height: 400px;
     padding-top: 0;
   }
 }
 
-.rng-vertical {
+.slider-vertical {
   width: 20px;
   height: 400px;
   position: relative;
-  .rng-track {
+
+  .slider-track {
     position: absolute;
   }
 }
 
-.rng-track, .rng-rail {
-  height: $track-height;
+.slider-track, .slider-rail {
+  height: $slider-track-width;
   background-color: $secondary-color;
-  border-radius: $track-height/2;
-  .rng-vertical & {
-    width: $track-height;
+  border-radius: $slider-track-width/2;
+
+  .slider-vertical & {
+    width: $slider-track-width;
     height: 400px;
   }
 }
 
-.rng-slider-wrapper {
+.slider-slider-wrapper {
   will-change: transform, top;
   transition: transform .2s ease-out, top .2s ease-out;
   transform: translate3d(0, 0, 0);
   position: relative;
 }
 
-.rng-control {
-  height: $btn-height;
-  width: $btn-height;
-  border-radius: $btn-height/2;
+.slider-control {
+  height: $slider-control-width;
+  width: $slider-control-width;
+  border-radius: $slider-control-width/2;
   background-color: darken($primary-color, 10%);
   position: absolute;
   display: inline-block;
   vertical-align: top;
-  margin-top: -($btn-height + $track-height)/2;
-  margin-left: -$btn-height/2;
+  margin-top: -($slider-control-width + $slider-track-width)/2;
+  margin-left: -$slider-control-width/2;
   cursor: pointer;
   transition: transform .2s ease-out;
-  .rng-disabled & {
+
+  .slider-disabled & {
     background-color: grayscale(darken($primary-color, 10%));
   }
-  .rng-vertical & {
-    margin-left: -($btn-height/2 - $track-height/2);
-    margin-top: -$btn-height/2;
+
+  .slider-vertical & {
+    margin-left: -($slider-control-width/2 - $slider-track-width/2);
+    margin-top: -$slider-control-width/2;
   }
 }
 
-.rng-rail {
+.slider-rail {
   position: relative;
   background-color: $primary-color;
-  will-change: left, width;
-  transition: left .2s ease-out, width .2s ease-out;
-  .rng-disabled & {
+  transition: all .2s ease-out;
+
+  .slider-disabled & {
     background-color: grayscale($primary-color);
   }
 }
 
-.rng-active .rng-slider {
+.slider-active .slider-slider {
   transform: scale(1.4) translate3d(0, 0, 0);
 }
 
 // TODO : prevent text selection in disabled state
 
-.rng-value {
+.slider-value {
   position: absolute;
   width: 40px;
   margin-left: -20px;
   text-align: center;
-  margin-top: - ($track-height + $btn-height/2 + 20px);
-  .rng-disabled & {
+  margin-top: - ($slider-track-width + $slider-control-width/2 + 20px);
+
+  .slider-disabled & {
     color: darken($secondary-color, 20%);
   }
-  .rng-vertical & {
-    margin-top: -($btn-height/2);
+
+  .slider-vertical & {
+    margin-top: -($slider-control-width/2);
     margin-left: -40px;
   }
 }
 
-.rng-range {
+.slider-range {
   div {
     display: inline-block;
     margin-top: 10px;
-    &.rng-range-max {
+
+    &.slider-range-max {
       float: right;
     }
   }
-  .rng-vertical & {
+
+  .slider-vertical & {
     margin-left: 20px;
     div{
       margin-top: 0;
@@ -110,12 +116,14 @@ $btn-height: 15px;
     position: absolute;
     top: 0;
     height: 100%;
-    .rng-range-min{
+
+    .slider-range-min{
       position: absolute;
       bottom: 0;
       margin-bottom: -10px;
     }
-    .rng-range-max{
+
+    .slider-range-max{
       margin-top: -10px;
     }
   }
@@ -123,33 +131,36 @@ $btn-height: 15px;
 
 $stepWidth: 6px;
 
-.rng-steps-wrapper {
+.slider-steps-wrapper {
   width: 100%;
-  height: $track-height;
-  margin-top: -$track-height;
+  height: $slider-track-width;
+  margin-top: -$slider-track-width;
   position: absolute;
-  .rng-vertical & {
+
+  .slider-vertical & {
     height: 100%;
-    margin-top: -($stepWidth + 4px)/2;
+    margin-top: -($slider-step-width + 4px)/2;
   }
 }
 
-.rng-step {
-  width: $stepWidth;
-  height: $stepWidth;
+.slider-step {
+  width: $slider-step-width;
+  height: $slider-step-width;
   background-color: white;
   display: inline-block;
   position: absolute;
   margin-top: -2px;
   border-radius: 50%;
   border: 2px solid $secondary-color;
-  margin-left: -($stepWidth+4px)/2;
+  margin-left: -($slider-step-width+4px)/2;
   will-change: border-color;
   transition: border-color .2s ease-out;
-  &.rng-step-active {
+
+  &.slider-step-active {
     border-color: $primary-color;
   }
-  .rng-vertical & {
+
+  .slider-vertical & {
     margin-left: -2px;
     margin-top: 0;
   }

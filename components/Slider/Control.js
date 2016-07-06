@@ -34,17 +34,19 @@ export default class Control extends Component {
   shouldComponentUpdate (newProps) {
     const dimension = constants[newProps.orientation].dimension;
 
-    return (hasStepDifference(newProps.value, this.props.value, newProps.step) &&
+    return (
+      (hasStepDifference(newProps.value, this.props.value, newProps.step) &&
       isWithinRange(newProps, newProps.value)) ||
-      newProps.trackOffset[dimension] !== this.props.trackOffset[dimension];
+      newProps.trackOffset[dimension] !== this.props.trackOffset[dimension]
+    );
   }
 
-  onChange (value, isRerenderRequired = false) {
+  onChange (value, isRenderRequired = false) {
     this.props.onChange({
       name: this.props.name,
       value,
       controlWidth: this.controlWidth
-    }, isRerenderRequired);
+    }, isRenderRequired);
   }
 
   getControlWidth () {
@@ -60,7 +62,7 @@ export default class Control extends Component {
 
   handleMouseDown (e) {
     suppress(e);
-    this.refs.controlWrapper.className += ' rng-active';
+    this.refs.controlWrapper.className += ' slider-active';
     document.addEventListener('mouseup', this.handleMouseUp);
     if (this.props.readOnly) return;
 
@@ -70,7 +72,7 @@ export default class Control extends Component {
 
   handleMouseUp (e) {
     suppress(e);
-    this.refs.controlWrapper.className = removeClass(this.refs.controlWrapper, 'rng-active');
+    this.refs.controlWrapper.className = removeClass(this.refs.controlWrapper, 'slider-active');
     document.removeEventListener('mouseup', this.handleMouseUp);
 
     if (this.props.readOnly) return;
@@ -100,9 +102,9 @@ export default class Control extends Component {
   }
 
   render () {
-    const { name, value, valueFormat, disabled, orientation } = this.props;
+    const { name, value, toolTipTemplate, disabled, orientation } = this.props;
 
-    const className = classNames('rng-control', name);
+    const className = classNames('slider-control', name);
 
     const sliderPosition = isVertical(orientation) ?
       (100 - getPositionFromValue(this.props)) : getPositionFromValue(this.props);
@@ -121,9 +123,9 @@ export default class Control extends Component {
 
 
     return (
-      <div className='rng-slider-wrapper' ref={'controlWrapper'} style={style} >
-        <div className='rng-value' >
-             {valueFormat(value)}
+      <div className='slider-slider-wrapper' ref={'controlWrapper'} style={style} >
+        <div className='slider-value' >
+             {toolTipTemplate(value)}
         </div>
         <div
           draggable='false'
@@ -138,22 +140,16 @@ export default class Control extends Component {
 }
 
 Control.propTypes = {
-  onChange: PropTypes.func,
-  step: PropTypes.number.isRequired,
-  name: PropTypes.string.isRequired,
-  value: PropTypes.number.isRequired,
-  orientation: PropTypes.string.isRequired,
-  min: PropTypes.number.isRequired,
+  disabled: PropTypes.bool.isRequired,
   max: PropTypes.number.isRequired,
+  min: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  onDragExtreme: PropTypes.func.isRequired,
+  orientation: PropTypes.string.isRequired,
+  readOnly: PropTypes.bool.isRequired,
+  step: PropTypes.number.isRequired,
+  toolTipTemplate: PropTypes.func.isRequired,
   trackOffset: PropTypes.object.isRequired,
-  valueFormat: PropTypes.func,
-  readOnly: PropTypes.bool,
-  disabled: PropTypes.bool,
-  onDragExtreme: PropTypes.func.isRequired
-};
-
-Control.defaultProps = {
-  valueFormat (value) {
-    return value;
-  }
+  value: PropTypes.number.isRequired
 };

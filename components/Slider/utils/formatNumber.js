@@ -1,6 +1,6 @@
 /**
  * Returns the closest integer value to the value calculated by cursor position
- * @param value unformatted value calculated by cursor position
+ * @param value non-formatted value calculated by cursor position
  * @param step step difference allowed in the slider
  * @param min minimum value on the slider
  * @returns {*} the nearest rounded valid number

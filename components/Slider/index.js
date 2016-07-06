@@ -30,9 +30,11 @@ export default class Slider extends Component {
   }
 
   shouldComponentUpdate (newProps, newState) {
-    return isWithinRange(newProps, newProps.value) &&
+    return (
+      isWithinRange(newProps, newProps.value) &&
       (!isEqual(this.props.value, newProps.value) || !!this.isRerenderRequired ||
-      this.state.trackOffset.width !== newState.trackOffset.width);
+      this.state.trackOffset.width !== newState.trackOffset.width)
+    );
   }
 
   componentDidUpdate () {
@@ -55,11 +57,10 @@ export default class Slider extends Component {
 
   onControlChange (data, isRerenderRequired) {
     let value;
-    if (!this.isRangeType()) {
-      value = data.value;
+    if (this.isRangeType()) {
+      value = formatValue(this.props.value, data.value, data.name, this.props.type);
     } else {
-      value = data.name === 'lower' ? [data.value, this.props.value[1]] :
-        [this.props.value[0], data.value];
+      value = data.value;
     }
 
     // only trigger on first onChange trigger
@@ -86,7 +87,8 @@ export default class Slider extends Component {
       min,
       max,
       readOnly,
-      disabled
+      disabled,
+      toolTipTemplate
     } = this.props;
 
     return (
@@ -102,6 +104,7 @@ export default class Slider extends Component {
         readOnly={readOnly}
         disabled={disabled}
         onDragExtreme={this.onDragExtreme}
+        toolTipTemplate={toolTipTemplate}
       />
     );
   }
@@ -126,6 +129,7 @@ export default class Slider extends Component {
     suppress(e);
     const newData = getNearestValue(e, this.props, this.getTrackOffset());
     this.onChange(newData.value, newData.changed);
+    this.onDragExtreme(newData.changed, newData.value, 'end');
   }
 
   isRangeType () {
@@ -142,21 +146,22 @@ export default class Slider extends Component {
       value,
       rangeTemplate,
       showSteps,
-      orientation
+      orientation,
+      attributes
     } = this.props;
 
     const mainClass = classNames('react-filters', 'rf-range', name, {
-      'rng-disabled': disabled,
-      'rng-vertical': isVertical(orientation)
+      'slider-disabled': disabled,
+      'slider-vertical': isVertical(orientation)
     });
 
     const lowerValue = this.isRangeType() ? value[0] : value;
 
     return (
-      <div className={mainClass} >
-        <div className='rng-wrapper' >
+      <div className={mainClass} {...attributes}>
+        <div className='slider-wrapper' >
           <div
-            className='rng-track'
+            className='slider-track'
             ref='track'
             onClick={!disabled && !showSteps && this.handleClick}
           >
@@ -166,6 +171,7 @@ export default class Slider extends Component {
               value={value}
               orientation={orientation}
             />}
+
           </div>
              {
                showSteps && <Steps
@@ -190,20 +196,22 @@ export default class Slider extends Component {
 }
 
 Slider.propTypes = {
+  attributes: PropTypes.object,
   disabled: PropTypes.bool,
   max: PropTypes.number,
   min: PropTypes.number,
   name: PropTypes.string.isRequired,
   onChange: PropTypes.func,
+  onDragEnd: PropTypes.func,
+  onDragStart: PropTypes.func,
   orientation: PropTypes.oneOf(['horizontal', 'vertical']),
-  step: PropTypes.number,
-  value: PropTypes.oneOfType([PropTypes.array, PropTypes.number]),
   rangeTemplate: PropTypes.func,
   readOnly: PropTypes.bool,
   showSteps: PropTypes.bool,
+  step: PropTypes.number,
+  toolTipTemplate: PropTypes.func,
   type: PropTypes.oneOf(['value', 'range']),
-  onDragStart: PropTypes.func,
-  onDragEnd: PropTypes.func
+  value: PropTypes.oneOfType([PropTypes.array, PropTypes.number])
 };
 
 function noop () {
@@ -211,23 +219,27 @@ function noop () {
 }
 
 Slider.defaultProps = {
+  attributes: {},
   disabled: false,
   max: 20,
   min: 0,
-  orientation: 'horizontal',
-  step: 1,
-  value: [5, 10],
-  readOnly: false,
-  showSteps: false,
-  type: 'value',
-  onDragStart: noop,
   onDragEnd: noop,
+  onDragStart: noop,
+  orientation: 'horizontal',
   rangeTemplate (min, max) {
     return (
-      <div className='rng-range' >
-        <div className='rng-range-min' >{min}</div>
-        <div className='rng-range-max' >{max}</div>
+      <div className='slider-range' >
+        <div className='slider-range-min' >{min}</div>
+        <div className='slider-range-max' >{max}</div>
       </div>
     );
-  }
+  },
+  readOnly: false,
+  showSteps: false,
+  step: 1,
+  toolTipTemplate (value) {
+    return value;
+  },
+  type: 'value',
+  value: [5, 10]
 };

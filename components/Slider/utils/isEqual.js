@@ -1,5 +1,5 @@
 /**
- * Tells if two arrays are exactly similar
+ * Tells if two values are exactly similar
  * @param val1
  * @param val2
  * @returns {boolean}

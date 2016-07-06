@@ -39,16 +39,12 @@ function getSteps (props) {
   for (let i = 0; i < totalSteps; i++) {
     let position = getPositionInPercentage(i * step, min, max);
 
-    if (isVertical(orientation)) {
-      position = 100 - position;
-    }
+    if (isVertical(orientation)) position = 100 - position;
 
-    const style = {
-      [constants[orientation].direction]: `${position}%`
-    };
+    const style = { [constants[orientation].direction]: `${position}%` };
 
-    const className = classNames('rng-step', {
-      'rng-step-active': isRangeType && isInActiveRange(i * step, value)
+    const className = classNames('slider-step', {
+      'slider-step-active': isRangeType && isInActiveRange(i * step, value)
     });
 
     steps.push(<span style={style} key={i} className={className} />);
@@ -59,18 +55,18 @@ function getSteps (props) {
 
 export default function Steps (props) {
   return (
-    <div className='rng-steps-wrapper' onClick={props.onClick} >
+    <div className='slider-steps-wrapper' onClick={props.onClick} >
          {getSteps(props)}
     </div>
   );
 }
 
 Steps.propTypes = {
-  step: PropTypes.number.isRequired,
-  min: PropTypes.number,
-  max: PropTypes.number,
-  onClick: PropTypes.func.isRequired,
   isRangeType: PropTypes.bool.isRequired,
-  orientation: PropTypes.string.isRequired
+  max: PropTypes.number.isRequired,
+  min: PropTypes.number.isRequired,
+  onClick: PropTypes.func.isRequired,
+  orientation: PropTypes.string.isRequired,
+  step: PropTypes.number.isRequired
 };
 

@@ -10,6 +10,7 @@
 export default function (currentVal, newValue, changed, type) {
   let val = newValue;
   if (type === 'range') {
+    if (typeof newValue === 'object') return newValue;
     val = (changed === 'lower') ? [newValue, currentVal[1]] : [currentVal[0], newValue];
   }
   return val;
