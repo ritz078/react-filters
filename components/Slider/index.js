@@ -55,7 +55,7 @@ export default class Slider extends Component {
     this.props.onChange(args);
   }
 
-  onControlChange (data, isRerenderRequired) {
+  onControlChange (data, isRenderRequired) {
     let value;
     if (this.isRangeType()) {
       value = formatValue(this.props.value, data.value, data.name, this.props.type);
@@ -64,7 +64,7 @@ export default class Slider extends Component {
     }
 
     // only trigger on first onChange trigger
-    this.isRerenderRequired = isRerenderRequired;
+    this.isRerenderRequired = isRenderRequired;
 
     if (isWithinRange(this.props, value) && !isEqual(this.props.value, value)) {
       this.onChange(value, data.name);
@@ -150,7 +150,7 @@ export default class Slider extends Component {
       attributes
     } = this.props;
 
-    const mainClass = classNames('react-filters', 'rf-range', name, {
+    const mainClass = classNames('react-filters', 'rf-slider', name, {
       'slider-disabled': disabled,
       'slider-vertical': isVertical(orientation)
     });
@@ -165,31 +165,33 @@ export default class Slider extends Component {
             ref='track'
             onClick={!disabled && !showSteps && this.handleClick}
           >
-            {this.isRangeType() && <Rail
+            {
+              this.isRangeType() && <Rail
+                min={min}
+                max={max}
+                value={value}
+                orientation={orientation}
+              />
+            }
+
+          </div>
+          {
+            showSteps && <Steps
+              step={step}
               min={min}
               max={max}
               value={value}
+              onClick={this.handleClick}
+              isRangeType={this.isRangeType()}
               orientation={orientation}
-            />}
+            />
+          }
 
-          </div>
-             {
-               showSteps && <Steps
-                 step={step}
-                 min={min}
-                 max={max}
-                 value={value}
-                 onClick={this.handleClick}
-                 isRangeType={this.isRangeType()}
-                 orientation={orientation}
-               />
-             }
-
-             {this.getControl(lowerValue, 'lower')}
-             {this.isRangeType() && this.getControl(value[1], 'upper')}
+          {this.getControl(lowerValue, 'lower')}
+          {this.isRangeType() && this.getControl(value[1], 'upper')}
 
         </div>
-           {rangeTemplate(min, max)}
+        {rangeTemplate(min, max)}
       </div>
     );
   }

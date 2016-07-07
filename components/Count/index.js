@@ -3,16 +3,8 @@ import classNames from 'classnames';
 
 import autoBind from '../utils/autoBind';
 
-function inRange (value, props) {
-  const { min, max } = props;
-  if (min !== null && max !== null) {
-    return value >= min && value <= max;
-  } else if (min) {
-    return value >= min;
-  } else if (max) {
-    return value <= max;
-  }
-  return true;
+function inRange (value, min, max) {
+  return value >= min && value <= max;
 }
 
 export default class Count extends Component {
@@ -27,12 +19,17 @@ export default class Count extends Component {
   }
 
   shouldComponentUpdate (newProps) {
-    return inRange(newProps.value, newProps) && (newProps.value !== this.props.value);
+    const { value, min, max } = newProps;
+    return (
+      inRange(value, min, max) &&
+      (value !== this.props.value)
+    );
   }
 
   onChange (value, action) {
-    if (inRange(value, this.props)) {
-      const { name, onChange } = this.props;
+    const { name, onChange, min, max } = this.props;
+
+    if (inRange(value, min, max)) {
       onChange({
         name,
         value,
@@ -72,7 +69,7 @@ export default class Count extends Component {
 
         <div className='count-value' >
           <span className='count-prefix' >{prefix}</span>
-             {value}
+          {value}
           <span className='count-suffix' >{suffix}</span>
         </div>
         <div
@@ -87,25 +84,20 @@ export default class Count extends Component {
 }
 
 Count.propTypes = {
-  name: PropTypes.string.isRequired,
-  disabled: PropTypes.bool,
-  onChange: PropTypes.func.isRequired,
-  value: PropTypes.number,
-  min: PropTypes.number,
-  max: PropTypes.number,
-  prefix: PropTypes.string,
-  suffix: PropTypes.string,
-  step: PropTypes.number,
   decrementElement: PropTypes.func,
-  incrementElement: PropTypes.func
+  disabled: PropTypes.bool,
+  incrementElement: PropTypes.func,
+  max: PropTypes.number,
+  min: PropTypes.number,
+  name: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  prefix: PropTypes.string,
+  step: PropTypes.number,
+  suffix: PropTypes.string,
+  value: PropTypes.number
 };
 
 Count.defaultProps = {
-  disabled: false,
-  value: 0,
-  min: null,
-  max: null,
-  step: 1,
   decrementElement () {
     return (
       <button className='count-button' >
@@ -113,11 +105,16 @@ Count.defaultProps = {
       </button>
     );
   },
+  disabled: false,
   incrementElement () {
     return (
       <button className='count-button' >
         <i className='icon-add' />
       </button>
     );
-  }
+  },
+  max: Number.POSITIVE_INFINITY,
+  min: Number.NEGATIVE_INFINITY,
+  step: 1,
+  value: 0
 };

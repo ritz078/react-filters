@@ -68,6 +68,10 @@ export default class Toggle extends Component {
     });
   }
 
+  isNormal () {
+    return this.props.mode === 'normal';
+  }
+
   render () {
     const {
       attributes,
@@ -84,7 +88,8 @@ export default class Toggle extends Component {
 
     const mainClass = classNames('rf-toggle', type, className, name, {
       'toggle-disabled': disabled,
-      'toggle-active': value
+      'toggle-active': value,
+      'toggle-tag': !this.isNormal()
     });
 
     const labelClass = classNames('toggle-label', {
@@ -100,11 +105,11 @@ export default class Toggle extends Component {
       >
         {
           label && <div className={labelClass} >
-                        {label}
-                        {count !== undefined && countElem(this.props)}
+            {label}
+            {count !== undefined && countElem(this.props)}
           </div>
         }
-        {this.getIconElement()}
+        {this.isNormal() && this.getIconElement()}
       </div>
     );
   }
@@ -126,6 +131,7 @@ Toggle.propTypes = {
   iconLabel: PropTypes.array,
   label: PropTypes.string,
   labelPosition: PropTypes.string,
+  mode: PropTypes.oneOf(['normal', 'tag']),
   name: PropTypes.string.isRequired,
   onChange: PropTypes.func,
   value: PropTypes.bool,
@@ -143,6 +149,7 @@ Toggle.defaultProps = {
   },
   disabled: false,
   labelPosition: 'before',
+  mode: 'normal',
   onChange: noop,
   value: false,
   type: 'switch'

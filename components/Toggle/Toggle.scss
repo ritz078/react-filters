@@ -1,10 +1,22 @@
 @import "../icons";
 @import "../theme";
+@import "../mixins";
 
 $toggleContainerWidth: 200px !default;
 
 .rf-toggle {
   display: inline-block;
+  i{
+    color: $tertiary-color;
+    transition: all .3s ease-out;
+  }
+  &.toggle-active i{
+    color: $primary-color;
+  }
+  &.toggle-tag.toggle-disabled{
+    background-color: $secondary-color;
+    border: darken($secondary-color, 35%);
+  }
 }
 
 .toggle-wrapper {
@@ -24,6 +36,24 @@ $toggleContainerWidth: 200px !default;
     background-color: grey;
     opacity: 0.5;
     pointer-events: none;
+  }
+}
+
+.toggle-tag{
+  border: 1px solid $primary-color;
+  border-radius: $toggle-height;
+  cursor: pointer;
+  &:hover{
+    background-color: $secondary-color;
+  }
+  &.toggle-active{
+    background-color: $primary-color;
+    &:hover{
+      background-color: darken($primary-color, 5%);
+    }
+    .toggle-count, .toggle-label{
+      color: #ffffff;
+    }
   }
 }
 
@@ -48,8 +78,14 @@ $toggleContainerWidth: 200px !default;
   display: inline-block;
   vertical-align: top;
   width: $toggleContainerWidth - $toggle-width;
+  @include no-select();
   .after {
     float: right;
+  }
+  .toggle-tag &{
+    text-align: center;
+    padding: 6px 0;
+    line-height: 20px;
   }
 }
 

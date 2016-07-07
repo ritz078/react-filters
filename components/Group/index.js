@@ -25,7 +25,7 @@ export default class Group extends Component {
   }
 
   getElements () {
-    const { value, type } = this.props;
+    const { value, type, display } = this.props;
     return value.map((val, i) => (
       <Toggle
         type={type}
@@ -34,6 +34,7 @@ export default class Group extends Component {
         onChange={this.handleChange}
         value={val.value}
         key={i}
+        display={display}
       />
     ));
   }
@@ -63,7 +64,7 @@ export default class Group extends Component {
     const mainClass = classNames('rf-group', `${type}-group`, name, className);
     return (
       <div className={mainClass} {...attributes}>
-           {this.getElements()}
+        {this.getElements()}
       </div>
     );
   }
@@ -72,6 +73,7 @@ export default class Group extends Component {
 Group.propTypes = {
   attributes: PropTypes.object,
   className: PropTypes.string,
+  display: PropTypes.oneOf(['normal', 'tag']),
   name: PropTypes.string.isRequired,
   value: PropTypes.arrayOf(
     PropTypes.shape({

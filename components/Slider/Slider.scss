@@ -1,5 +1,13 @@
 @import "../theme";
 
+.rf-slider{
+  overflow: hidden;
+  padding: 0 10px;
+  &.slider-vertical{
+    overflow: visible;
+  }
+}
+
 .slider-wrapper {
   width: 100%;
   overflow: visible;
