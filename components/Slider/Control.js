@@ -43,9 +43,9 @@ export default class Control extends Component {
 
   onChange (value, isRenderRequired = false) {
     this.props.onChange({
+      controlWidth: this.controlWidth,
       name: this.props.name,
-      value,
-      controlWidth: this.controlWidth
+      value
     }, isRenderRequired);
   }
 
@@ -128,8 +128,8 @@ export default class Control extends Component {
              {toolTipTemplate(value)}
         </div>
         <div
-          draggable='false'
           className={className}
+          draggable='false'
           onMouseDown={!disabled && this.handleMouseDown}
           onTouchStart={!disabled && this.handleTouchStart}
           ref='control'

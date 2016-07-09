@@ -31,9 +31,9 @@ export default class Count extends Component {
 
     if (inRange(value, min, max)) {
       onChange({
+        action,
         name,
-        value,
-        action
+        value
       });
     }
   }

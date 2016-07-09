@@ -47,7 +47,7 @@ function getSteps (props) {
       'slider-step-active': isRangeType && isInActiveRange(i * step, value)
     });
 
-    steps.push(<span style={style} key={i} className={className} />);
+    steps.push(<span className={className} key={i} style={style} />);
   }
 
   return steps;

@@ -74,9 +74,9 @@ export default class Slider extends Component {
   onDragExtreme (name, value, action) {
     const newValue = formatValue(this.props.value, value, name, this.props.type);
     this.props[`onDrag${capitalize(action)}`]({
+      changed: name,
       name: this.props.name,
-      value: newValue,
-      changed: name
+      value: newValue
     });
   }
 
@@ -93,18 +93,18 @@ export default class Slider extends Component {
 
     return (
       <Control
-        value={value}
-        name={name}
-        step={step}
-        orientation={orientation}
-        trackOffset={this.getTrackOffset()}
-        onChange={this.onControlChange}
-        min={min}
-        max={max}
-        readOnly={readOnly}
         disabled={disabled}
+        max={max}
+        min={min}
+        name={name}
+        onChange={this.onControlChange}
         onDragExtreme={this.onDragExtreme}
+        orientation={orientation}
+        readOnly={readOnly}
+        step={step}
         toolTipTemplate={toolTipTemplate}
+        trackOffset={this.getTrackOffset()}
+        value={value}
       />
     );
   }
@@ -158,32 +158,32 @@ export default class Slider extends Component {
     const lowerValue = this.isRangeType() ? value[0] : value;
 
     return (
-      <div className={mainClass} {...attributes}>
+      <div {...attributes} className={mainClass}>
         <div className='slider-wrapper' >
           <div
             className='slider-track'
-            ref='track'
             onClick={!disabled && !showSteps && this.handleClick}
+            ref='track'
           >
             {
               this.isRangeType() && <Rail
-                min={min}
                 max={max}
-                value={value}
+                min={min}
                 orientation={orientation}
+                value={value}
               />
             }
 
           </div>
           {
             showSteps && <Steps
-              step={step}
-              min={min}
-              max={max}
-              value={value}
-              onClick={this.handleClick}
               isRangeType={this.isRangeType()}
+              max={max}
+              min={min}
+              onClick={this.handleClick}
               orientation={orientation}
+              step={step}
+              value={value}
             />
           }
 

@@ -25,16 +25,16 @@ export default class Group extends Component {
   }
 
   getElements () {
-    const { value, type, display } = this.props;
+    const { value, type, mode } = this.props;
     return value.map((val, i) => (
       <Toggle
-        type={type}
         {...val}
+        key={i}
+        mode={mode}
         name={`${type}-${i}`}
         onChange={this.handleChange}
+        type={type}
         value={val.value}
-        key={i}
-        display={display}
       />
     ));
   }
@@ -52,10 +52,10 @@ export default class Group extends Component {
     }
 
     this.props.onChange({
+      index,
       name,
-      value: newValue,
       oldValue: value,
-      index
+      value: newValue
     });
   }
 
@@ -63,7 +63,7 @@ export default class Group extends Component {
     const { name, className, attributes, type } = this.props;
     const mainClass = classNames('rf-group', `${type}-group`, name, className);
     return (
-      <div className={mainClass} {...attributes}>
+      <div {...attributes} className={mainClass}>
         {this.getElements()}
       </div>
     );
@@ -73,17 +73,17 @@ export default class Group extends Component {
 Group.propTypes = {
   attributes: PropTypes.object,
   className: PropTypes.string,
-  display: PropTypes.oneOf(['normal', 'tag']),
+  mode: PropTypes.oneOf(['normal', 'tag']),
   name: PropTypes.string.isRequired,
-  value: PropTypes.arrayOf(
-    PropTypes.shape({
-      label: PropTypes.string,
-      value: PropTypes.bool,
-      count: PropTypes.number
-    })
-  ),
   onChange: PropTypes.func.isRequired,
   type: PropTypes.oneOf([
     'radio', 'checkbox', 'switch'
-  ])
+  ]),
+  value: PropTypes.arrayOf(
+    PropTypes.shape({
+      count: PropTypes.number,
+      label: PropTypes.string,
+      value: PropTypes.bool
+    })
+  )
 };

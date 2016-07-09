@@ -28,11 +28,11 @@ export default function (e, props, trackOffset) {
       Math.abs(nearestValue - value[1])
     ];
     return distancesFromValues[0] < distancesFromValues[1] ? ({
-      value: [nearestValue, value[1]],
-      changed: 'lower'
+      changed: 'lower',
+      value: [nearestValue, value[1]]
     }) : ({
-      value: [value[0], nearestValue],
-      changed: 'upper'
+      changed: 'upper',
+      value: [value[0], nearestValue]
     });
   } else {
     return { value: nearestValue };

@@ -15,10 +15,10 @@ export default class AutoComplete extends Component {
     super(props);
 
     this.state = {
-      results: props.showInitialResults ? props.list : [],
-      selectedIndex: 0,
+      multiSelected: [],
       query: '',
-      multiSelected: []
+      results: props.showInitialResults ? props.list : [],
+      selectedIndex: 0
     };
 
     autoBind([
@@ -64,10 +64,10 @@ export default class AutoComplete extends Component {
 
       if (multiSelect) {
         onSelect({
-          name,
-          value: this.state.multiSelected,
           action: 'added',
-          changed: results[selectedIndex]
+          changed: results[selectedIndex],
+          name,
+          value: this.state.multiSelected
         });
       } else if (results[selectedIndex]) {
         onSelect({
@@ -77,9 +77,9 @@ export default class AutoComplete extends Component {
       }
 
       this.setState({
+        query: multiSelect ? '' : results[selectedIndex][valueKey],
         results: [],
-        selectedIndex: 0,
-        query: multiSelect ? '' : results[selectedIndex][valueKey]
+        selectedIndex: 0
       });
     }
   }
@@ -107,17 +107,17 @@ export default class AutoComplete extends Component {
 
     return {
       caseSensitive,
+      distance,
       id,
       include,
       keys,
+      location,
+      maxPatternLength,
       shouldSort,
       sortFn,
-      tokenize,
-      verbose,
-      maxPatternLength,
-      distance,
       threshold,
-      location
+      tokenize,
+      verbose
     };
   }
 
@@ -128,8 +128,8 @@ export default class AutoComplete extends Component {
       return (
         <Suggestions
           results={results}
-          selectedIndex={selectedIndex}
           resultsTemplate={resultsTemplate}
+          selectedIndex={selectedIndex}
         />
       );
     }
@@ -142,10 +142,10 @@ export default class AutoComplete extends Component {
     multiSelected.splice(id, 1);
     this.setState({ multiSelected }, () => (
       this.props.onSelect({
-        name: this.props.name,
-        value: this.state.multiSelected,
         action: 'removed',
-        changed
+        changed,
+        name: this.props.name,
+        value: this.state.multiSelected
       })
     ));
   }
@@ -186,19 +186,19 @@ export default class AutoComplete extends Component {
     return (
       <div className={mainClass} onKeyDown={this.onKeyDown}>
         <SearchBox
-          onQueryChange={this.handleQueryChange}
           Reset={Reset}
-          value={this.state.query}
-          multiSelected={this.state.multiSelected}
-          onReset={this.onResetClick}
-          placeholder={placeholder}
-          onFocus={onFocus}
-          onBlur={onBlur}
           disabled={disabled}
           multiSelect={multiSelect}
-          showTagRemove={showTagRemove}
-          valueKey={valueKey}
+          multiSelected={this.state.multiSelected}
+          onBlur={onBlur}
+          onFocus={onFocus}
+          onQueryChange={this.handleQueryChange}
+          onReset={this.onResetClick}
           onTagRemove={this.removeTag}
+          placeholder={placeholder}
+          showTagRemove={showTagRemove}
+          value={this.state.query}
+          valueKey={valueKey}
         />
 
            {this.getSuggestions()}
@@ -208,59 +208,59 @@ export default class AutoComplete extends Component {
 }
 
 AutoComplete.propTypes = {
+  Reset: PropTypes.func,
   async: PropTypes.bool,
-  showInitialResults: PropTypes.bool,
-  debounce: PropTypes.number,
-  disabled: PropTypes.bool,
-  name: PropTypes.string.isRequired,
-  onChange: PropTypes.func,
   caseSensitive: PropTypes.bool,
   className: PropTypes.string,
+  debounce: PropTypes.number,
+  disabled: PropTypes.bool,
   distance: PropTypes.number,
   id: PropTypes.string,
   include: PropTypes.array,
-  maxPatternLength: PropTypes.number,
-  onSelect: PropTypes.func.isRequired,
-  width: PropTypes.number,
   keys: PropTypes.oneOfType([PropTypes.array, PropTypes.string]),
   list: PropTypes.array,
   location: PropTypes.number,
+  maxPatternLength: PropTypes.number,
+  multiSelect: PropTypes.bool,
+  name: PropTypes.string.isRequired,
+  onBlur: PropTypes.func,
+  onChange: PropTypes.func,
+  onFocus: PropTypes.func,
+  onSelect: PropTypes.func.isRequired,
   placeholder: PropTypes.string,
   resultsTemplate: PropTypes.func,
   shouldSort: PropTypes.bool,
+  showInitialResults: PropTypes.bool,
+  showTagRemove: PropTypes.bool,
   sortFn: PropTypes.func,
   threshold: PropTypes.number,
   tokenize: PropTypes.bool,
-  verbose: PropTypes.bool,
-  onFocus: PropTypes.func,
-  onBlur: PropTypes.func,
-  Reset: PropTypes.func,
   valueKey: PropTypes.string,
-  showTagRemove: PropTypes.bool,
-  multiSelect: PropTypes.bool
+  verbose: PropTypes.bool,
+  width: PropTypes.number
 };
 
 AutoComplete.defaultProps = {
   async: false,
-  debounce: 250,
-  showInitialResults: false,
-  disabled: false,
   caseSensitive: false,
+  debounce: 250,
+  disabled: false,
   distance: 100,
   include: [],
   location: 0,
-  width: 430,
+  multiSelect: false,
   placeholder: 'Search',
   resultsTemplate: Suggestions.defaultResultsTemplate,
   shouldSort: true,
+  showInitialResults: false,
+  showTagRemove: true,
   sortFn (a, b) {
     return a.score - b.score;
   },
+  tags: false,
   threshold: 0.6,
   tokenize: false,
-  verbose: false,
   valueKey: 'title',
-  tags: false,
-  showTagRemove: true,
-  multiSelect: false
+  verbose: false,
+  width: 430
 };

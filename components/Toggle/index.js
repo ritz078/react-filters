@@ -99,9 +99,9 @@ export default class Toggle extends Component {
 
     return (
       <div
-        onClick={!disabled && this.handleClick}
-        className={mainClass}
         {...attributes}
+        className={mainClass}
+        onClick={!disabled && this.handleClick}
       >
         {
           label && <div className={labelClass} >
@@ -134,10 +134,10 @@ Toggle.propTypes = {
   mode: PropTypes.oneOf(['normal', 'tag']),
   name: PropTypes.string.isRequired,
   onChange: PropTypes.func,
-  value: PropTypes.bool,
   type: PropTypes.oneOf([
     'switch', 'radio', 'checkbox'
-  ])
+  ]),
+  value: PropTypes.bool
 };
 
 function noop () {
@@ -151,6 +151,6 @@ Toggle.defaultProps = {
   labelPosition: 'before',
   mode: 'normal',
   onChange: noop,
-  value: false,
-  type: 'switch'
+  type: 'switch',
+  value: false
 };

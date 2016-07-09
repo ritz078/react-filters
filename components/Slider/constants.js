@@ -1,13 +1,13 @@
 export default {
   horizontal: {
+    coordinate: 'x',
     dimension: 'width',
-    direction: 'left',
-    coordinate: 'x'
+    direction: 'left'
   },
   vertical: {
+    coordinate: 'y',
     dimension: 'height',
-    direction: 'top',
-    coordinate: 'y'
+    direction: 'top'
   }
 };
 

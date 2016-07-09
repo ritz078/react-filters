@@ -24,18 +24,18 @@ export default class InputRange extends Component {
     return (
       <div className={mainClass}>
         <AutoComplete
-          name={'ir-lower'}
-          list={suggestions[0]}
-          onSelect={this.onSelect}
           keys={['author', 'title']}
+          list={suggestions[0]}
+          name={'ir-lower'}
+          onSelect={this.onSelect}
           placeholder={placeholders[0]}
         />
         <span className='ir-separator'> - </span>
         <AutoComplete
-          name={'ir-upper'}
-          list={suggestions[1]}
-          onSelect={this.onSelect}
           keys={['author', 'title']}
+          list={suggestions[1]}
+          name={'ir-upper'}
+          onSelect={this.onSelect}
           placeholder={placeholders[1]}
         />
       </div>
@@ -44,11 +44,11 @@ export default class InputRange extends Component {
 }
 
 InputRange.propTypes = {
-  name: PropTypes.string,
   disabled: PropTypes.bool,
-  suggestions: PropTypes.array,
+  name: PropTypes.string,
+  onSelect: PropTypes.func.isRequired,
   placeholders: PropTypes.arrayOf(PropTypes.string),
-  onSelect: PropTypes.func.isRequired
+  suggestions: PropTypes.array
 };
 
 function noop () {

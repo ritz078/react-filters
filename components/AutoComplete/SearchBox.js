@@ -18,9 +18,9 @@ export default class SearchBox extends Component {
     return this.props.multiSelected.map((val, i) => (
       <Tag
         id={i}
-        text={val[this.props.valueKey]}
-        showRemove={this.props.showTagRemove}
         onRemove={this.props.onTagRemove}
+        showRemove={this.props.showTagRemove}
+        text={val[this.props.valueKey]}
       />
     ));
   }
@@ -75,15 +75,15 @@ export default class SearchBox extends Component {
 
         <input
           className='ac-searchbox-input'
-          type='text'
-          ref='autocomplete'
-          placeholder={placeholder}
           disabled={disabled}
+          onBlur={onBlur}
           onChange={this.handleQueryChange}
           onFocus={onFocus}
-          onBlur={onBlur}
-          value={value}
           onKeyDown={this.removeLastTag}
+          placeholder={placeholder}
+          ref='autocomplete'
+          type='text'
+          value={value}
         />
 
         <span
@@ -104,19 +104,19 @@ function noop () {
 }
 
 SearchBox.propTypes = {
-  onBlur: PropTypes.func,
-  onFocus: PropTypes.func,
-  disabled: PropTypes.bool,
-  placeholder: PropTypes.string,
-  value: PropTypes.string.isRequired,
-  onQueryChange: PropTypes.func.isRequired,
   Reset: PropTypes.element.isRequired,
-  onReset: PropTypes.func,
+  disabled: PropTypes.bool,
   multiSelect: PropTypes.bool,
   multiSelected: PropTypes.array,
+  onBlur: PropTypes.func,
+  onFocus: PropTypes.func,
+  onQueryChange: PropTypes.func.isRequired,
+  onReset: PropTypes.func,
+  onTagRemove: PropTypes.func,
+  placeholder: PropTypes.string,
   showTagRemove: PropTypes.bool,
-  valueKey: PropTypes.string,
-  onTagRemove: PropTypes.func
+  value: PropTypes.string.isRequired,
+  valueKey: PropTypes.string
 };
 
 function ResetContent () {
@@ -124,8 +124,8 @@ function ResetContent () {
 }
 
 SearchBox.defaultProps = {
-  onFocus: noop,
+  Reset: ResetContent,
   onBlur: noop,
-  placeholder: 'Search',
-  Reset: ResetContent
+  onFocus: noop,
+  placeholder: 'Search'
 };

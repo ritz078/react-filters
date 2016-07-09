@@ -25,8 +25,8 @@ export default class Tag extends Component {
         <span className='ac-tag-text'>{text}</span>
            {showRemove &&
              <span
-               onClick={this.handleRemove}
                className='ac-tag-remove'
+               onClick={this.handleRemove}
              >
                 &#x2715;
              </span>
@@ -40,7 +40,7 @@ Tag.propTypes = {
   id: PropTypes.oneOfType([
     PropTypes.number, PropTypes.string
   ]),
-  text: PropTypes.string.isRequired,
   onRemove: PropTypes.func,
-  showRemove: PropTypes.bool
+  showRemove: PropTypes.bool,
+  text: PropTypes.string.isRequired
 };
