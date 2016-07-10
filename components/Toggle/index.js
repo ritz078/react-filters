@@ -124,13 +124,12 @@ Toggle.propTypes = {
     PropTypes.element
   ]),
   disabled: PropTypes.bool,
-  iconElement: PropTypes.oneOfType([
-    PropTypes.func,
-    PropTypes.element
-  ]),
+  iconElement: PropTypes.func,
   iconLabel: PropTypes.array,
   label: PropTypes.string,
-  labelPosition: PropTypes.string,
+  labelPosition: PropTypes.oneOf([
+    'before', 'after'
+  ]),
   mode: PropTypes.oneOf(['normal', 'tag']),
   name: PropTypes.string.isRequired,
   onChange: PropTypes.func,

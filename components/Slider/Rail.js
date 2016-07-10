@@ -3,8 +3,8 @@ import { isVertical } from './utils';
 import constants from './constants';
 
 /**
- * Returns value of `left` for horizontal slider and `top` for vertical
- * slider
+ * Returns rail's position value of `left` for horizontal slider and `top`
+ * for vertical slider
  * @param value
  * @param min
  * @param max
