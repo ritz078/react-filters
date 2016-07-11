@@ -2,6 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import classNames from 'classnames';
 
 import autoBind from '../utils/autoBind';
+import noop from '../utils/noop';
 
 function radioElement (p) {
   const iconClass = classNames({
@@ -102,6 +103,7 @@ export default class Toggle extends Component {
         {...attributes}
         className={mainClass}
         onClick={!disabled && this.handleClick}
+        aria-selected={!!value}
       >
         {
           label && <div className={labelClass} >
@@ -138,9 +140,6 @@ Toggle.propTypes = {
   ]),
   value: PropTypes.bool
 };
-
-function noop () {
-}
 
 Toggle.defaultProps = {
   countElem (p) {

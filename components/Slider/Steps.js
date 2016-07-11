@@ -38,7 +38,6 @@ function getSteps (props) {
 
   for (let i = 0; i < totalSteps; i++) {
     let position = getPositionInPercentage(i * step, min, max);
-
     if (isVertical(orientation)) position = 100 - position;
 
     const style = { [constants[orientation].direction]: `${position}%` };
@@ -46,10 +45,8 @@ function getSteps (props) {
     const className = classNames('slider-step', {
       'slider-step-active': isRangeType && isInActiveRange(i * step, value)
     });
-
     steps.push(<span className={className} key={i} style={style} />);
   }
-
   return steps;
 }
 

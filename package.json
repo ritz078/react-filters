@@ -10,7 +10,8 @@
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
     "test": "mocha --require test/config/setup 'test/**/*.test.js'",
     "test:cover": "istanbul cover -x *.test.js _mocha -- -R spec --require test/config/setup 'test/**/*.test.js'",
-    "test:report": "cat ./coverage/lcov.info | codecov && rm -rf ./coverage"
+    "test:report": "cat ./coverage/lcov.info | codecov && rm -rf ./coverage",
+    "build":"build-storybook -o ./"
   },
   "repository": {
     "type": "git",
@@ -30,7 +31,7 @@
   "homepage": "https://github.com/ritz078/react-filters",
   "devDependencies": {
     "@kadira/react-storybook-decorator-centered": "^1.0.0",
-    "@kadira/storybook": "^1.35.1",
+    "@kadira/storybook": "^1.37.0",
     "autoprefixer": "^6.3.6",
     "babel": "^6.5.2",
     "babel-core": "^6.9.0",

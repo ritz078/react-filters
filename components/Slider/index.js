@@ -6,6 +6,7 @@ import Control from './Control';
 import Steps from './Steps';
 import Rail from './Rail';
 import autoBind from '../utils/autoBind';
+import noop from '../utils/noop';
 
 export default class Slider extends Component {
   constructor (props) {
@@ -215,10 +216,6 @@ Slider.propTypes = {
   type: PropTypes.oneOf(['value', 'range']),
   value: PropTypes.oneOfType([PropTypes.array, PropTypes.number])
 };
-
-function noop () {
-
-}
 
 Slider.defaultProps = {
   attributes: {},
