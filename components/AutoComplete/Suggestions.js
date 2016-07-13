@@ -15,7 +15,7 @@ Suggestions.defaultResultsTemplate = function (val, i, selectedIndex) {
   const className = classNames('ac-suggestion', {
     'ac-suggestion-active': i === selectedIndex
   });
-  return <div className={className} key={i} data-index={i}>{val.title}</div>;
+  return <div className={className} data-index={i} key={i}>{val.title}</div>;
 };
 
 Suggestions.propTypes = {

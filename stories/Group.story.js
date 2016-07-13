@@ -44,4 +44,20 @@ storiesOf('Group Button', module)
       type='checkbox'
       value={value}
     />
+  ))
+  .add('Radio Tag', () => (
+    <Group
+      name='group-tag'
+      type={'radio'}
+      value={value}
+      mode={'tag'}
+    />
+  ))
+  .add('Checkbox Tag', () => (
+    <Group
+      name='group-tag'
+      type={'checkbox'}
+      value={value}
+      mode={'tag'}
+    />
   ));

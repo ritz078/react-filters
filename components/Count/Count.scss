@@ -1,15 +1,12 @@
+@import "../theme";
 @import "../icons";
 
-$width: 120px;
-$height: 40px;
-$primary: green;
-$padding: 4px;
-
 .rf-count {
-  width: $width;
+  width: $count-width;
   background-color: #f6f6f6;
-  padding: $padding;
+  padding: $count-padding;
   overflow: auto;
+
   &.disabled{
     opacity: 0.8;
     pointer-events: none;
@@ -22,12 +19,12 @@ $padding: 4px;
   outline: none;
   border-radius: 2px;
   padding: 8px 10px;
-  color: $primary;
+  color: $primary-color;
   display: inline-block;
   vertical-align: top;
   float: left;
-  height: $height - 2*$padding;
-  width: $height - 2*$padding;
+  height: $count-height - 2*$count-padding;
+  width: $count-height - 2*$count-padding;
   cursor: pointer;
 }
 
@@ -37,6 +34,6 @@ $padding: 4px;
   line-height: 32px;
   float: left;
   overflow: hidden;
-  width: $width - 2*($height - 2*$padding);
+  width: $count-width - 2*($count-height - 2*$count-padding);
   text-align: center;
 }

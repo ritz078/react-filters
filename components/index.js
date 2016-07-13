@@ -1,8 +1,8 @@
-import AutoComplete from './AutoComplete/AutoComplete';
-import Count from './Count/Count';
-import Range from './Range/Range';
-import Toggle from './Toggle/Toggle';
-import InputRange from './InputRange/InputRange';
-import Group from './Group/Group';
+import AutoComplete from './AutoComplete';
+import Count from './Count';
+import Slider from './Slider';
+import Toggle from './Toggle';
+import InputRange from './InputRange';
+import Group from './Group';
 
-export { AutoComplete, Count, Range, Toggle, InputRange, Group };
+export { AutoComplete, Count, Slider, Toggle, InputRange, Group };

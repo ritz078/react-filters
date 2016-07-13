@@ -1,0 +1,175 @@
+@import "../theme";
+
+.rf-slider{
+  overflow: hidden;
+  padding: 0 10px;
+  &.slider-vertical{
+    overflow: visible;
+  }
+}
+
+.slider-wrapper {
+  width: 100%;
+  overflow: visible;
+  position: relative;
+  display: inline-block;
+  padding-top: 40px;
+
+  .slider-vertical & {
+    width: $slider-track-width;
+    height: 400px;
+    padding-top: 0;
+  }
+}
+
+.slider-vertical {
+  width: 20px;
+  height: 400px;
+  position: relative;
+
+  .slider-track {
+    position: absolute;
+  }
+}
+
+.slider-track, .slider-rail {
+  height: $slider-track-width;
+  background-color: $secondary-color;
+  border-radius: $slider-track-width/2;
+
+  .slider-vertical & {
+    width: $slider-track-width;
+    height: 400px;
+  }
+}
+
+.slider-slider-wrapper {
+  will-change: transform, top;
+  transition: transform .2s ease-out, top .2s ease-out;
+  transform: translate3d(0, 0, 0);
+  position: relative;
+}
+
+.slider-control {
+  height: $slider-control-width;
+  width: $slider-control-width;
+  border-radius: $slider-control-width/2;
+  background-color: darken($primary-color, 10%);
+  position: absolute;
+  display: inline-block;
+  vertical-align: top;
+  margin-top: -($slider-control-width + $slider-track-width)/2;
+  margin-left: -$slider-control-width/2;
+  cursor: pointer;
+  transition: transform .2s ease-out;
+
+  .slider-disabled & {
+    background-color: grayscale(darken($primary-color, 10%));
+  }
+
+  .slider-vertical & {
+    margin-left: -($slider-control-width/2 - $slider-track-width/2);
+    margin-top: -$slider-control-width/2;
+  }
+}
+
+.slider-rail {
+  position: relative;
+  background-color: $primary-color;
+  transition: all .2s ease-out;
+
+  .slider-disabled & {
+    background-color: grayscale($primary-color);
+  }
+}
+
+.slider-active .slider-slider {
+  transform: scale(1.4) translate3d(0, 0, 0);
+}
+
+// TODO : prevent text selection in disabled state
+
+.slider-value {
+  position: absolute;
+  width: 40px;
+  margin-left: -20px;
+  text-align: center;
+  margin-top: - ($slider-track-width + $slider-control-width/2 + 20px);
+
+  .slider-disabled & {
+    color: darken($secondary-color, 20%);
+  }
+
+  .slider-vertical & {
+    margin-top: -($slider-control-width/2);
+    margin-left: -40px;
+  }
+}
+
+.slider-range {
+  div {
+    display: inline-block;
+    margin-top: 10px;
+
+    &.slider-range-max {
+      float: right;
+    }
+  }
+
+  .slider-vertical & {
+    margin-left: 20px;
+    div{
+      margin-top: 0;
+    }
+    position: absolute;
+    top: 0;
+    height: 100%;
+
+    .slider-range-min{
+      position: absolute;
+      bottom: 0;
+      margin-bottom: -10px;
+    }
+
+    .slider-range-max{
+      margin-top: -10px;
+    }
+  }
+}
+
+$stepWidth: 6px;
+
+.slider-steps-wrapper {
+  width: 100%;
+  height: $slider-track-width;
+  margin-top: -$slider-track-width;
+  position: absolute;
+
+  .slider-vertical & {
+    height: 100%;
+    margin-top: -($slider-step-width + 4px)/2;
+  }
+}
+
+.slider-step {
+  width: $slider-step-width;
+  height: $slider-step-width;
+  background-color: white;
+  display: inline-block;
+  position: absolute;
+  margin-top: -2px;
+  border-radius: 50%;
+  border: 2px solid $secondary-color;
+  margin-left: -($slider-step-width+4px)/2;
+  will-change: border-color;
+  transition: border-color .2s ease-out;
+
+  &.slider-step-active {
+    border-color: $primary-color;
+  }
+
+  .slider-vertical & {
+    margin-left: -2px;
+    margin-top: 0;
+  }
+}

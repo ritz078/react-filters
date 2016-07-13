@@ -69,6 +69,10 @@ class AutoCompleteContainer extends React.Component {
   }
 }
 
+AutoCompleteContainer.propTypes = {
+  multiSelect: React.PropTypes.bool
+};
+
 storiesOf('AutoComplete', module)
   .add('Basic', () => (
     <AutoComplete

@@ -3,8 +3,8 @@
   "description": "A collection of filters made in React",
   "main": "components/index.js",
   "scripts": {
-    "lint": "eslint --format=node_modules/eslint-formatter-pretty components/**/*.js test/**/*.js",
-    "lintfix": "eslint --fix components/**/*.js test/**/*.js",
+    "lint": "eslint --format=node_modules/eslint-formatter-pretty components/**/*.js test/**/*.js stories/*.js",
+    "lintfix": "eslint --fix components/**/*.js test/**/*.js stories/*.js",
     "prepublish": "npm run lintfix",
     "storybook": "start-storybook -p 9002",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
@@ -85,7 +85,7 @@
       "path": "node_modules/cz-conventional-changelog"
     },
     "ghooks": {
-      "pre-commit": "npm run lintfix && npm run test:cover"
+      "pre-commit": "npm run lintfix && npm run test"
     }
   }
 }

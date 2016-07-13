@@ -16,14 +16,48 @@
 </a>
 </p>
 
-##TODO
+> A collection of Components like autocomplete, radio, checkbox, slider etc. written in React.
 
-- [x] Switch
-- [x] Checkbox
-- [x] Radio
-- [x] Range
-- [x] Autocomplete
-- [x] Input Range
-- [x] Count
+##Installation
+```
+npm install --save react-filters
+```
+
+##Basic Usage
+import the component you need to use.
+
+```js
+import { Slider, Toggle } from 'react-filters';
+```
+
+If you don't want to use all the components and are concerned about file size, you can just import the component you need.
+
+```js
+import Slider from 'react-filters/Slider';
+import Toggle from 'react-filters/Toggle';
+```
+
+##Components
+
+Click on the component name to go to their documentation.
+
+- [x] [Toggle](docs/toggle.md) (Switch, Checkbox, Radio)
+- [x] [Slider](docs/slider.md)
+- [x] [Autocomplete](docs/autocomplete.md)
+- [x] [Input Range](docs/input_range.md)
+- [x] [Count](docs/count.md)
 - [ ] Select
 - [ ] Dropdown
+
+##Development
+1. Clone the repo
+1. Create a new branch.
+1. Run `npm install && npm run storybook`
+1. You can find the server running at **localhost:9002**
+1. Add feature or fix bug. Add tests if required.
+1. Make sure your comments follow conventional changelog guideline. You can simply run `npm run commit` or `git cz` if you have `commitizen` installed globally to do the commit with the required guidelines.
+1. if commit fails make sure that there's no linting error or failed test by running `npm run test && npm run lint`
+
+
+##License
+MIT @ Ritesh Kumar
