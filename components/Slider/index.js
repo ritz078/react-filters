@@ -83,14 +83,14 @@ export default class Slider extends Component {
 
   getControl (value, name) {
     const {
-      step,
-      orientation,
-      min,
-      max,
-      readOnly,
-      disabled,
-      toolTipTemplate
-    } = this.props;
+            step,
+            orientation,
+            min,
+            max,
+            readOnly,
+            disabled,
+            toolTipTemplate
+          } = this.props;
 
     return (
       <Control
@@ -139,17 +139,17 @@ export default class Slider extends Component {
 
   render () {
     const {
-      name,
-      disabled,
-      step,
-      min,
-      max,
-      value,
-      rangeTemplate,
-      showSteps,
-      orientation,
-      attributes
-    } = this.props;
+            name,
+            disabled,
+            step,
+            min,
+            max,
+            value,
+            rangeTemplate,
+            showSteps,
+            orientation,
+            attributes
+          } = this.props;
 
     const mainClass = classNames('react-filters', 'rf-slider', name, {
       'slider-disabled': disabled,
@@ -159,21 +159,20 @@ export default class Slider extends Component {
     const lowerValue = this.isRangeType() ? value[0] : value;
 
     return (
-      <div {...attributes} className={mainClass}>
+      <div {...attributes} className={mainClass} >
         <div className='slider-wrapper' >
           <div
             className='slider-track'
             onClick={!disabled && !showSteps && this.handleClick}
             ref='track'
           >
-            {
-              this.isRangeType() && <Rail
-                max={max}
-                min={min}
-                orientation={orientation}
-                value={value}
-              />
-            }
+            <Rail
+              max={max}
+              min={min}
+              orientation={orientation}
+              value={value}
+              isRangeType={this.isRangeType()}
+            />
 
           </div>
           {

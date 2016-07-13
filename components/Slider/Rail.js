@@ -11,7 +11,7 @@ import constants from './constants';
  * @param orientation
  * @returns {number} Value in Percentage
  */
-function getDirectionPosition (value, min, max, orientation) {
+function getDirectionPositionForRange (value, min, max, orientation) {
   return isVertical(orientation) ? (
     // as upper value is used to calculate `top`;
     Math.round(((max - value[1]) / max - min) * 100)
@@ -21,20 +21,32 @@ function getDirectionPosition (value, min, max, orientation) {
 }
 
 export default function Rail (props) {
-  const { value, min, max, orientation } = props;
+  const { value, min, max, orientation, isRangeType } = props;
 
-  const dimensionValue = ((value[1] - value[0]) / (max - min)) * 100;
+  const difference = isRangeType ? (value[1] - value[0]) : value;
+  const dimensionValue = (difference / (max - min)) * 100;
 
-  const directionValue = getDirectionPosition(value, min, max, orientation);
+  const directionValue = getDirectionPositionForRange(value, min, max, orientation);
 
   const railStyle = {
     [constants[orientation].direction]: `${directionValue}%`,
     [constants[orientation].dimension]: `${dimensionValue}%`
   };
+
+  if (!isRangeType) {
+    railStyle[isVertical(orientation) ? 'bottom' : 'left'] = 0;
+    if (isVertical(orientation)) {
+      railStyle.top = `${100 - dimensionValue}%`;
+    } else {
+      railStyle.left = 0;
+    }
+  }
+
   return <div className='slider-rail' style={railStyle} />;
 }
 
 Rail.propTypes = {
+  isRangeType: PropTypes.bool.isRequired,
   max: PropTypes.number.isRequired,
   min: PropTypes.number.isRequired,
   orientation: PropTypes.string.isRequired,
