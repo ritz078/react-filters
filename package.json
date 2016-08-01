@@ -48,7 +48,7 @@
     "cz-conventional-changelog": "^1.1.6",
     "enzyme": "^2.3.0",
     "eslint": "^2.10.2",
-    "eslint-config-airbnb": "^9.0.1",
+    "eslint-config-airbnb": "^10.0.0",
     "eslint-formatter-pretty": "^0.2.2",
     "eslint-plugin-import": "^1.8.1",
     "eslint-plugin-react": "^5.1.1",
