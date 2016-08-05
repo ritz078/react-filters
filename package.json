@@ -61,7 +61,7 @@
     "mocha": "^3.0.1",
     "node-sass": "^3.7.0",
     "raw-loader": "^0.5.1",
-    "react-addons-test-utils": "*",
+    "react-addons-test-utils": "15.3.0",
     "redux": "^3.5.2",
     "rimraf": "^2.5.2",
     "sass-loader": "^3.2.0",
