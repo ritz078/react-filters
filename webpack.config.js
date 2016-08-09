@@ -16,13 +16,7 @@ module.exports = {
     libraryTarget: 'umd'
   },
 
-  externals: {
-    react: 'React',
-    classnames: 'classNames',
-    'react-dom': 'ReactDOM',
-    'fuse.js': 'Fuse',
-    'deep-copy': 'deepCopy'
-  },
+  externals: ['react', 'react-dom', 'deep-copy', 'fuse.js', 'classnames'],
 
   module: {
     loaders: [
