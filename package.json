@@ -13,8 +13,8 @@
   "scripts": {
     "lint": "eslint --format=node_modules/eslint-formatter-pretty components/**/*.js test/**/*.js stories/*.js",
     "lintfix": "eslint --fix components/**/*.js test/**/*.js stories/*.js",
-    "pretest": "npm run lintfix && babel components -d dist",
-    "prepublish": "npm run test",
+    "pretest": "npm run lintfix",
+    "prepublish": "npm run test && babel components -d dist",
     "prebuild": "rm -rf dist/*",
     "storybook": "start-storybook -p 9002",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
@@ -98,7 +98,7 @@
       "path": "node_modules/cz-conventional-changelog"
     },
     "ghooks": {
-      "pre-commit": "npm run lintfix && npm run test"
+      "pre-commit": "npm run test"
     }
   }
 }
