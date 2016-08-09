@@ -13,7 +13,6 @@
   "scripts": {
     "lint": "eslint --format=node_modules/eslint-formatter-pretty components/**/*.js test/**/*.js stories/*.js",
     "lintfix": "eslint --fix components/**/*.js test/**/*.js stories/*.js",
-    "pretest": "npm run lintfix",
     "prepublish": "npm run test && babel components -d dist",
     "prebuild": "rm -rf dist/*",
     "storybook": "start-storybook -p 9002",
