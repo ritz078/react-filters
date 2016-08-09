@@ -13,7 +13,7 @@
   "scripts": {
     "lint": "eslint --format=node_modules/eslint-formatter-pretty components/**/*.js test/**/*.js stories/*.js",
     "lintfix": "eslint --fix components/**/*.js test/**/*.js stories/*.js",
-    "prepublish": "npm run test && babel components -d dist",
+    "prepublish": "npm run test && webpack",
     "prebuild": "rm -rf dist/*",
     "storybook": "start-storybook -p 9002",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
@@ -49,6 +49,7 @@
     "babel-eslint": "^6.0.2",
     "babel-loader": "^6.2.4",
     "babel-plugin-transform-object-rest-spread": "^6.8.0",
+    "babel-plugin-transform-react-remove-prop-types": "^0.2.9",
     "babel-preset-es2015": "^6.9.0",
     "babel-preset-react": "^6.5.0",
     "babel-preset-stage-0": "^6.5.0",
