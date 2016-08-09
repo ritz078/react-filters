@@ -1,6 +1,7 @@
 import React, { PropTypes, Component } from 'react';
 import classNames from 'classnames';
 import autoBind from '../utils/autoBind';
+import noop from '../utils/noop';
 
 import AutoComplete from '../AutoComplete/index';
 
@@ -50,10 +51,6 @@ InputRange.propTypes = {
   placeholders: PropTypes.arrayOf(PropTypes.string),
   suggestions: PropTypes.array
 };
-
-function noop () {
-
-}
 
 InputRange.defaultProps = {
   disabled: false,

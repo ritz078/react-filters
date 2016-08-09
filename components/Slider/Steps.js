@@ -7,10 +7,15 @@ import { isVertical } from './utils';
  * Tells whether a particular step comes in between two controls or not
  * @param stepValue value of the position where this step is located
  * @param value Array of control values
+ * @param isRangeType
  * @returns {boolean}
  */
-function isInActiveRange (stepValue, value) {
-  return stepValue > value[0] && stepValue < value[1];
+function isInActiveRange (stepValue, value, isRangeType) {
+  if (isRangeType) {
+    return stepValue > value[0] && stepValue < value[1];
+  } else {
+    return stepValue < value;
+  }
 }
 
 /**
@@ -38,18 +43,15 @@ function getSteps (props) {
 
   for (let i = 0; i < totalSteps; i++) {
     let position = getPositionInPercentage(i * step, min, max);
-
     if (isVertical(orientation)) position = 100 - position;
 
     const style = { [constants[orientation].direction]: `${position}%` };
 
     const className = classNames('slider-step', {
-      'slider-step-active': isRangeType && isInActiveRange(i * step, value)
+      'slider-step-active': isInActiveRange(i * step, value, isRangeType)
     });
-
     steps.push(<span className={className} key={i} style={style} />);
   }
-
   return steps;
 }
 
