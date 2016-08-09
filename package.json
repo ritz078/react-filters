@@ -12,7 +12,7 @@
     "test": "mocha --require test/config/setup 'test/**/*.test.js'",
     "test:cover": "istanbul cover -x *.test.js _mocha -- -R spec --require test/config/setup 'test/**/*.test.js'",
     "test:report": "cat ./coverage/lcov.info | codecov && rm -rf ./coverage",
-    "build":"build-storybook -o ./"
+    "build": "build-storybook -o ./"
   },
   "repository": {
     "type": "git",
@@ -33,6 +33,7 @@
   "devDependencies": {
     "@kadira/react-storybook-decorator-centered": "^1.0.0",
     "@kadira/storybook": "^1.37.0",
+    "@kadira/storybook-deployer": "^1.0.0",
     "autoprefixer": "^6.3.6",
     "babel": "^6.5.2",
     "babel-core": "^6.9.0",
@@ -49,10 +50,11 @@
     "css-loader": "^0.23.1",
     "cz-conventional-changelog": "^1.1.6",
     "enzyme": "^2.3.0",
-    "eslint": "^2.10.2",
+    "eslint": "^2.13.1",
     "eslint-config-airbnb": "^9.0.1",
     "eslint-formatter-pretty": "^0.2.2",
     "eslint-plugin-import": "^1.8.1",
+    "eslint-plugin-jsx-a11y": "^1.5.5",
     "eslint-plugin-react": "^5.1.1",
     "eventsource-polyfill": "*",
     "file-loader": "^0.9.0",
@@ -74,7 +76,6 @@
     "webpack-hot-middleware": "^2.10.0"
   },
   "dependencies": {
-    "@kadira/storybook-deployer": "^1.0.0",
     "classnames": "^2.2.5",
     "deep-copy": "^1.1.2",
     "fuse.js": "^2.2.0",
