@@ -1,6 +1,5 @@
 {
   "name": "react-filters",
-  "version": "",
   "description": "A collection of filters made in React",
   "main": "dist/index.js",
   "jsnext:main": "components/index.js",
