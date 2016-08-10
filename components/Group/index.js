@@ -2,6 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import classNames from 'classnames';
 import autoBind from '../utils/autoBind';
 import lastElement from '../utils/lastElement';
+import getSelectedIds from '../utils/getSelectedIds';
 
 import deepCopy from 'deep-copy';
 
@@ -15,18 +16,38 @@ function handleSingleSelect (arr, index) {
   });
 }
 
+function formatValue (props) {
+  const { value, selectedIds, id } = props;
+  if (!selectedIds) return value;
+  const value$ = deepCopy(value);
+  return value$.map(val => {
+    if (selectedIds.indexOf(val[id]) >= 0) val.value = true;
+    return val;
+  });
+}
+
 export default class Group extends Component {
   constructor (props) {
     super(props);
+
+    this.formattedValue = formatValue(props);
 
     autoBind([
       'handleChange'
     ], this);
   }
 
+  componentDidMount () {
+    this.formattedValue = formatValue(this.props);
+  }
+
+  componentWillReceiveProps (newProps) {
+    this.formattedValue = formatValue(newProps);
+  }
+
   getElements () {
-    const { value, type, mode } = this.props;
-    return value.map((val, i) => (
+    const { type, mode } = this.props;
+    return this.formattedValue.map((val, i) => (
       <Toggle
         {...val}
         key={i}
@@ -40,8 +61,8 @@ export default class Group extends Component {
   }
 
   handleChange (data) {
-    const { name, value, type } = this.props;
-    let newValue = deepCopy(value);
+    const { name, type, id, value } = this.props;
+    let newValue = deepCopy(this.formattedValue);
 
     const index = parseInt(lastElement(data.name.split('-')), 10);
 
@@ -55,7 +76,8 @@ export default class Group extends Component {
       index,
       name,
       oldValue: value,
-      value: newValue
+      value: newValue,
+      selectedIds: getSelectedIds(newValue, id)
     });
   }
 
@@ -85,5 +107,11 @@ Group.propTypes = {
       label: PropTypes.string,
       value: PropTypes.bool
     })
-  )
+  ),
+  selectedIds: PropTypes.array,
+  id: PropTypes.string
+};
+
+Group.defaultProps = {
+  id: 'id'
 };

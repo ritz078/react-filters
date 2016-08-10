@@ -11,11 +11,14 @@ describe('Group Component', () => {
 
   before(() => (
     value = [{
+      id:1,
       label: 'a',
       count: 6
     }, {
+      id:2,
       label: 'b'
     }, {
+      id:3,
       label: 'c'
     }]
   ));
@@ -51,16 +54,20 @@ describe('Group Component', () => {
     const args = {
       name: 'change',
       value: [{
+        id:1,
         label: 'a',
         count: 6
       }, {
+        id:2,
         label: 'b',
         value: true
       }, {
+        id:3,
         label: 'c'
       }],
       oldValue: value,
-      index: 1
+      index: 1,
+      selectedIds: [2]
     };
 
     expect(onChange.calledWith(args)).to.equal(true);
@@ -72,25 +79,32 @@ describe('Group Component', () => {
     const args2 = {
       name: 'change',
       value: [{
+        id:1,
         label: 'a',
         count: 6,
         value: true
       }, {
+        id:2,
         label: 'b',
         value: true
       }, {
+        id:3,
         label: 'c'
       }],
       oldValue: [{
+        id:1,
         label: 'a',
         count: 6
       }, {
+        id:2,
         label: 'b',
         value: true
       }, {
+        id:3,
         label: 'c'
       }],
-      index: 0
+      index: 0,
+      selectedIds: [1, 2]
     };
 
     expect(onChange.calledWith(args2)).to.equal(true);
@@ -113,18 +127,22 @@ describe('Group Component', () => {
     const args = {
       name: 'radio-group',
       value: [{
+        id:1,
         label: 'a',
         count: 6,
         value: false
       }, {
+        id:2,
         label: 'b',
         value: true
       }, {
+        id:3,
         label: 'c',
         value: false
       }],
       oldValue: value,
-      index: 1
+      index: 1,
+      selectedIds: [2]
     };
 
     expect(onChange.calledWith(args)).to.equal(true);
@@ -136,18 +154,22 @@ describe('Group Component', () => {
     const args2 = {
       name: 'radio-group',
       value: [{
+        id:1,
         label: 'a',
         count: 6,
         value: true
       }, {
+        id:2,
         label: 'b',
         value: false
       }, {
+        id:3,
         label: 'c',
         value: false
       }],
       oldValue: args.value,
-      index: 0
+      index: 0,
+      selectedIds: [1]
     };
 
     expect(onChange.calledWith(args2)).to.equal(true);

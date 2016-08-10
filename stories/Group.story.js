@@ -5,20 +5,26 @@ import { Group } from '../components';
 import Container from './Container';
 
 const value = [{
+  id: 1,
   label: 'a',
   count: 6
 }, {
+  id: 2,
   label: 'b'
 }, {
+  id: 3,
   label: 'c'
 }];
 
 const value2 = [{
+  id: 1,
   label: 'a',
   count: 6
 }, {
+  id: 2,
   label: 'b'
 }, {
+  id: 3,
   label: 'c'
 }];
 
