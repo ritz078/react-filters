@@ -1,4 +1,29 @@
 <a name=""></a>
+# [](https://github.com/ritz078/react-filters/compare/v0.1.6...v) (2016-08-11)
+
+
+### Bug Fixes
+
+* **group:** accept and return selectedIds as number if type is radio ([b5c67ee](https://github.com/ritz078/react-filters/commit/b5c67ee))
+
+
+### Features
+
+* **toggle:** added separated prop fro selected ids and added selectedIds in onChnage argument ([5f66bf0](https://github.com/ritz078/react-filters/commit/5f66bf0))
+
+
+
+<a name=""></a>
+# [](https://github.com/ritz078/react-filters/compare/v0.1.6...v) (2016-08-11)
+
+
+### Features
+
+* **toggle:** added separated prop fro selected ids and added selectedIds in onChnage argument ([5f66bf0](https://github.com/ritz078/react-filters/commit/5f66bf0))
+
+
+
+<a name=""></a>
 # [](https://github.com/ritz078/react-filters/compare/v0.1.6...v) (2016-08-10)
 
 

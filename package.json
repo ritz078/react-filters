@@ -19,7 +19,8 @@
     "test": "mocha --require test/config/setup 'test/**/*.test.js'",
     "test:cover": "istanbul cover -x *.test.js _mocha -- -R spec --require test/config/setup 'test/**/*.test.js'",
     "test:report": "cat ./coverage/lcov.info | codecov && rm -rf ./coverage",
-    "build": "build-storybook -o ./"
+    "build": "build-storybook -o ./",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s"
   },
   "repository": {
     "type": "git",
@@ -98,7 +99,7 @@
       "path": "node_modules/cz-conventional-changelog"
     },
     "ghooks": {
-      "pre-commit": "npm run test && conventional-changelog -p angular -i CHANGELOG.md -s"
+      "pre-commit": "npm run test"
     }
   }
 }
