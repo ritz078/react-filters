@@ -1,4 +1,14 @@
 <a name=""></a>
+# [](https://github.com/ritz078/react-filters/compare/v0.1.6...v) (2016-08-11)
+
+
+### Features
+
+* **toggle:** added separated prop fro selected ids and added selectedIds in onChnage argument ([5f66bf0](https://github.com/ritz078/react-filters/commit/5f66bf0))
+
+
+
+<a name=""></a>
 # [](https://github.com/ritz078/react-filters/compare/v0.1.6...v) (2016-08-10)
 
 
