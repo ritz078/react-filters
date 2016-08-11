@@ -21,7 +21,8 @@ function formatValue (props) {
   if (!selectedIds) return value;
   const value$ = deepCopy(value);
   return value$.map(val => {
-    if (selectedIds.indexOf(val[id]) >= 0) val.value = true;
+    if ((typeof selectedIds === 'object' && selectedIds.indexOf(val[id]) >= 0) ||
+      (typeof selectedIds === 'number' && selectedIds === val[id])) val.value = true;
     return val;
   });
 }
@@ -77,7 +78,7 @@ export default class Group extends Component {
       name,
       oldValue: value,
       value: newValue,
-      selectedIds: getSelectedIds(newValue, id)
+      selectedIds: getSelectedIds(newValue, id, type === 'radio')
     });
   }
 
