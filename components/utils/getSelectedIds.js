@@ -4,11 +4,12 @@
  * it will return [1, 3]
  * @param arr
  * @param key
+ * @param number whether return number or Array
  */
-export default function (arr, key) {
+export default function (arr, key, number = false) {
   const selected = [];
   arr.forEach(val => {
     if (val.value) selected.push(val[key]);
   });
-  return selected;
-};
+  return number ? selected[0] : selected;
+}

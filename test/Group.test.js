@@ -142,7 +142,7 @@ describe('Group Component', () => {
       }],
       oldValue: value,
       index: 1,
-      selectedIds: [2]
+      selectedIds: 2
     };
 
     expect(onChange.calledWith(args)).to.equal(true);
@@ -169,7 +169,7 @@ describe('Group Component', () => {
       }],
       oldValue: args.value,
       index: 0,
-      selectedIds: [1]
+      selectedIds: 1
     };
 
     expect(onChange.calledWith(args2)).to.equal(true);
