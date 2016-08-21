@@ -1,13 +1,10 @@
 import React, { PropTypes, Component } from 'react';
 import classNames from 'classnames';
 import Fuzzy from 'fuse.js';
-
 import autoBind from '../utils/autoBind';
 import debounce from '../utils/debounce';
-
 import SearchBox from './SearchBox';
 import Suggestions from './Suggestions';
-
 import deepCopy from 'deep-copy';
 
 export default class AutoComplete extends Component {
@@ -90,35 +87,7 @@ export default class AutoComplete extends Component {
   }
 
   getOptions () {
-    const {
-      caseSensitive,
-      id,
-      include,
-      keys,
-      shouldSort,
-      sortFn,
-      tokenize,
-      verbose,
-      maxPatternLength,
-      distance,
-      threshold,
-      location
-    } = this.props;
-
-    return {
-      caseSensitive,
-      distance,
-      id,
-      include,
-      keys,
-      location,
-      maxPatternLength,
-      shouldSort,
-      sortFn,
-      threshold,
-      tokenize,
-      verbose
-    };
+    return { ...this.props.fuzzyOptions, keys: this.props.keys };
   }
 
   getSuggestions () {
@@ -168,16 +137,16 @@ export default class AutoComplete extends Component {
 
   render () {
     const {
-      name,
-      disabled,
-      placeholder,
-      onFocus,
-      onBlur,
-      Reset,
-      multiSelect,
-      showTagRemove,
-      valueKey
-    } = this.props;
+            name,
+            disabled,
+            placeholder,
+            onFocus,
+            onBlur,
+            Reset,
+            multiSelect,
+            showTagRemove,
+            valueKey
+          } = this.props;
 
     const mainClass = classNames('react-filters', 'rf-autocomplete', name, {
       disabled
@@ -201,7 +170,7 @@ export default class AutoComplete extends Component {
           valueKey={valueKey}
         />
 
-           {this.getSuggestions()}
+        {this.getSuggestions()}
       </div>
     );
   }
@@ -210,17 +179,10 @@ export default class AutoComplete extends Component {
 AutoComplete.propTypes = {
   Reset: PropTypes.func,
   async: PropTypes.bool,
-  caseSensitive: PropTypes.bool,
   className: PropTypes.string,
   debounce: PropTypes.number,
   disabled: PropTypes.bool,
-  distance: PropTypes.number,
-  id: PropTypes.string,
-  include: PropTypes.array,
-  keys: PropTypes.oneOfType([PropTypes.array, PropTypes.string]),
   list: PropTypes.array,
-  location: PropTypes.number,
-  maxPatternLength: PropTypes.number,
   multiSelect: PropTypes.bool,
   name: PropTypes.string.isRequired,
   onBlur: PropTypes.func,
@@ -229,38 +191,49 @@ AutoComplete.propTypes = {
   onSelect: PropTypes.func.isRequired,
   placeholder: PropTypes.string,
   resultsTemplate: PropTypes.func,
-  shouldSort: PropTypes.bool,
   showInitialResults: PropTypes.bool,
   showTagRemove: PropTypes.bool,
-  sortFn: PropTypes.func,
-  threshold: PropTypes.number,
-  tokenize: PropTypes.bool,
   valueKey: PropTypes.string,
-  verbose: PropTypes.bool,
-  width: PropTypes.number
+  width: PropTypes.number,
+  fuzzyOptions: PropTypes.shape({
+    caseSensitive: PropTypes.bool,
+    id: PropTypes.string,
+    include: PropTypes.array,
+    keys: PropTypes.oneOfType([PropTypes.array, PropTypes.string]),
+    shouldSort: PropTypes.bool,
+    sortFn: PropTypes.func,
+    tokenize: PropTypes.bool,
+    verbose: PropTypes.bool,
+    maxPatternLength: PropTypes.number,
+    distance: PropTypes.number,
+    threshold: PropTypes.number,
+    location: PropTypes.number
+  })
 };
 
 AutoComplete.defaultProps = {
   async: false,
-  caseSensitive: false,
   debounce: 250,
   disabled: false,
-  distance: 100,
-  include: [],
-  location: 0,
   multiSelect: false,
   placeholder: 'Search',
   resultsTemplate: Suggestions.defaultResultsTemplate,
-  shouldSort: true,
   showInitialResults: false,
   showTagRemove: true,
-  sortFn (a, b) {
-    return a.score - b.score;
-  },
   tags: false,
-  threshold: 0.6,
-  tokenize: false,
   valueKey: 'title',
-  verbose: false,
-  width: 430
+  width: 430,
+  fuzzyOptions: {
+    caseSensitive: false,
+    shouldSort: true,
+    sortFn (a, b) {
+      return a.score - b.score;
+    },
+    threshold: 0.6,
+    tokenize: false,
+    verbose: false,
+    distance: 100,
+    include: [],
+    location: 0
+  }
 };
