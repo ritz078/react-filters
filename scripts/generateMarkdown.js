@@ -48,7 +48,7 @@ function generateProp(propName, prop) {
 
 function propTable (propName, prop) {
   return (
-    '[' +propName + '](#'+ propName +')' + '|' + (prop.required ? '✔️' : ' ') + '|' + (prop.type ? generatePropType(prop.type, false) : '\n')
+    '[' +propName + '](#'+ propName.toLowerCase() +')' + '|' + (prop.required ? '✔️' : ' ') + '|' + (prop.type ? generatePropType(prop.type, false) : '\n')
   )
 }
 
