@@ -20,7 +20,8 @@
     "test:cover": "istanbul cover -x *.test.js _mocha -- -R spec --require test/config/setup 'test/**/*.test.js'",
     "test:report": "cat ./coverage/lcov.info | codecov && rm -rf ./coverage",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
-    "build": "build-storybook -o docs"
+    "build": "build-storybook -o docs",
+    "docs": "react-docgen ./components/**/*.jsx | node scripts/buildDocs.js"
   },
   "repository": {
     "type": "git",
@@ -40,7 +41,7 @@
   "homepage": "https://github.com/ritz078/react-filters",
   "devDependencies": {
     "@kadira/react-storybook-decorator-centered": "^1.0.0",
-    "@kadira/storybook": "^2.2.1",
+    "@kadira/storybook": "^2.3.0",
     "@kadira/storybook-deployer": "^1.0.0",
     "autoprefixer": "^6.3.6",
     "babel": "^6.5.2",
@@ -77,6 +78,7 @@
     "node-sass": "^3.7.0",
     "raw-loader": "^0.5.1",
     "react-addons-test-utils": "*",
+    "react-docgen": "^2.10.0",
     "redux": "^3.5.2",
     "rimraf": "^2.5.2",
     "sass-loader": "^3.2.0",

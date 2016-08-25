@@ -1,6 +1,5 @@
-import React, { PropTypes, Component } from 'react';
+import React, { PropTypes } from 'react';
 import classNames from 'classnames';
-
 import autoBind from '../utils/autoBind';
 import noop from '../utils/noop';
 
@@ -9,7 +8,7 @@ function radioElement (p) {
     'icon-radio-button-unchecked': !p.value,
     'icon-radio-button-checked': p.value
   });
-  return <i className={iconClass} />;
+  return <i className={iconClass}/>;
 }
 
 function checkBoxElement (p) {
@@ -17,7 +16,7 @@ function checkBoxElement (p) {
     'icon-check-box-outline-blank': !p.value,
     'icon-check-box': p.value
   });
-  return <i className={iconClass} />;
+  return <i className={iconClass}/>;
 }
 
 function switchElement (prop) {
@@ -32,14 +31,17 @@ function switchElement (prop) {
     iconLabelText = prop.value ? prop.iconLabel[0] : prop.iconLabel[1];
   }
   return (
-    <div className='toggle-wrapper' >
-      <div className={labelClass} >{iconLabelText}</div>
-      <div className='toggle-btn' />
+    <div className='toggle-wrapper'>
+      <div className={labelClass}>{iconLabelText}</div>
+      <div className='toggle-btn'/>
     </div>
   );
 }
 
-export default class Toggle extends Component {
+/**
+ * Hello world
+ */
+export default class Toggle extends React.Component {
   constructor (props) {
     super(props);
     autoBind([
@@ -75,17 +77,17 @@ export default class Toggle extends Component {
 
   render () {
     const {
-      attributes,
-      className,
-      name,
-      label,
-      labelPosition,
-      value,
-      disabled,
-      countElem,
-      count,
-      type
-    } = this.props;
+            attributes,
+            className,
+            name,
+            label,
+            labelPosition,
+            value,
+            disabled,
+            countElem,
+            count,
+            type
+          } = this.props;
 
     const mainClass = classNames('rf-toggle', type, className, name, {
       'toggle-disabled': disabled,
@@ -103,10 +105,9 @@ export default class Toggle extends Component {
         {...attributes}
         className={mainClass}
         onClick={!disabled && this.handleClick}
-        aria-selected={!!value}
       >
         {
-          label && <div className={labelClass} >
+          label && <div className={labelClass}>
             {label}
             {count !== undefined && countElem(this.props)}
           </div>
@@ -118,16 +119,50 @@ export default class Toggle extends Component {
 }
 
 Toggle.propTypes = {
+  /**
+   * Sometimes you may need to add some custom attributes to the root tag of the
+   * component. attributes will accept an object where the key and values will
+   * be those attributes and their value respectively.
+   *
+   * Eg : If you pass
+   * ```js
+   * attributes = {
+   *  'data-attr1' : 'val1',
+   *  'data-attr2' : 'val2'
+   * }
+   * ```
+   * the root tag will have the attributes `data-attr1` and `data-attr2` with the
+   * corresponding values as `val1` and `val2` respectively
+   */
   attributes: PropTypes.object,
+
+  /**
+   * Optional className to be added to the root tag of the component
+   */
   className: PropTypes.string,
+
+  /**
+   * In case you want to show aggregation/count in front of label then pass the
+   * number in this option. This is generally useful for showing the items present
+   * corresponding to that filter option.
+   */
   count: PropTypes.number,
   countElem: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.element
   ]),
+
+  /**
+   * Set to `true` if you want to disable the component interactions.
+   */
   disabled: PropTypes.bool,
   iconElement: PropTypes.func,
   iconLabel: PropTypes.array,
+
+  /**
+   * The label text present in the component. If this option is not set only the
+   * icon element will render.
+   */
   label: PropTypes.string,
   labelPosition: PropTypes.oneOf([
     'before', 'after'
@@ -143,7 +178,7 @@ Toggle.propTypes = {
 
 Toggle.defaultProps = {
   countElem (p) {
-    return <span className='toggle-count' >({p.count})</span>;
+    return <span className='toggle-count'>({p.count})</span>;
   },
   disabled: false,
   labelPosition: 'before',
