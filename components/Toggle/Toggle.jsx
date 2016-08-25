@@ -173,7 +173,7 @@ Toggle.propTypes = {
   type: PropTypes.oneOf([
     'switch', 'radio', 'checkbox'
   ]),
-  value: PropTypes.bool
+  value: PropTypes.bool.isRequired
 };
 
 Toggle.defaultProps = {

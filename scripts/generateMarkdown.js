@@ -1,13 +1,3 @@
-/**
- * Copyright (c) 2015, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- */
-"use strict";
-
 function stringOfLength(string, length) {
   var newString = '';
   for (var i = 0; i < length; i++) {
@@ -25,7 +15,7 @@ function generateDesciption(description) {
   return description + '\n';
 }
 
-function generatePropType(type) {
+function generatePropType(type, includeType = true) {
   var values;
   if (Array.isArray(type.value)) {
     values = '(' +
@@ -37,7 +27,7 @@ function generatePropType(type) {
     values = type.value;
   }
 
-  return 'type: `' + type.name + (values ? values: '') + '`\n';
+  return (includeType ? 'type: `' : '`') + type.name + (values ? values: '') + '`\n';
 }
 
 function generatePropDefaultValue(value) {
@@ -48,12 +38,18 @@ function generatePropDefaultValue(value) {
 function generateProp(propName, prop) {
   return (
     '### `' + propName + '`' + (prop.required ? ' (required)' : '') + '\n' +
-    '\n' +
-    (prop.description ? prop.description + '\n\n' : '') +
     (prop.type ? generatePropType(prop.type) : '') +
     (prop.defaultValue ? generatePropDefaultValue(prop.defaultValue) : '') +
+    '\n' +
+    (prop.description ? prop.description + '\n\n' : '') +
     '\n'
   );
+}
+
+function propTable (propName, prop) {
+  return (
+    '[' +propName + '](#'+ propName +')' + '|' + (prop.required ? '✔️' : ' ') + '|' + (prop.type ? generatePropType(prop.type, false) : '\n')
+  )
 }
 
 function generateProps(props) {
@@ -63,6 +59,10 @@ function generateProps(props) {
     title + '\n' +
     stringOfLength('-', title.length) + '\n' +
     '\n' +
+    'prop name | isRequired | type\n-------|------|------\n' +
+      Object.keys(props).sort().map(function (propName) {
+        return  propTable(propName, props[propName])
+      }).join('')+
     Object.keys(props).sort().map(function(propName) {
       return generateProp(propName, props[propName]);
     }).join('\n')

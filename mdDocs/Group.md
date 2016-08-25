@@ -6,48 +6,59 @@
 Props
 -----
 
+prop name | isRequired | type
+-------|------|------
+[attributes](#attributes)| |`object`
+[className](#className)| |`string`
+[id](#id)| |`string`
+[mode](#mode)| |`enum('normal'|'tag')`
+[name](#name)|✔️|`string`
+[onChange](#onChange)|✔️|`func`
+[selectedIds](#selectedIds)| |`array`
+[type](#type)| |`enum('radio'|'checkbox'|'switch')`
+[value](#value)| |`arrayOf[object Object]`
 ### `attributes`
-
 type: `object`
 
 
-### `className`
 
+### `className`
 type: `string`
 
 
-### `id`
 
+### `id`
 type: `string`
 defaultValue: `'id'`
 
 
-### `mode`
 
+### `mode`
 type: `enum('normal'|'tag')`
 
 
-### `name` (required)
 
+### `name` (required)
 type: `string`
 
 
-### `onChange` (required)
 
+### `onChange` (required)
 type: `func`
 
 
-### `selectedIds`
 
+### `selectedIds`
 type: `array`
 
 
-### `type`
 
+### `type`
 type: `enum('radio'|'checkbox'|'switch')`
 
 
-### `value`
 
+### `value`
 type: `arrayOf[object Object]`
+
 

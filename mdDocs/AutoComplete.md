@@ -6,36 +6,57 @@
 Props
 -----
 
+prop name | isRequired | type
+-------|------|------
+[Reset](#Reset)| |`func`
+[async](#async)| |`bool`
+[className](#className)| |`string`
+[debounce](#debounce)| |`number`
+[disabled](#disabled)| |`bool`
+[fuzzyOptions](#fuzzyOptions)| |`shape[object Object]`
+[list](#list)| |`array`
+[multiSelect](#multiSelect)| |`bool`
+[name](#name)|✔️|`string`
+[onBlur](#onBlur)| |`func`
+[onChange](#onChange)| |`func`
+[onFocus](#onFocus)| |`func`
+[onSelect](#onSelect)|✔️|`func`
+[placeholder](#placeholder)| |`string`
+[resultsTemplate](#resultsTemplate)| |`func`
+[showInitialResults](#showInitialResults)| |`bool`
+[showTagRemove](#showTagRemove)| |`bool`
+[tags](#tags)| |
+[valueKey](#valueKey)| |`string`
+[width](#width)| |`number`
 ### `Reset`
-
 type: `func`
 
 
-### `async`
 
+### `async`
 type: `bool`
 defaultValue: `false`
 
 
-### `className`
 
+### `className`
 type: `string`
 
 
-### `debounce`
 
+### `debounce`
 type: `number`
 defaultValue: `250`
 
 
-### `disabled`
 
+### `disabled`
 type: `bool`
 defaultValue: `false`
 
 
-### `fuzzyOptions`
 
+### `fuzzyOptions`
 type: `shape[object Object]`
 defaultValue: `{
   caseSensitive: false,
@@ -52,79 +73,80 @@ defaultValue: `{
 }`
 
 
-### `list`
 
+### `list`
 type: `array`
 
 
-### `multiSelect`
 
+### `multiSelect`
 type: `bool`
 defaultValue: `false`
 
 
-### `name` (required)
 
+### `name` (required)
 type: `string`
 
 
-### `onBlur`
 
+### `onBlur`
 type: `func`
+
 
 
 ### `onChange`
-
 type: `func`
+
 
 
 ### `onFocus`
-
 type: `func`
+
 
 
 ### `onSelect` (required)
-
 type: `func`
 
 
-### `placeholder`
 
+### `placeholder`
 type: `string`
 defaultValue: `'Search'`
 
 
-### `resultsTemplate`
 
+### `resultsTemplate`
 type: `func`
 defaultValue: `Suggestions.defaultResultsTemplate`
 
 
-### `showInitialResults`
 
+### `showInitialResults`
 type: `bool`
 defaultValue: `false`
 
 
-### `showTagRemove`
 
+### `showTagRemove`
 type: `bool`
 defaultValue: `true`
 
 
-### `tags`
 
+### `tags`
 defaultValue: `false`
 
 
-### `valueKey`
 
+### `valueKey`
 type: `string`
 defaultValue: `'title'`
 
 
-### `width`
 
+### `width`
 type: `number`
 defaultValue: `430`
+
 

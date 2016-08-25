@@ -6,60 +6,77 @@
 Props
 -----
 
+prop name | isRequired | type
+-------|------|------
+[attributes](#attributes)| |`object`
+[disabled](#disabled)| |`bool`
+[max](#max)| |`number`
+[min](#min)| |`number`
+[name](#name)|✔️|`string`
+[onChange](#onChange)| |`func`
+[onDragEnd](#onDragEnd)| |`func`
+[onDragStart](#onDragStart)| |`func`
+[orientation](#orientation)| |`enum('horizontal'|'vertical')`
+[rangeTemplate](#rangeTemplate)| |`func`
+[readOnly](#readOnly)| |`bool`
+[showSteps](#showSteps)| |`bool`
+[step](#step)| |`number`
+[toolTipTemplate](#toolTipTemplate)| |`func`
+[type](#type)| |`enum('value'|'range')`
+[value](#value)| |`union(array|number)`
 ### `attributes`
-
 type: `object`
 defaultValue: `{}`
 
 
-### `disabled`
 
+### `disabled`
 type: `bool`
 defaultValue: `false`
 
 
-### `max`
 
+### `max`
 type: `number`
 defaultValue: `20`
 
 
-### `min`
 
+### `min`
 type: `number`
 defaultValue: `0`
 
 
-### `name` (required)
 
+### `name` (required)
 type: `string`
 
 
-### `onChange`
 
+### `onChange`
 type: `func`
+
 
 
 ### `onDragEnd`
-
 type: `func`
 defaultValue: `noop`
+
 
 
 ### `onDragStart`
-
 type: `func`
 defaultValue: `noop`
 
 
-### `orientation`
 
+### `orientation`
 type: `enum('horizontal'|'vertical')`
 defaultValue: `'horizontal'`
 
 
-### `rangeTemplate`
 
+### `rangeTemplate`
 type: `func`
 
 defaultValue: 
@@ -74,26 +91,26 @@ function(min, max) {
 }
 ```
 
-### `readOnly`
 
+### `readOnly`
 type: `bool`
 defaultValue: `false`
+
 
 
 ### `showSteps`
-
 type: `bool`
 defaultValue: `false`
 
 
-### `step`
 
+### `step`
 type: `number`
 defaultValue: `1`
 
 
-### `toolTipTemplate`
 
+### `toolTipTemplate`
 type: `func`
 
 defaultValue: 
@@ -103,14 +120,15 @@ function(value) {
 }
 ```
 
-### `type`
 
+### `type`
 type: `enum('value'|'range')`
 defaultValue: `'value'`
 
 
-### `value`
 
+### `value`
 type: `union(array|number)`
 defaultValue: `[5, 10]`
+
 

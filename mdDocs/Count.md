@@ -6,8 +6,20 @@
 Props
 -----
 
+prop name | isRequired | type
+-------|------|------
+[decrementElement](#decrementElement)| |`func`
+[disabled](#disabled)| |`bool`
+[incrementElement](#incrementElement)| |`func`
+[max](#max)| |`number`
+[min](#min)| |`number`
+[name](#name)|✔️|`string`
+[onChange](#onChange)|✔️|`func`
+[prefix](#prefix)| |`string`
+[step](#step)| |`number`
+[suffix](#suffix)| |`string`
+[value](#value)| |`number`
 ### `decrementElement`
-
 type: `func`
 
 defaultValue: 
@@ -21,14 +33,14 @@ function() {
 }
 ```
 
-### `disabled`
 
+### `disabled`
 type: `bool`
 defaultValue: `false`
 
 
-### `incrementElement`
 
+### `incrementElement`
 type: `func`
 
 defaultValue: 
@@ -42,46 +54,47 @@ function() {
 }
 ```
 
-### `max`
 
+### `max`
 type: `number`
 defaultValue: `Number.POSITIVE_INFINITY`
 
 
-### `min`
 
+### `min`
 type: `number`
 defaultValue: `Number.NEGATIVE_INFINITY`
 
 
-### `name` (required)
 
+### `name` (required)
 type: `string`
+
 
 
 ### `onChange` (required)
-
 type: `func`
 
 
-### `prefix`
 
+### `prefix`
 type: `string`
 
 
-### `step`
 
+### `step`
 type: `number`
 defaultValue: `1`
 
 
-### `suffix`
 
+### `suffix`
 type: `string`
 
 
-### `value`
 
+### `value`
 type: `number`
 defaultValue: `0`
+
 
