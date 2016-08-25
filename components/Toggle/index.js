@@ -1,1 +1,2 @@
-export * from './Toggle';
+import Toggle from './Toggle';
+export default Toggle;
