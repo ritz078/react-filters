@@ -41,11 +41,11 @@ import Toggle from 'react-filters/Toggle';
 
 Click on the component name to go to their documentation.
 
-- [x] [Toggle](mdDocs/toggle.md) (Switch, Checkbox, Radio)
-- [x] [Slider](mdDocs/slider.md)
-- [x] [Autocomplete](mdDocs/autocomplete.md)
-- [x] [Input Range](mdDocs/input_range.md)
-- [x] [Count](mdDocs/count.md)
+- [x] [Toggle](mdDocs/Toggle.md) (Switch, Checkbox, Radio)
+- [x] [Slider](mdDocs/Slider.md)
+- [x] [Autocomplete](mdDocs/AutoComplete.md)
+- [x] [Input Range](mdDocs/InputRange.md)
+- [x] [Count](mdDocs/Count.md)
 - [ ] Select
 - [ ] Dropdown
 
