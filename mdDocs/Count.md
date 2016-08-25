@@ -8,13 +8,13 @@ Props
 
 prop name | isRequired | type
 -------|------|------
-[decrementElement](#decrementElement)| |`func`
+[decrementElement](#decrementelement)| |`func`
 [disabled](#disabled)| |`bool`
-[incrementElement](#incrementElement)| |`func`
+[incrementElement](#incrementelement)| |`func`
 [max](#max)| |`number`
 [min](#min)| |`number`
 [name](#name)|✔️|`string`
-[onChange](#onChange)|✔️|`func`
+[onChange](#onchange)|✔️|`func`
 [prefix](#prefix)| |`string`
 [step](#step)| |`number`
 [suffix](#suffix)| |`string`

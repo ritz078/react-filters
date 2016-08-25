@@ -13,15 +13,15 @@ prop name | isRequired | type
 [max](#max)| |`number`
 [min](#min)| |`number`
 [name](#name)|✔️|`string`
-[onChange](#onChange)| |`func`
-[onDragEnd](#onDragEnd)| |`func`
-[onDragStart](#onDragStart)| |`func`
+[onChange](#onchange)| |`func`
+[onDragEnd](#ondragend)| |`func`
+[onDragStart](#ondragstart)| |`func`
 [orientation](#orientation)| |`enum('horizontal'|'vertical')`
-[rangeTemplate](#rangeTemplate)| |`func`
-[readOnly](#readOnly)| |`bool`
-[showSteps](#showSteps)| |`bool`
+[rangeTemplate](#rangetemplate)| |`func`
+[readOnly](#readonly)| |`bool`
+[showSteps](#showsteps)| |`bool`
 [step](#step)| |`number`
-[toolTipTemplate](#toolTipTemplate)| |`func`
+[toolTipTemplate](#tooltiptemplate)| |`func`
 [type](#type)| |`enum('value'|'range')`
 [value](#value)| |`union(array|number)`
 ### `attributes`

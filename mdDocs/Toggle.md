@@ -9,17 +9,17 @@ Props
 prop name | isRequired | type
 -------|------|------
 [attributes](#attributes)| |`object`
-[className](#className)| |`string`
+[className](#classname)| |`string`
 [count](#count)| |`number`
-[countElem](#countElem)| |`union(func|element)`
+[countElem](#countelem)| |`union(func|element)`
 [disabled](#disabled)| |`bool`
-[iconElement](#iconElement)| |`func`
-[iconLabel](#iconLabel)| |`array`
+[iconElement](#iconelement)| |`func`
+[iconLabel](#iconlabel)| |`array`
 [label](#label)| |`string`
-[labelPosition](#labelPosition)| |`enum('before'|'after')`
+[labelPosition](#labelposition)| |`enum('before'|'after')`
 [mode](#mode)| |`enum('normal'|'tag')`
 [name](#name)|✔️|`string`
-[onChange](#onChange)| |`func`
+[onChange](#onchange)| |`func`
 [type](#type)| |`enum('switch'|'radio'|'checkbox')`
 [value](#value)|✔️|`bool`
 ### `attributes`

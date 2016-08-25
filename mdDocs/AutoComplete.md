@@ -8,25 +8,25 @@ Props
 
 prop name | isRequired | type
 -------|------|------
-[Reset](#Reset)| |`func`
+[Reset](#reset)| |`func`
 [async](#async)| |`bool`
-[className](#className)| |`string`
+[className](#classname)| |`string`
 [debounce](#debounce)| |`number`
 [disabled](#disabled)| |`bool`
-[fuzzyOptions](#fuzzyOptions)| |`shape[object Object]`
+[fuzzyOptions](#fuzzyoptions)| |`shape[object Object]`
 [list](#list)| |`array`
-[multiSelect](#multiSelect)| |`bool`
+[multiSelect](#multiselect)| |`bool`
 [name](#name)|✔️|`string`
-[onBlur](#onBlur)| |`func`
-[onChange](#onChange)| |`func`
-[onFocus](#onFocus)| |`func`
-[onSelect](#onSelect)|✔️|`func`
+[onBlur](#onblur)| |`func`
+[onChange](#onchange)| |`func`
+[onFocus](#onfocus)| |`func`
+[onSelect](#onselect)|✔️|`func`
 [placeholder](#placeholder)| |`string`
-[resultsTemplate](#resultsTemplate)| |`func`
-[showInitialResults](#showInitialResults)| |`bool`
-[showTagRemove](#showTagRemove)| |`bool`
+[resultsTemplate](#resultstemplate)| |`func`
+[showInitialResults](#showinitialresults)| |`bool`
+[showTagRemove](#showtagremove)| |`bool`
 [tags](#tags)| |
-[valueKey](#valueKey)| |`string`
+[valueKey](#valuekey)| |`string`
 [width](#width)| |`number`
 ### `Reset`
 type: `func`

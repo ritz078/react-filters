@@ -9,12 +9,12 @@ Props
 prop name | isRequired | type
 -------|------|------
 [attributes](#attributes)| |`object`
-[className](#className)| |`string`
+[className](#classname)| |`string`
 [id](#id)| |`string`
 [mode](#mode)| |`enum('normal'|'tag')`
 [name](#name)|✔️|`string`
-[onChange](#onChange)|✔️|`func`
-[selectedIds](#selectedIds)| |`array`
+[onChange](#onchange)|✔️|`func`
+[selectedIds](#selectedids)| |`array`
 [type](#type)| |`enum('radio'|'checkbox'|'switch')`
 [value](#value)| |`arrayOf[object Object]`
 ### `attributes`

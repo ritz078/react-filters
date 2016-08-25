@@ -10,7 +10,7 @@ prop name | isRequired | type
 -------|------|------
 [disabled](#disabled)| |`bool`
 [name](#name)| |`string`
-[onSelect](#onSelect)|✔️|`func`
+[onSelect](#onselect)|✔️|`func`
 [placeholders](#placeholders)| |`arrayOf[object Object]`
 [suggestions](#suggestions)| |`array`
 ### `disabled`
