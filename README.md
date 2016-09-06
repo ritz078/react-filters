@@ -41,11 +41,11 @@ import Toggle from 'react-filters/Toggle';
 
 Click on the component name to go to their documentation.
 
-- [x] [Toggle](docs/toggle.md) (Switch, Checkbox, Radio)
-- [x] [Slider](docs/slider.md)
-- [x] [Autocomplete](docs/autocomplete.md)
-- [x] [Input Range](docs/input_range.md)
-- [x] [Count](docs/count.md)
+- [x] [Toggle](mdDocs/Toggle.md) (Switch, Checkbox, Radio)
+- [x] [Slider](mdDocs/Slider.md)
+- [x] [Autocomplete](mdDocs/AutoComplete.md)
+- [x] [Input Range](mdDocs/InputRange.md)
+- [x] [Count](mdDocs/Count.md)
 - [ ] Select
 - [ ] Dropdown
 
@@ -55,7 +55,6 @@ Click on the component name to go to their documentation.
 1. Run `npm install && npm run storybook`
 1. You can find the server running at **localhost:9002**
 1. Add feature or fix bug. Add tests if required.
-1. Make sure your comments follow conventional changelog guideline. You can simply run `npm run commit` or `git cz` if you have `commitizen` installed globally to do the commit with the required guidelines.
 1. if commit fails make sure that there's no linting error or failed test by running `npm run test && npm run lint`
 
 
