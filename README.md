@@ -27,14 +27,14 @@ npm install --save react-filters
 import the component you need to use.
 
 ```js
-import { Slider, Toggle } from 'react-filters';
+import { Slider, Toggle } from 'react-filters/dist';
 ```
 
 If you don't want to use all the components and are concerned about file size, you can just import the component you need.
 
 ```js
-import Slider from 'react-filters/Slider';
-import Toggle from 'react-filters/Toggle';
+import Slider from 'react-filters/dist/Slider';
+import Toggle from 'react-filters/dist/Toggle';
 ```
 
 ##Components
