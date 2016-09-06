@@ -1,4 +1,14 @@
 <a name=""></a>
+# [](https://github.com/ritz078/react-filters/compare/v0.2.1...v) (2016-09-06)
+
+
+### Performance Improvements
+
+* **build:** decreased filesize by removing webpack code from build files ([cb927ff](https://github.com/ritz078/react-filters/commit/cb927ff))
+
+
+
+<a name=""></a>
 # [](https://github.com/ritz078/react-filters/compare/v0.1.6...v) (2016-08-11)
 
 
