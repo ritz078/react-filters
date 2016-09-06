@@ -12,7 +12,7 @@
   "scripts": {
     "lint": "eslint --format=node_modules/eslint-formatter-pretty components/**/*.js test/**/*.js stories/*.js",
     "lintfix": "eslint --fix components/**/*.js test/**/*.js stories/*.js",
-    "prepublish": "npm run test && webpack",
+    "prepublish": "npm run test && babel components --out-dir dist",
     "prebuild": "rm -rf dist/*",
     "storybook": "start-storybook -p 9002",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
