@@ -44,7 +44,7 @@ export default class SearchBox extends Component {
   removeLastTag (e) {
     const { onTagRemove, multiSelected } = this.props;
     const keyCode = e.which || e.keyCode;
-    if (keyCode === 8 && multiSelected && multiSelected.length) {
+    if (keyCode === 8 && multiSelected && multiSelected.length && !this.props.value.length) {
       e.preventDefault();
       e.stopPropagation();
       onTagRemove({
