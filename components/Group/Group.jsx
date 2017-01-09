@@ -110,7 +110,7 @@ Group.propTypes = {
       value: PropTypes.bool
     })
   ),
-  selectedIds: PropTypes.array,
+  selectedIds: PropTypes.oneOfType([PropTypes.array, PropTypes.number]),
   id: PropTypes.string,
   disabled: PropTypes.bool
 };
