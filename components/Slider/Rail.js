@@ -50,5 +50,8 @@ Rail.propTypes = {
   max: PropTypes.number.isRequired,
   min: PropTypes.number.isRequired,
   orientation: PropTypes.string.isRequired,
-  value: PropTypes.array.isRequired
+  value: PropTypes.oneOfType([
+    React.PropTypes.number,
+    React.PropTypes.array
+  ]).isRequired,
 };

@@ -151,5 +151,8 @@ Control.propTypes = {
   step: PropTypes.number.isRequired,
   toolTipTemplate: PropTypes.func.isRequired,
   trackOffset: PropTypes.object.isRequired,
-  value: PropTypes.number.isRequired
+  value: PropTypes.oneOfType([
+    React.PropTypes.number,
+    React.PropTypes.array
+  ]).isRequired,
 };
